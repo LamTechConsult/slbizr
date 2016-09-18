@@ -14,3 +14,30 @@ You are a loyal customer and want to help others use your reviews to make inform
 **Why list your business on SLBizReviews?** 
 To stay Relevant, Increase Revenue, Improve and Maintain Reputation and Status, Serve more customers, Interact with your Customers online, and Increase Loyal Customer base. SLBizReviews is 100% free to list and manage your business. Visit us on the web at www.slbr.sl or send and SMS or what’s up message to 078535009 to receive a link to download our mobile app. 
 
+Instructions
+------------
+- clone the repository using 'git clone [reponame]'
+- cd <reponame>
+- npm insatll (to install node module dependency).
+- bower update (to install bower dependency).
+
+Add platform
+------------
+- ionic paltform add [android/ios]
+
+Gegrate resources
+-----------------
+- ionic resources --splash
+
+Browser run
+-----------
+- ionic serve --lab
+- ionic serve
+
+Build app
+---------
+- ionic bild [android/ios]
+
+Run the app
+-----------
+- ionic run [android/ios]
