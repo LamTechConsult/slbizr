@@ -17,7 +17,7 @@ To stay Relevant, Increase Revenue, Improve and Maintain Reputation and Status, 
 Instructions
 ------------
 - clone the repository using 'git clone [reponame]'
-- cd <reponame>
+- cd [reponame]
 - npm insatll (to install node module dependency).
 - bower update (to install bower dependency).
 
@@ -25,8 +25,8 @@ Add platform
 ------------
 - ionic paltform add [android/ios]
 
-Gegrate resources
------------------
+Generate resources
+------------------
 - ionic resources --splash
 
 Browser run
