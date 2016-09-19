@@ -1,0 +1,37 @@
+<ion-view view-title="Phone number verification">
+
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-buttons side="right">
+      <button class="button button-icon" ng-click="skipMobileVerification()">Skip</button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+    <div class="row responsive-sm">
+      <div class="col">
+        <div class="splash-body">
+            <span>
+                Please check your SMS or wait for your new PIN to verify your account. PIN has been sent to: 782740873
+            </span>
+        </div>
+        <div class="row responsive-sm">
+          <div class="col">
+            <div class="splash-body">
+                <span>
+                    To complete your registaration.
+                </span>
+            </div>
+            <label class="item item-input">
+              <input type="text" placeholder="Enter the pin you received">
+          </label>
+            <button class="button button-block button-positive" ng-click="confirmPin()">
+                CONFIRM PIN
+            </button>
+            <button class="button button-block button-positive" ng-click="requestNewPin()">
+              REQUEST NEW PIN
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

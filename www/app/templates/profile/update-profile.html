@@ -1,0 +1,60 @@
+<ion-view view-title="Edit My Profile">
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-back-button side="left">Back </ion-nav-back-button>
+  </ion-nav-bar>
+
+  <ion-content>
+    <!-- <div class="card" ng-show="serverErrors">
+      <div class="item item-text-wrap" ng-repeat="serverError in serverErrors">
+        {{serverError}}
+      </div>
+    </div> -->
+    <div class="row responsive-sm">
+       <div class="col">
+        <div class="list">
+        <form name="editProfileForm" ng-submit="saveProfile(editProfileForm)" novalidate>
+          <a class="item item-avatar">
+            <img src="assets/img/user/default-avatar.png">
+            <p>{{profile.field_user_nick_name.und[0].value}}</p
+            <p>{{profile.mail}}</p
+          </a>
+
+            <a class="item item-icon-left">
+              <i class="icon ion-person"></i>
+              <label class="item item-input item-stacked-label">
+                 <span class="input-label">Full Name</span>
+                 <input type="text" placeholder="Full Name" ng-model="profileUpdate.field_user_nick_name.und[0].value">
+             </label>
+            </a>
+
+            <a class="item item-icon-left item-icon-right">
+              <i class="icon ion-android-phone-portrait"></i>
+              <label class="item item-input item-stacked-label">
+                 <span class="input-label" >Phone</span>
+                 <input type="text" placeholder="Phone" ng-model="profileUpdate.field_mobile_user_telephone.und[0].value">
+             </label>
+            </a>
+
+            <a class="item item-icon-left item-icon-right">
+              <i class="icon ion-email"></i>
+              <label class="item item-input item-stacked-label">
+                 <span class="input-label">Email</span>
+                 <input type="text" placeholder="john@example.com" ng-model="profile.mail" readonly="true">
+             </label>
+            </a>
+            <a class="item item-icon-left item-icon-right">
+              <i class="icon ion-document-text"></i>
+              <label class="item item-input item-stacked-label">
+                 <span class="input-label">About me</span>
+                 <textarea placeholder="Write something about you" ng-model="profileUpdate.field_user_about_me.und[0].value"></textarea>
+             </label>
+            </a>
+            <button class="button button-block button-positive" ng-submit="saveProfile(editProfileForm)">
+              SAVE PROFILE
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

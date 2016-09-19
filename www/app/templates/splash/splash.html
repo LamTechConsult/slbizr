@@ -1,0 +1,54 @@
+<ion-slide-box on-slide-changed="slideHasChanged($index)" class="positive-bg text-center">
+  <ion-slide class="padding2x">
+    <div class="splash-header logo"><img src="assets/img/splash_logo.png" /></div>
+    <div class="splash-body">
+        <h2 class="title">Welcome</h2>
+        <p>Sierra Leone Bussiness Review is local search engine and user review and rating apps. Use it to find, rate and review local business near you.</p>
+    </div>
+    <div class="splash-footer">
+	    <a href on-tap="nextSlide()"><img src="assets/img/agreement_round.png" /></a>
+    </div>
+  </ion-slide>
+
+  <!-- second slide-->
+  <ion-slide class="padding2x">
+    <div class="splash-header logo"><img src="assets/img/splash_logo.png" /></div>
+ 	<div class="splash-body">
+ 		<h2 class="title">Why Use This App</h2>
+ 		<p>I am a customer and I want to share my good and bad experience to help other customers like me make informed purchasing decisions.</p>
+ 	</div>
+ 	<div class="splash-footer" ng-click="splash2Enter()">
+		<a href on-tap="nextSlide()"><img src="assets/img/write-a-review-icon.png" /></a>
+ 	</div>
+  </ion-slide>
+
+  <!-- third slide-->
+  <ion-slide class="padding2x">
+    <div class="splash-header logo"><img src="assets/img/splash_logo.png" /></div>
+ 	<div class="splash-body">
+ 		<h2 class="title">Feature Of This App</h2>
+ 		<p>To stay relevant, satisfy my customers, increase revenue, improve reputation and status, interact with my customers and its free to list and manage by business.</p>
+ 	</div>
+ 	<div class="splash-footer" ng-click="splash3Enter()">
+ 		<a href on-tap="nextSlide()"><img src="assets/img/why-list-your-business-icon.png" /></a>
+ 	</div>
+  </ion-slide>
+
+  <!-- fourth slide-->
+  <ion-slide class="padding2x">
+    <div class="splash-header logo"><img src="assets/img/splash_logo.png" /></div>
+    <div class="splash-body">
+ 		<h2 class="title">Benefits of this app</h2>
+ 		<p>SLBizReviews is a local business search engine. It will help you find, rate and review nearby businesses when a friend or family recommendation is not available or not trusted</p>
+    </div>
+    <div class="splash-footer">
+    	<span on-tap="signinClick()"><a href="#" ><img src="assets/img/login_round.png" /></a></span>
+        <span on-tap="signupClick()"><a href="#"><img src="assets/img/signup_round.png"/></a></span>
+    </div>
+  </ion-slide>
+</ion-slide-box>
+
+<ion-footer-bar align-title="left" class="bar-clear">
+  <button class="button button-calm login" on-tap="signinClick()">LOGIN</button>
+  <button class="button button-calm signup" on-tap="signupClick()">SIGN UP</button>
+</ion-footer-bar>

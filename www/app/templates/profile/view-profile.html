@@ -1,0 +1,65 @@
+<ion-view view-title="My Profile">
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-back-button side="left">Back </ion-nav-back-button>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon ion-more" ng-click="editProfile()"></button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+  <ion-content>
+    <div class="card" ng-if="serverErrors.lenght">
+      <div class="item item-text-wrap" ng-repeat="serverError in serverErrors">
+        {{serverError}}
+      </div>
+    </div>
+    <div class="row responsive-sm">
+       <div class="col">
+        <div class="list">
+          <a class="item item-avatar">
+            <img src="assets/img/user/default-avatar.png">
+            <p>{{currentUser.field_user_nick_name.und[0].value}}</p
+            <p>{{currentUser.mail}}</p
+          </a>
+
+          <a class="item item-icon-left">
+            <i class="icon ion-person"></i>
+            <label class="item item-input item-stacked-label">
+               <span class="input-label">Full Name</span>
+               <span class="input-label">{{currentUser.field_user_nick_name.und[0].value}}</span>
+           </label>
+          </a>
+
+          <a class="item item-icon-left item-icon-right">
+            <i class="icon ion-android-phone-portrait"></i>
+            <label class="item item-input item-stacked-label">
+               <span class="input-label">Phone</span>
+               <span class="input-label">{{currentUser.field_mobile_user_telephone.und[0].value}}</span>
+           </label>
+          </a>
+
+          <a class="item item-icon-left item-icon-right">
+            <i class="icon ion-email"></i>
+            <label class="item item-input item-stacked-label">
+               <span class="input-label">Email</span>
+              <div class="item item-body">{{currentUser.mail}}</div>
+           </label>
+          </a>
+          <a class="item item-icon-left item-icon-right">
+            <i class="icon ion-document-text"></i>
+
+            <label class="item item-stacked-label">
+               <span class="input-label">About me</span>
+                <div class="item item-body">{{currentUser.field_user_about_me.und[0].value}}</div>
+           </label>
+          </a>
+          <button class="button button-block button-positive" ng-click="editProfile()">
+            EDIT PROFILE
+          </button>
+          <button class="button button-block button-positive" ng-click="doLogout()">
+            LOG OUT
+          </button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,63 @@
+<ion-view view-title="My Profile">
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-buttons side="right">
+      <button class="button button-icon ion-more" ng-click="editProfile()"></button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+  <!-- <ion-header-bar class="bar bar-positive bar-header item-input-inset">
+
+  </ion-header-bar> -->
+
+  <ion-content>
+    <div class="card" ng-show="serverErrors">
+      <div class="item item-text-wrap" ng-repeat="serverError in serverErrors">
+        {{serverError}}
+      </div>
+    </div>
+    <div class="list">
+      <a class="item item-avatar">
+        <img src="assets/img/user/default-avatar.png">
+        <p>{{currentUser.name}}</p
+        <p>{{currentUser.mail}}</p
+      </a>
+
+      <a class="item item-icon-left">
+        <i class="icon ion-person"></i>
+        <label class="item item-input item-stacked-label">
+           <span class="input-label">Full Name</span>
+           <span class="input-label">{{currentUser.name}}</span>
+       </label>
+      </a>
+
+      <a class="item item-icon-left item-icon-right">
+        <i class="icon ion-person"></i>
+        <label class="item item-input item-stacked-label">
+           <span class="input-label">Phone</span>
+           <span class="input-label">{{currentUser.field_mobile_user_telephone.und[0].value}}</span>
+       </label>
+      </a>
+
+      <a class="item item-icon-left item-icon-right">
+        <i class="icon ion-person"></i>
+        <label class="item item-input item-stacked-label">
+           <span class="input-label">Email</span>
+          <span class="input-label">{{currentUser.mail}}</span>
+       </label>
+      </a>
+      <a class="item item-icon-left item-icon-right">
+        <i class="icon ion-person"></i>
+        <label class="item item-input item-stacked-label">
+           <span class="input-label">About me</span>
+            <span class="input-label">{{currentUser.field_user_nick_name.und[0].value}}</span>
+       </label>
+      </a>
+      <button class="button button-block button-positive" ng-click="editProfile()">
+        EDIT PROFILE
+      </button>
+      <button class="button button-block button-positive" ng-click="doLogout()">
+        LOG OUT
+      </button>
+    </div>
+  </ion-content>
+</ion-view>
