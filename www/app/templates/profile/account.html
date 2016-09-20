@@ -1,21 +1,11 @@
 <ion-view view-title="My account">
-  <!-- <ion-header>
-  <div class="bar bar-header bar-transparent">
-    <div ng-click="goBack()">
-      <button class="button button-icon icon ion-ios-arrow-back"></button>
-    </div>
-   </div>
-</ion-header> -->
+
   <ion-nav-bar class="bar-header bar-positive">
     <ion-nav-back-button side="left">Back </ion-nav-back-button>
     <ion-nav-buttons side="right">
-      <button class="button button-icon ion-more" ng-click="showProfile()"></button>
+      <button class="button button-icon button-clear ion-more" ng-click="showProfile()"></button>
     </ion-nav-buttons>
   </ion-nav-bar>
-
-  <!-- <ion-header-bar class="bar bar-positive bar-header item-input-inset">
-
-  </ion-header-bar> -->
 
   <ion-content>
     <div class="card" ng-if="serverErrors.length">
@@ -24,59 +14,44 @@
       </div>
     </div>
     <div class="list">
-      <a class="item item-avatar">
-        <img src="assets/img/user/default-avatar.png">
-        <p ng-if="currentUser.field_user_nick_name">{{currentUser.field_user_nick_name.und[0].value}}</p>
-        <p ng-if="!currentUser.field_user_nick_name">{{currentUser.name}}</p>
-        <p>{{currentUser.mail}}</p
+      <div class="item item-avatar avatar-top text-center">
+	    <img ng-if="currentUser.pictureUrl" ng-src="{{currentUser.pictureUrl}}">
+      <img ng-if="!currentUser.pictureUrl" src="assets/img/user/default-avatar.png">
+		<h2 ng-if="currentUser.field_user_nick_name">{{currentUser.field_user_nick_name.und[0].value}}</h2>
+		<h2 ng-if="!currentUser.field_user_nick_name">{{currentUser.name}}</h2>
+		<p>{{currentUser.mail}}</p>
+  	  </div>
+
+      <a class="item item-icon-left item-icon-right item-icon-out" ng-click="myReviewerProfile()" href="#/app/view-profile">
+        <i class="icon ion-person icon-circle"></i> My Reviewer Profile <i class="icon ion-ios-arrow-right"></i>
       </a>
 
-      <a class="item item-icon-left item-icon-right" href="#/app/view-profile">
-        <i class="icon ion-person"></i>
-        My Reviewer Profile
-        <i class="icon ion-ios-arrow-right"></i>
+      <a class="item item-icon-left item-icon-right item-icon-out" ng-click="myReviewers()" href="#/app/myReviewers">
+        <i class="icon ion-android-star icon-circle"></i> My Reviewers <i class="icon ion-ios-arrow-right"></i>
       </a>
 
-      <a class="item item-icon-left item-icon-right" href="#/app/myReviewers">
-        <i class="icon ion-ios-star-outline"></i>
-        My Reviewers
-        <i class="icon ion-ios-arrow-right"></i>
+      <a class="item item-icon-left item-icon-right item-icon-out" ng-click="myBookmarks()" href="#/app/myBookMarks">
+        <i class="icon ion-android-bookmark icon-circle"></i> My Bookmarks <i class="icon ion-ios-arrow-right"></i>
       </a>
 
-      <a class="item item-icon-left item-icon-right" href="#/app/myBookMarks">
-        <i class="icon ion-android-bookmark"></i>
-        My Bookmarks
-        <i class="icon ion-ios-arrow-right"></i>
+      <a class="item item-icon-left item-icon-right item-icon-out" ng-click="myMessages()" href="#/app/myMessages">
+        <i class="icon ion-ios-email-outline icon-circle"></i> My Messages <i class="icon ion-ios-arrow-right"></i>
       </a>
 
-      <a class="item item-icon-left item-icon-right" href="#/app/myMessages">
-        <i class="icon ion-ios-email-outline"></i>
-        My Messages
-          <i class="icon ion-ios-arrow-right"></i>
+      <a class="item item-icon-left item-icon-right item-icon-out" ng-click="myFriends()" href="#/app/myFriends">
+        <i class="icon ion-person-stalker icon-circle"></i> My Friends <i class="icon ion-ios-arrow-right"></i>
       </a>
 
-      <a class="item item-icon-left item-icon-right" href="#/app/myFriends">
-        <i class="icon ion-person-stalker"></i>
-        My Friends
-        <i class="icon ion-ios-arrow-right"></i>
+      <a class="item item-icon-left item-icon-right item-icon-out" ng-click="myFollowers()" href="#/app/myFollowers">
+        <i class="icon ion-ios-people icon-circle"></i> My Followers <i class="icon ion-ios-arrow-right"></i>
       </a>
 
-      <a class="item item-icon-left item-icon-right" href="#/app/myFollowers">
-        <i class="icon ion-ios-people"></i>
-        My Followers
-        <i class="icon ion-ios-arrow-right"></i>
+      <a class="item item-icon-left item-icon-right item-icon-out" ng-click="myFollowings()" href="#/app/myFollowings">
+        <i class="icon ion-ios-people icon-circle"></i> My Followings <i class="icon ion-ios-arrow-right"></i>
       </a>
 
-      <a class="item item-icon-left item-icon-right" href="#/app/myFollowings">
-        <i class="icon ion-ios-people"></i>
-        My Followings
-          <i class="icon ion-ios-arrow-right"></i>
-      </a>
-
-      <a class="item item-icon-left item-icon-right" href="#/app/recentActivies">
-        <i class="icon ion-ios-list-outline"></i>
-        Recent Activities
-        <i class="icon ion-ios-arrow-right"></i>
+      <a class="item item-icon-left item-icon-right item-icon-out" ng-click="recentActivities()"  href="#/app/recentActivies">
+        <i class="icon ion-ios-list-outline icon-circle"></i> Recent Activities <i class="icon ion-ios-arrow-right"></i>
       </a>
     </div>
   </ion-content>

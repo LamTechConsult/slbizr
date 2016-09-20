@@ -9881,6 +9881,9 @@ img {
 .padding-l2x {
   padding-left: 20px; }
 
+.border-bottom {
+  border-bottom: 1px solid #ddd; }
+
 .col-divider-margin {
   margin-right: 5%; }
 
@@ -9894,21 +9897,20 @@ img {
   text-align: center;
   position: relative;
   clear: both; }
-
-.dot-divider span {
-  text-align: center;
-  background: #fff;
-  color: #444;
-  display: inline-block;
-  padding: 0 5px;
-  height: 50px;
-  line-height: 50px;
-  position: absolute;
-  font-size: 18px;
-  margin: 0 auto 0 -25px;
-  top: -25px;
-  left: 50%;
-  z-index: 1; }
+  .dot-divider span {
+    text-align: center;
+    background: #fff;
+    color: #444;
+    display: inline-block;
+    padding: 0 5px;
+    height: 50px;
+    line-height: 50px;
+    position: absolute;
+    font-size: 18px;
+    margin: 0 auto 0 -25px;
+    top: -25px;
+    left: 50%;
+    z-index: 1; }
 
 @media (orientation: portrait) {
   .dot-divider {
@@ -9960,14 +9962,12 @@ img {
   text-overflow: ellipsis;
   padding: 120px 20px 20px 20px;
   line-height: 1em; }
-
-.loading-container .loading p {
-  font-size: 14px;
-  margin-top: -5px; }
-
-.loading-container .loading svg {
-  width: 20px;
-  height: 20px; }
+  .loading-container .loading p {
+    font-size: 14px;
+    margin-top: -5px; }
+  .loading-container .loading svg {
+    width: 20px;
+    height: 20px; }
 
 /*--- slider ---*/
 .slider {
@@ -9988,9 +9988,8 @@ img {
 .slider-pager .slider-pager-page {
   color: #fff;
   opacity: 0.8; }
-
-.slider-pager .slider-pager-page.active {
-  color: #86dc00; }
+  .slider-pager .slider-pager-page.active {
+    color: #86dc00; }
 
 @media (orientation: landscape) {
   .slider .title, .splash-header {
@@ -10005,3 +10004,44 @@ img {
   border-bottom: solid 1px #ccc;
   background-color: transparent;
   padding-left: 0; }
+
+/*---- avatar top ---*/
+.item-avatar.avatar-top {
+  padding-left: 0; }
+  .item-avatar.avatar-top > img:first-child {
+    position: relative;
+    top: 0;
+    left: 0;
+    max-width: 50px;
+    max-height: 50px; }
+
+/*----- circle icon ---*/
+.icon-circle.icon::before {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  border-radius: 50%;
+  border: 1px solid #ebebeb;
+  color: #444;
+  overflow: hidden; }
+
+/*--- item icon out ---*/
+.item-icon-out {
+  border-left: none;
+  margin-left: 60px;
+  padding-left: 5px;
+  overflow: visible; }
+  .item-icon-out .icon {
+    margin-left: -60px; }
+  .item-icon-out.last {
+    border-bottom: none; }
+
+/*--- go arrow ---*/
+.icon.go-arrow {
+  font-size: 20px; }
+  .icon.go-arrow.icon::before {
+    width: 20px;
+    border: 1px solid #444;
+    border-radius: 3px;
+    box-shadow: 0px 3px 0px #444;
+    color: #444; }

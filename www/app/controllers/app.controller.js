@@ -51,11 +51,46 @@ SLBizReviews.controller('otherCtrl', function($scope,$state,$ionicHistory,$rootS
   });
 });
 
-SLBizReviews.controller('AccountCtrl', function($scope,$state,$rootScope,$localStorage,ProfileService) {
+SLBizReviews.controller('AccountCtrl', function($scope,$state,$rootScope,myAccountService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
-
+  
+  $scope.myFriends = function (uid) {
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+    myAccountService.getMyFriends($rootScope.currentUser.uid).then(function (data) {
+      $rootScope.friends = data.relationships;
+      console.log(data.relationships);
+    }).finally(function () { $rootScope.$broadcast('loading:hide');});
+  } 
+  $scope.myFollowers = function (uid) {
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+    myAccountService.getMyFollowers($rootScope.currentUser.uid).then(function (data) {
+      $rootScope.followers = data.relationships;
+      console.log(data);
+    }).finally(function () { $rootScope.$broadcast('loading:hide');});
+  }
+  $scope.myFollowings = function (uid) {
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+    myAccountService.getMyFollowings($rootScope.currentUser.uid).then(function (data) {
+      $rootScope.followings = data.relationships;
+      console.log(data);
+    }).finally(function () { $rootScope.$broadcast('loading:hide');});
+  }
+  $scope.myMessages = function () {
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+    myAccountService.getMyMessages($rootScope.currentUser.uid).then(function (data) {
+      $rootScope.messages = data;
+      console.log(data);
+    }).finally(function () { $rootScope.$broadcast('loading:hide');});
+  }
+  $scope.myBookmarks = function () {
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+    myAccountService.getMyBookmarks().then(function (data) {
+      $rootScope.bookmarks = data.nodes;
+      console.log(data);
+    }).finally(function () { $rootScope.$broadcast('loading:hide');});
+  }
   $scope.showProfile = function () {
     $state.go('app.viewProfile');
   }

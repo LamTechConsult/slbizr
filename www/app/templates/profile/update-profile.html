@@ -9,52 +9,37 @@
         {{serverError}}
       </div>
     </div> -->
-    <div class="row responsive-sm">
-       <div class="col">
-        <div class="list">
-        <form name="editProfileForm" ng-submit="saveProfile(editProfileForm)" novalidate>
-          <a class="item item-avatar">
-            <img src="assets/img/user/default-avatar.png">
-            <p>{{profile.field_user_nick_name.und[0].value}}</p
-            <p>{{profile.mail}}</p
-          </a>
 
-            <a class="item item-icon-left">
-              <i class="icon ion-person"></i>
-              <label class="item item-input item-stacked-label">
-                 <span class="input-label">Full Name</span>
-                 <input type="text" placeholder="Full Name" ng-model="profileUpdate.field_user_nick_name.und[0].value">
-             </label>
-            </a>
+    <form name="editProfileForm" ng-submit="saveProfile(editProfileForm)" novalidate>
+	  <div class="list border-bottom">
+        <div class="item item-avatar avatar-top text-center">
+	      <img ng-if="currentUser.pictureUrl" ng-src="{{currentUser.pictureUrl}}">
+        <img ng-if="!currentUser.pictureUrl" src="assets/img/user/default-avatar.png">
+		  <h2 ng-if="currentUser.field_user_nick_name">{{profile.field_user_nick_name.und[0].value}}</h2>
+		  <p>{{profile.mail}}</p>
+  	    </div>
 
-            <a class="item item-icon-left item-icon-right">
-              <i class="icon ion-android-phone-portrait"></i>
-              <label class="item item-input item-stacked-label">
-                 <span class="input-label" >Phone</span>
-                 <input type="text" placeholder="Phone" ng-model="profileUpdate.field_mobile_user_telephone.und[0].value">
-             </label>
-            </a>
-
-            <a class="item item-icon-left item-icon-right">
-              <i class="icon ion-email"></i>
-              <label class="item item-input item-stacked-label">
-                 <span class="input-label">Email</span>
-                 <input type="text" placeholder="john@example.com" ng-model="profile.mail" readonly="true">
-             </label>
-            </a>
-            <a class="item item-icon-left item-icon-right">
-              <i class="icon ion-document-text"></i>
-              <label class="item item-input item-stacked-label">
-                 <span class="input-label">About me</span>
-                 <textarea placeholder="Write something about you" ng-model="profileUpdate.field_user_about_me.und[0].value"></textarea>
-             </label>
-            </a>
-            <button class="button button-block button-positive" ng-submit="saveProfile(editProfileForm)">
-              SAVE PROFILE
-            </button>
-          </form>
-        </div>
+        <label class="item item-input item-stacked-label item-icon-left item-icon-out">
+          <i class="icon ion-person"></i>
+          <input type="text" placeholder="Full Name" ng-model="profileUpdate.field_user_nick_name.und[0].value">
+        </label>
+        <label class="item item-input item-stacked-label item-icon-left item-icon-out">
+          <i class="icon ion-android-phone-portrait"></i>
+          <input type="text" placeholder="Phone" ng-model="profileUpdate.field_mobile_user_telephone.und[0].value">
+        </label>
+        <label class="item item-input item-stacked-label item-icon-left item-icon-out">
+          <i class="icon ion-email"></i>
+          <input type="text" placeholder="john@example.com" ng-model="profile.mail" readonly="true">
+        </label>
+        <label class="item item-input item-stacked-label item-icon-left item-icon-out last">
+          <i class="icon ion-document-text"></i>
+          <span class="input-label">About me</span>
+          <textarea placeholder="Write something about you" ng-model="profileUpdate.field_user_about_me.und[0].value"></textarea>
+        </label>
       </div>
-    </div>
+      <div class="padding3x">
+        <button class="button button-block button-calm" ng-submit="saveProfile(editProfileForm)">SAVE PROFILE</button>
+      </div>
+    </form>
   </ion-content>
 </ion-view>

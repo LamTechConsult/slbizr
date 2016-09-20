@@ -45,7 +45,7 @@ function ProfileService($q, $http, $filter, $rootScope,DrupalApiConstant, UserRe
   }
   function saveProfileData(newProfile) {
     var preparedProfile = newProfile;
-  //  preparedProfile.pictureUrl = (preparedProfile.picture) ? DrupalHelperService.getDrupalPath() + 'sites/default/files/pictures/' + preparedProfile.picture.filename : false;
+    preparedProfile.pictureUrl = (preparedProfile.picture) ? preparedProfile.picture.url : false;
     profile = preparedProfile;
   }
 
@@ -77,3 +77,54 @@ function ProfileService($q, $http, $filter, $rootScope,DrupalApiConstant, UserRe
     return defer.promise;
   }
 };
+
+// SLBizReviews.service('accountService',ProfileService);
+// function accountService($q, $http, $filter, $rootScope,DrupalApiConstant, UserResource, AuthenticationService, AuthenticationChannel){
+
+//   var account = false,
+//   scope = $rootScope.$new();
+
+//   AuthenticationChannel.subCurrentUserUpdated(scope, saveProfileData);
+
+//   //account service object
+//   var accountService = {
+//     getMyFriends: getMyFriends
+//   };
+
+//   return accountService;
+//   /////////////////////////////////////////////////////////////
+
+//   function getMyFriends() {
+
+//     var defer = $q.defer();
+
+//     //return account form cache
+//     if (angular.isObject(account) && typeof Object.keys(account)[0] !== 'undefined') {
+//       return $q.resolve(account);
+//     }
+
+//     var currentUser = AuthenticationService.getCurrentUser();
+
+//     if (currentUser.uid != 0) {
+
+//       UserResource
+//         .retrieve({uid: currentUser.uid})
+//         .success(function (data) {
+//           saveAccountData(data);
+//           defer.resolve(account);
+//         })
+//         .catch(function (error) {
+//           defer.reject(error);
+//         });
+
+//     }
+
+//     return defer.promise;
+//   }
+//   function saveAccountData(newAccount) {
+//     var preparedAccount = newAccount;
+//   //  preparedProfile.pictureUrl = (preparedProfile.picture) ? DrupalHelperService.getDrupalPath() + 'sites/default/files/pictures/' + preparedProfile.picture.filename : false;
+//     account = preparedAccount;
+//   }
+
+// };

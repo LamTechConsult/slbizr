@@ -289,7 +289,7 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       views: {
         'menu-myFriends': {
           templateUrl: 'app/templates/profile/my-friends.html',
-          controller: 'ProfileCtrl'
+          controller: 'AccountCtrl'
         }
       }
   })
