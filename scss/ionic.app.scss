@@ -186,12 +186,23 @@ img {
 }
 
 /*--- material item design --*/
-.material .item {
-  border: none;
-  text-align: left;
-  border-bottom: solid 1px $grey;
-  background-color: transparent;
-  padding-left: 0;
+.material {
+  .item {
+    border: none;
+    text-align: left;
+    background-color: transparent;
+    padding: 0;
+    margin: 6px 0 5px 0;
+    &.item-input input, &.item-input textarea {
+	  border-bottom: solid 1px $grey;
+	  &:focus {
+	    border-color: #0099cc;
+	  }
+    }
+    &.item-input input {
+	  height: 40px;
+    }
+  }
 }
 
 /*---- avatar top ---*/

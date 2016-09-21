@@ -9966,9 +9966,15 @@ img {
 .material .item {
   border: none;
   text-align: left;
-  border-bottom: solid 1px #ccc;
   background-color: transparent;
-  padding-left: 0; }
+  padding: 0;
+  margin: 6px 0 5px 0; }
+  .material .item.item-input input, .material .item.item-input textarea {
+    border-bottom: solid 1px #ccc; }
+    .material .item.item-input input:focus, .material .item.item-input textarea:focus {
+      border-color: #0099cc; }
+  .material .item.item-input input {
+    height: 40px; }
 
 /*---- avatar top ---*/
 .item-avatar.avatar-top {
