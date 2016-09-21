@@ -168,6 +168,15 @@ img {
   top: 10px;
   bottom: 10px;
 }
+.bar-header {
+  .item-input-wrapper {
+    background-color: #fff;
+    .icon {
+	  padding-right: 0;
+	  font-size: 20px;
+    }
+  }
+}
 .button-img {
   border-color: transparent;
   background: none;
