@@ -51,7 +51,7 @@ SLBizReviews.controller('otherCtrl', function($scope,$state,$ionicHistory,$rootS
   });
 });
 
-SLBizReviews.controller('AccountCtrl', function($scope,$stateParams,$state,$rootScope,myAccountService) {
+SLBizReviews.controller('AccountCtrl', function($scope,AuthenticationService,$ionicHistory,$stateParams,$state,$rootScope,myAccountService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -97,6 +97,15 @@ SLBizReviews.controller('AccountCtrl', function($scope,$stateParams,$state,$root
   $scope.showProfile = function () {
     $state.go('app.viewProfile');
   }
+
+  $scope.doLogout = function () {
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+    AuthenticationService.logout().then(function (data) {
+      //$localStorage.isLogedin = false;
+      $state.go('splash', {}, {reload: true});
+      $ionicHistory.clearHistory();
+    }).finally(function () {$rootScope.$broadcast('loading:hide');});
+  }
 });
 
 SLBizReviews.controller('subProfileCtrl', function($scope,$state,$rootScope,$localStorage,ProfileService) {
@@ -114,19 +123,36 @@ SLBizReviews.controller('ProfileCtrl', function($scope,$rootScope,ProfileService
   $scope.profileUpdate = {};
 
   $rootScope.$on('profile:changed', function(e,data) {
-    ProfileService.getProfile().then(function (profile) {
-         $rootScope.profile = profile;
+    ProfileService.getUpdatedProfile().then(function (updateProfile) {
+            $rootScope.profile = updateProfile;
+            $rootScope.currentUser = updateProfile;
+    }).finally(function () {
+       $rootScope.$broadcast('loading:hide');
     });
   });
 
   $scope.$on("$ionicView.enter", function(event, data){
      ProfileService.getProfile().then(function (profile) {
           $rootScope.profile = profile;
-          $scope.profileUpdate = {"uid": profile.uid,
-                                  "field_user_nick_name":{"und":[{"value": profile.field_user_nick_name.und[0].value}]},
-                                  "field_mobile_user_telephone":{"und":[{"value": profile.field_mobile_user_telephone.und[0].value}]},
-                                  //"field_user_about_me":{"und":[{"value": profile.field_user_about_me.und[0].value}]}
-                                };
+          $scope.profileUpdate = {"uid": profile.uid};
+          if(!angular.isArray(profile.field_user_nick_name)){
+            $scope.profileUpdate.field_user_nick_name = {"und":[{"value":profile.field_user_nick_name.und[0].value}]};
+          }
+          if(angular.isArray(profile.field_user_nick_name)){
+            $scope.profileUpdate.field_user_nick_name = {"und":[{"value":''}]};
+          }
+          if(!angular.isArray(profile.field_mobile_user_telephone)){
+            $scope.profileUpdate.field_mobile_user_telephone = {"und":[{"value": profile.field_mobile_user_telephone.und[0].value}]};
+          }
+          if(angular.isArray(profile.field_mobile_user_telephone)){
+            $scope.profileUpdate.field_mobile_user_telephone = {"und":[{"value":''}]};
+          }
+          if(!angular.isArray(profile.field_user_about_me)){
+            $scope.profileUpdate.field_user_about_me = {"und":[{"value":profile.field_user_about_me.und[0].value}]};
+          }
+          if(angular.isArray(profile.field_user_about_me)){
+            $scope.profileUpdate.field_user_about_me = {"und":[{"value":""}]};
+          }
       }) .finally(function () { });
   });
 
@@ -137,21 +163,9 @@ SLBizReviews.controller('ProfileCtrl', function($scope,$rootScope,ProfileService
   $scope.saveProfile = function (editProfileForm) {
     $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
     ProfileService.updateProfile($scope.profileUpdate).then(function (profile) {
-          $rootScope.$broadcast('profile:changed');
-          //console.log(profile);
-    }).finally(function (findata) {
-       $rootScope.$broadcast('loading:hide');
+        $rootScope.$broadcast('profile:changed');
     });
     $state.go('app.viewProfile');
-  }
-
-  $scope.doLogout = function () {
-    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-    AuthenticationService.logout().then(function (data) {
-      //$localStorage.isLogedin = false;
-      $state.go('splash', {}, {reload: true});
-      $ionicHistory.clearHistory();
-    }).finally(function () {$rootScope.$broadcast('loading:hide');});
   }
 });
 

@@ -9,12 +9,35 @@ function ProfileService($q, $http, $filter, $rootScope,DrupalApiConstant, UserRe
   //profile service object
   var profileService = {
     getProfile: getProfile,
+    getUpdatedProfile: getUpdatedProfile,
     updateProfile: updateProfile,
     changePassword: changePassword
   };
 
   return profileService;
   /////////////////////////////////////////////////////////////
+
+  function getUpdatedProfile() {
+   var defer = $q.defer();
+   var currentUser = AuthenticationService.getCurrentUser();
+
+    if (currentUser.uid != 0) {
+
+      UserResource
+        .retrieve({uid: currentUser.uid})
+        .success(function (data) {
+          saveProfileData(data);
+          defer.resolve(profile);
+        })
+        .catch(function (error) {
+          defer.reject(error);
+        });
+
+    }
+
+    return defer.promise;
+  }
+
 
   function getProfile() {
 
