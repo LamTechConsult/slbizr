@@ -9881,8 +9881,17 @@ img {
 .padding-l2x {
   padding-left: 20px; }
 
+.border-top {
+  border-top: 1px solid #ddd; }
+
 .border-bottom {
   border-bottom: 1px solid #ddd; }
+
+.border-left {
+  border-left: 1px solid #ddd; }
+
+.border-right {
+  border-right: 1px solid #ddd; }
 
 .col-divider-margin {
   margin-right: 5%; }
@@ -9924,6 +9933,8 @@ img {
   border-radius: 3px;
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
   min-height: 42px; }
+  .button ~ .item-input-wrapper {
+    margin-left: 10px; }
 
 .bar .button, .bar button {
   padding-left: 30px;
@@ -9944,6 +9955,53 @@ img {
   box-shadow: none;
   color: transparent;
   max-height: none; }
+
+/*--- material item design --*/
+.material .item {
+  border: none;
+  text-align: left;
+  border-bottom: solid 1px #ccc;
+  background-color: transparent;
+  padding-left: 0; }
+
+/*---- avatar top ---*/
+.item-avatar.avatar-top {
+  padding-left: 0; }
+  .item-avatar.avatar-top > img:first-child {
+    position: relative;
+    top: 0;
+    left: 0;
+    max-width: 50px;
+    max-height: 50px; }
+
+/*----- circle icon ---*/
+.icon-circle.icon::before {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  border-radius: 50%;
+  border: 1px solid #ebebeb;
+  color: #444;
+  overflow: hidden; }
+
+/*--- icon size---*/
+.icon.icon-small {
+  font-size: 20px; }
+  .icon.icon-small.icon::before {
+    width: 20px; }
+
+.icon.icon-small-x {
+  font-size: 15px; }
+  .icon.icon-small-x.icon::before {
+    width: 18px;
+    padding: 1px; }
+
+/*--- icon shadow ---*/
+.icon.icon-shadow.icon::before {
+  border: 1px solid #444;
+  border-radius: 3px;
+  box-shadow: 0px 3px 0px #444;
+  color: #444; }
 
 /*--- loading screen ---*/
 .backdrop {
@@ -9993,55 +10051,34 @@ img {
 
 @media (orientation: landscape) {
   .slider .title, .splash-header {
-    margin-bottom: 20px; }
+    margin-bottom: 10px; }
   .splash-footer {
     margin-top: 20px; } }
 
-/*--- material item design --*/
-.material .item {
+/*--- my-friends ----*/
+.my-friends .item-avatar h2 {
+  line-height: 2.2em; }
+
+/*--- slr list design --*/
+.slr-list .item {
   border: none;
-  text-align: left;
-  border-bottom: solid 1px #ccc;
-  background-color: transparent;
-  padding-left: 0; }
-
-/*---- avatar top ---*/
-.item-avatar.avatar-top {
-  padding-left: 0; }
-  .item-avatar.avatar-top > img:first-child {
-    position: relative;
-    top: 0;
-    left: 0;
-    max-width: 50px;
-    max-height: 50px; }
-
-/*----- circle icon ---*/
-.icon-circle.icon::before {
-  width: 40px;
-  height: 40px;
-  font-size: 40px;
-  border-radius: 50%;
-  border: 1px solid #ebebeb;
-  color: #444;
-  overflow: hidden; }
-
-/*--- item icon out ---*/
-.item-icon-out {
-  border-left: none;
-  margin-left: 60px;
-  padding-left: 5px;
-  overflow: visible; }
-  .item-icon-out .icon {
-    margin-left: -60px; }
-  .item-icon-out.last {
+  margin: 0;
+  padding: 0; }
+  .slr-list .item .slr-item-text {
+    padding: 16px 5px;
+    border-bottom: 1px solid #ddd; }
+  .slr-list .item.item-icon-left .slr-item-text {
+    margin-left: 54px; }
+  .slr-list .item.item-icon-right .slr-item-text {
+    padding-right: 54px; }
+  .slr-list .item.item-avatar {
+    min-height: auto; }
+    .slr-list .item.item-avatar .slr-item-text {
+      margin-left: 72px;
+      min-height: 72px; }
+  .slr-list .item.item-input .slr-item-text {
+    padding: 6px 0 5px 16px; }
+  .slr-list .item.first .slr-item-text {
+    border-top: none; }
+  .slr-list .item.last .slr-item-text {
     border-bottom: none; }
-
-/*--- go arrow ---*/
-.icon.go-arrow {
-  font-size: 20px; }
-  .icon.go-arrow.icon::before {
-    width: 20px;
-    border: 1px solid #444;
-    border-radius: 3px;
-    box-shadow: 0px 3px 0px #444;
-    color: #444; }

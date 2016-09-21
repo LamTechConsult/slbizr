@@ -15,16 +15,340 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
+// My custom color.
+$positive:	#4f85d9 !default;
+$calm:		#2196f3 !default;
+$balanced:	#86dc00 !default;
+$blue:		#2b59a2 !default;
+$grey:		#ccc !default;
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
-.bellow-button{
-  position:absolute;
-  width:100%;
-  bottom:15px;
-  padding-left:10px;
-  padding-right:10px;
+a {
+  text-decoration: none;
+  color: $calm;
 }
+img {
+  max-width: 100%;
+  height: auto;
+  width: auto\9; /* ie8 */
+}
+.padding2x {
+  padding: 20px;
+}
+.padding3x {
+  padding: 30px;
+}
+.padding4x {
+  padding: 40px;
+}
+.padding5x {
+  padding: 50px;
+}
+.padding-h2x {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.padding-v2x {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.padding-h3x {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.padding-v3x {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.padding-h4x {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.padding-v4x {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.padding-h5x {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+.padding-v5x {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.padding-t2x {
+  padding-top: 20px;
+}
+.padding-r2x {
+  padding-right: 20px;
+}
+.padding-b2x {
+  padding-bottom: 20px;
+}
+.padding-l2x {
+  padding-left: 20px;
+}
+.border-top {
+  border-top: 1px solid #ddd;
+}
+.border-bottom {
+  border-bottom: 1px solid #ddd;
+}
+.border-left {
+  border-left: 1px solid #ddd;
+}
+.border-right {
+  border-right: 1px solid #ddd;
+}
+.col-divider-margin {
+  margin-right: 5%;
+}
+.dot-divider {
+  border: 0;
+  height: 6px;
+  margin: 40px 10%;
+  background-image: url("../assets/img/dot.png");
+  background-position: left center;
+  background-size: 6px;
+  text-align: center;
+  position: relative;
+  clear: both;
+  span {
+    text-align: center;
+    background: $light;
+    color: $dark;
+    display: inline-block;
+    padding: 0 5px;
+    height: 50px;
+    line-height: 50px;
+    position: absolute;
+    font-size: 18px;
+    margin: 0 auto 0 -25px;
+    top: -25px;
+    left: 50%;
+    z-index: 1;
+  }
+}
+@media (orientation:portrait) {
+  .dot-divider {
+    margin-top: 20px;
+  }
+  .signup .dot-divider {
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
+}
+
+/*-- button customization --*/
+.button {
+  border-radius: 3px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
+  min-height: 42px;
+  ~ .item-input-wrapper {
+    margin-left: 10px;
+  }
+}
+.bar {
+  .button, button {
+	padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+.bar-footer {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 54px;
+}
+.bar-footer > .button + .button:last-child {
+  top: 10px;
+  bottom: 10px;
+}
+.button-img {
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+  color: transparent;
+  max-height: none;
+}
+
+/*--- material item design --*/
+.material .item {
+  border: none;
+  text-align: left;
+  border-bottom: solid 1px $grey;
+  background-color: transparent;
+  padding-left: 0;
+}
+
+/*---- avatar top ---*/
+.item-avatar.avatar-top{
+  padding-left: 0;
+  > img:first-child {
+    position: relative;
+    top: 0;
+    left: 0;
+    max-width: 50px;
+    max-height: 50px;
+  }
+}
+
+/*----- circle icon ---*/
+.icon-circle {
+  &.icon::before {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+    border-radius: 50%;
+    border: 1px solid #ebebeb;
+    color: $dark;
+    overflow: hidden;
+  }
+}
+
+/*--- icon size---*/
+.icon.icon-small {
+  font-size: 20px;
+  &.icon::before {
+	width: 20px;
+  }
+}
+.icon.icon-small-x {
+  font-size: 15px;
+  &.icon::before {
+	width: 18px;
+	padding: 1px;
+  }
+}
+
+/*--- icon shadow ---*/
+.icon.icon-shadow {
+  &.icon::before {
+    border: 1px solid $dark;
+	border-radius: 3px;
+	box-shadow: 0px 3px 0px $dark;
+	color: $dark;
+  }
+}
+
+/*--- loading screen ---*/
+.backdrop {
+  background-color: $positive;
+}
+.loading-container {
+  .loading {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-color: #e2e2e2;
+    color: $positive;
+    background-image: url("../assets/img/splash_logo.png");
+    background-repeat: no-repeat;
+    background-position: center 45px;
+    background-size: 150px;
+    text-overflow: ellipsis;
+    padding: 120px 20px 20px 20px;
+    line-height: 1em;
+    p {
+	  font-size: 14px;
+      margin-top: -5px; 
+    }
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+/*--- slider ---*/
+.slider {
+  background-color: $blue;
+  height: 100%;
+  color: $light;
+}
+.slider .title {
+  color: $light;
+  margin-bottom: 40px;
+}
+.splash-header {
+  margin-bottom: 40px;
+}
+.splash-footer {
+  margin-top: 40px;
+}
+.slider-pager  {
+  .slider-pager-page {
+    color: $light;
+    opacity: 0.8;
+    &.active {
+      color: $balanced;
+    }
+  }
+}
+@media (orientation:landscape) {
+  .slider .title, .splash-header {
+    margin-bottom: 10px;
+  }
+  .splash-footer {
+    margin-top: 20px;
+  }
+}
+
+/*--- my-friends ----*/
+.my-friends {
+  .item-avatar {
+    h2 {
+	  line-height: 2.2em;
+    }
+  }
+}
+
+/*--- slr list design --*/
+.slr-list {
+  .item {
+    border: none;
+    margin: 0;
+    padding: 0;
+    .slr-item-text {
+	  padding: 16px 5px;
+	  border-bottom: 1px solid #ddd;
+    }
+    &.item-icon-left {
+	  .slr-item-text {
+	    margin-left: ceil( ($item-padding * 3) + ($item-padding / 3) );
+	  }
+	}
+	&.item-icon-right {
+	  .slr-item-text {
+	    padding-right: ceil( ($item-padding * 3) + ($item-padding / 3) );
+	  }
+	}
+	&.item-avatar {
+	  min-height: auto;
+	  .slr-item-text {
+	    margin-left: $item-avatar-width + ($item-padding * 2);
+	    min-height: $item-avatar-width + ($item-padding * 2);
+	  }
+	}
+	&.item-input {
+	  .slr-item-text {
+	    padding: 6px 0 5px 16px;
+	  }
+	}
+    &.first {
+	  .slr-item-text {
+        border-top: none;
+      }
+    }
+    &.last {
+	  .slr-item-text {
+        border-bottom: none;
+      }
+    }
+  }
+}
+

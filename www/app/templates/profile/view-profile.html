@@ -13,34 +13,41 @@
       </div>
     </div>
 
-    <div class="list border-bottom">
-      <div class="item item-avatar avatar-top text-center">
-	     <img ng-if="currentUser.pictureUrl" ng-src="{{currentUser.pictureUrl}}">
+    <div class="item item-avatar avatar-top text-center">
+	  <img ng-if="currentUser.pictureUrl" ng-src="{{currentUser.pictureUrl}}">
       <img ng-if="!currentUser.pictureUrl" src="assets/img/user/default-avatar.png">
-		<h2 ng-if="currentUser.field_user_nick_name">{{currentUser.field_user_nick_name.und[0].value}}</h2>
-		<h2 ng-if="!currentUser.field_user_nick_name">{{currentUser.name}}</h2>
-		<p>{{currentUser.mail}}</p>
-  	  </div>
+	  <h2 ng-if="currentUser.field_user_nick_name">{{currentUser.field_user_nick_name.und[0].value}}</h2>
+	  <h2 ng-if="!currentUser.field_user_nick_name">{{currentUser.name}}</h2>
+  	</div>
 
-      <div class="item item-icon-left item-icon-out">
+    <div class="list slr-list border-bottom">
+      <div class="item item-icon-left">
         <i class="icon ion-person"></i>
-        <h2>Full Name</h2>
-        <p>{{currentUser.field_user_nick_name.und[0].value}}</p>
+        <div class="slr-item-text">
+	      <h2>Full Name</h2>
+          <p>{{currentUser.field_user_nick_name.und[0].value}}</p>
+        </div>
       </div>
-      <div class="item item-icon-left item-icon-out">
+      <div class="item item-icon-left">
         <i class="icon ion-android-phone-portrait"></i>
-        <h2>Phone</h2>
-        <p>{{currentUser.field_mobile_user_telephone.und[0].value}}</p>
+        <div class="slr-item-text">
+	      <h2>Phone</h2>
+          <p>{{currentUser.field_mobile_user_telephone.und[0].value}}</p>
+        </div>
       </div>
-      <div class="item item-icon-left item-icon-out">
+      <div class="item item-icon-left">
         <i class="icon ion-email"></i>
-        <h2>Email</h2>
-        <p>{{currentUser.mail}}</p>
+        <div class="slr-item-text">
+	      <h2>Email</h2>
+          <p>{{currentUser.mail}}</p>
+        </div>
       </div>
-      <div class="item item-icon-left item-icon-out last">
+      <div class="item item-icon-left last">
         <i class="icon ion-document-text"></i>
-        <h2>About me</h2>
-        <p>{{currentUser.field_user_about_me.und[0].value}}</p>
+        <div class="slr-item-text">
+	      <h2>About me</h2>
+          <p>{{currentUser.field_user_about_me.und[0].value}}</p>
+        </div>
       </div>
     </div>
     <div class="padding3x">
