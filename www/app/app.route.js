@@ -321,7 +321,15 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       }
   })
 
-
+    .state('app.myFriendsDetails',{
+      url:'/myFriendsDetails/:fid',
+      views: {
+        'menu-myFriendsDetails': {
+          templateUrl: 'app/templates/profile/my-reviewer-profile.html',
+          controller: 'AccountCtrl'
+        }
+      }
+  })
 
 
   // if none of the above states are matched, use this as the fallback

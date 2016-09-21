@@ -51,7 +51,7 @@ SLBizReviews.controller('otherCtrl', function($scope,$state,$ionicHistory,$rootS
   });
 });
 
-SLBizReviews.controller('AccountCtrl', function($scope,$state,$rootScope,myAccountService) {
+SLBizReviews.controller('AccountCtrl', function($scope,$stateParams,$state,$rootScope,myAccountService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -90,6 +90,9 @@ SLBizReviews.controller('AccountCtrl', function($scope,$state,$rootScope,myAccou
       $rootScope.bookmarks = data.nodes;
       console.log(data);
     }).finally(function () { $rootScope.$broadcast('loading:hide');});
+  }
+  $scope.showMyDetails = function (fid) {
+    console.log();
   }
   $scope.showProfile = function () {
     $state.go('app.viewProfile');
@@ -176,7 +179,12 @@ SLBizReviews.controller('LoginCtrl',function($scope,$rootScope,AuthService,$ioni
           $rootScope.currentUser = data.user;
           $localStorage.isLogedin = true;
           $rootScope.$broadcast('loading:hide');
-          $state.go('location');
+          if($localStorage.isLocationAllowed){
+            $state.go('app.nearBy', {}, {reload: true});
+          }else{
+            $state.go('location');
+          }
+          
         },
         //error
         function (errorResult) {
@@ -207,6 +215,7 @@ SLBizReviews.controller('LoginCtrl',function($scope,$rootScope,AuthService,$ioni
       confirmPopup.then(function(res) {
         if(res) {
             $state.go('app.nearBy', {}, {reload: true});
+            $localStorage.isLocationAllowed = true;
          } else {
             console.log('Not sure!');
          }

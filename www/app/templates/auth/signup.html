@@ -15,19 +15,19 @@
         <form name="signupForm" ng-submit="doSignup(signupForm)" novalidate>
           <div class="list material">
             <label class="item item-input">
-              <input type="text" ng-model="user.name" placeholder="Username" ng-focus="scrollDown()" autocapitalize="off" required>
+              <input name="name" type="text" ng-model="user.name" placeholder="Username" ng-focus="scrollDown()" autocapitalize="off" required>
             </label>
             <label class="item item-input">
-              <input type="password" ng-model="user.pass" placeholder="Password" required>
+              <input name="pass" type="password" ng-model="user.pass" ng-minlength="6" placeholder="Password" required>
             </label>
             <label class="item item-input item-no-border">
-              <input type="text" ng-model="user.field_user_nick_name.und[0].value" placeholder="Nick Name" ng-focus="scrollDown()" autocapitalize="off" >
+              <input name="nickname"  type="text" ng-model="user.field_user_nick_name.und[0].value" placeholder="Nick Name" ng-focus="scrollDown()" autocapitalize="off" >
             </label>
             <label class="item item-input item-no-border">
-              <input type="email" ng-model="user.mail" placeholder="Email" ng-focus="scrollDown()" autocapitalize="off" required>
+              <input name="email"  type="email" ng-model="user.mail" placeholder="Email" ng-focus="scrollDown()" autocapitalize="off" required>
             </label>
             <label class="item item-input item-no-border">
-              <input type="number" ng-model="user.field_mobile_user_telephone.und[0].value" placeholder="Phone Number" ng-focus="scrollDown()" >
+              <input name="phone"  type="number" ng-model="user.field_mobile_user_telephone.und[0].value" placeholder="Phone Number" ng-minlength="10" ng-focus="scrollDown()" required >
             </label>
           </div>
     	  <button class="button-img" on-tap="doSignup(signupForm)"><img src="assets/img/signup_round.png" alt="Sign Up" /></button>

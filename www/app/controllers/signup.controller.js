@@ -8,13 +8,15 @@ SLBizReviews.controller('SignupCtrl',function ($scope,$state,$ionicPopup,$rootSc
     field_mobile_user_telephone: {und: [{value:''}]},
     field_user_nick_name: {und: [{value: ''}]}
     };
-
+ 
   $rootScope.doSignup = function (signupForm) {
     $scope.serverErrors = [];
     console.log(signupForm);
     if (signupForm.$valid) {
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Connecting...</p>"}});
       console.log($scope.user);
+      $rootScope.phonenumber = $scope.user.field_mobile_user_telephone.und[0].value;
+
       UserResource.register($scope.user).then(function (data) {
           console.log(data);
           $localStorage.isRegistered = true;
@@ -57,14 +59,24 @@ SLBizReviews.controller('SignupCtrl',function ($scope,$state,$ionicPopup,$rootSc
         })
       .finally(function () {$rootScope.$broadcast('loading:hide');} );
     }else{
-      $scope.serverErrors.push('Username, Password and Email is required');
+      if(signupForm.name.$invalid){
+        $scope.serverErrors.push('Username is required');
+      }
+      else if(signupForm.pass.$invalid){
+        $scope.serverErrors.push('The password is too short: it must be at least 6 characters');
+      }
+      else if(signupForm.email.$invalid){
+        $scope.serverErrors.push('Invalid email address');
+      }
+      else if(signupForm.phone.$error.minlength || signupForm.phone.$error.required){
+        $scope.serverErrors.push('Invalid phone number: it must be at least 10 digit');
+      }      
     }
-
   }
  $scope.showPoup = function () {
    var alertPopup = $ionicPopup.alert({
         title:'<b>Thank You for Signing Up</b>',
-        template: "A text message with your PIN has been sent to 7827408745.<br>Please check your SMS Message and click below to verify your phone number",
+        template: "A text message with your PIN has been sent to {{phonenumber}}.<br>Please check your SMS Message and click below to verify your phone number",
         okText: 'VERIFY YOU PHONE NUMBER',
         okType:'button button-clear button-positive'
      });
@@ -84,13 +96,14 @@ SLBizReviews.controller('SignupCtrl',function ($scope,$state,$ionicPopup,$rootSc
          okType:'button button-clear button-positive'
       });
       alertPopup.then(function(res) {
+          $localStorage.isPhoneVerified =true;
           $state.go('location');
       });
   }
   $scope.requestNewPin = function () {
     var alertPopup = $ionicPopup.alert({
          title:'<b>Phone number VERIFIED</b>',
-         template: "New PIN has been sent to:</br> xx-xxx-xx-43",
+         template: "New PIN has been sent to:</br> {{phonenumber}}",
          okText: 'HIDE THIS MESSAGE',
          okType:'button button-clear button-positive'
       });
