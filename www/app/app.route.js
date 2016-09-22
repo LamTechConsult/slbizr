@@ -102,7 +102,7 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
     views: {
       'tab-nearby': {
         templateUrl: 'app/templates/others/nearby.html',
-        controller: 'otherCtrl'
+        controller: 'homeCtrl'
       }
     },
     data: {
@@ -320,17 +320,24 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
         }
       }
   })
-
-    .state('app.myFriendsDetails',{
-      url:'/myFriendsDetails/:fid',
-      views: {
-        'menu-myFriendsDetails': {
-          templateUrl: 'app/templates/profile/my-reviewer-profile.html',
-          controller: 'AccountCtrl'
-        }
+  .state('app.myFriendsDetails',{
+    url:'/myFriendsDetails/:fid',
+    views: {
+      'menu-myFriendsDetails': {
+        templateUrl: 'app/templates/profile/my-reviewer-profile.html',
+        controller: 'AccountCtrl'
       }
+    }
   })
-
+  .state('app.businessDetails',{
+    url:'/businessDetails/:bid',
+    views: {
+      'menu-businessDetails': {
+        templateUrl: 'app/templates/biz/business.html',
+        controller: 'bizCtrl'
+      }
+    }
+  })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('splash');

@@ -45,5 +45,17 @@ SLBizReviews.factory('DataService', function($http,DrupalApiConstant) {
     return $http.get(url,config);
   }
 
+  //fetBusinesses
+  dataService.fetchBusinesses = function() {
+    url = basePath + "slbiz/app-business-home.json";
+    return $http.get(url,config);
+  }
+  // //fetchMyBookmarks
+  // dataService.fetchBusinessesById = function(bid) {
+  //   url = basePath + "slbiz/"+bid+"/app-business-home.json";
+  //   return $http.get(url,config);
+  // }
+
+
   return dataService;
 });

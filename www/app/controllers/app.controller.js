@@ -6,6 +6,61 @@ SLBizReviews.controller('MainCtrl', function($scope,$localStorage,$rootScope,$st
   $rootScope.isLogedin = 'false';
 });
 
+
+SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,ProfileService,businessesService) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+     businessesService.getBusinesses()
+        .then(function (biz) {
+          console.log($stateParams.bid);
+          for (a=0;a<biz.nodes.length;a++){
+            if(biz.nodes[a].node.nid === $stateParams.bid){
+              $rootScope.businesses = biz.nodes[a].node;
+              console.log($rootScope.businesses);
+              break;
+            }
+          }
+      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+  });
+
+});
+
+SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$rootScope,$localStorage,ProfileService,businessesService) {
+  
+  $scope.$on("$ionicView.enter", function(event, data){
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+      $ionicHistory.clearHistory(); //hide the back button.
+
+      ProfileService.getProfile()
+        .then(function (profile) {
+          $rootScope.currentUser = profile;
+          console.log($rootScope.currentUser);
+      }) .finally(function () {});
+
+      businessesService.getBusinesses()
+        .then(function (biz) {
+          $rootScope.displayBusinesses = biz.nodes;
+          console.log($rootScope.displayBusinesses);
+      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+  });
+
+  $scope.getTimeFormat = function (argument) {
+    var val = argument.split('-');
+    return val[1]+'-'+val[2];
+  }
+  $scope.getStatus = function (argument) {
+    var val = argument.split('-');
+    //var status = val[0].split(' ');
+    return val[0];
+  }
+  $scope.businessDetails = function (bid) {
+    $state.go('app.businessDetails',{bid:bid});
+  }
+});
+
 SLBizReviews.controller('SplashCtrl',function($rootScope,$scope,$state,$window,$ionicSlideBoxDelegate){
   $scope.signinClick = function () {
     $state.go('login');

@@ -1,0 +1,143 @@
+<ion-view view-title="">
+   <ion-nav-bar class="bar-header bar-positive">
+    <ion-nav-back-button side="left">Back </ion-nav-back-button>
+    <div class="logo padding-t2x"><img src="assets/img/splash_logo_small.png"/></div>
+  </ion-nav-bar>
+  <ion-content>
+    <div ng-repeat="bs in businesses" style="padding:5px;margin:0;width:100%;">
+    	<div id="wrapper">
+    		<div style="background-image:url('{{bs.image.src}}');height:130px;">
+    			<div style="font-size:16px;font-weight:bold;color:#FFFFFF;background-color:#000000;opacity:0.75;padding:5px;">{{bs.title}}</div>
+    			</div>
+    		<div id="over_map">
+				<div style="font-size:14px;font-weight:bold;color:#000000;width:100%;padding:10px;background-color:#FFFFFF;opacity:0.8;">
+	                <span ng-repeat="x in bs.starcount">
+					   <img ng-src="img/{{bs.starimage[$index]}}" width="15px" height="15px" />
+					</span>
+					&nbsp;{{bs.reviewcount}} Reviews
+				</div>
+    		</div>
+            <div id="right_map">
+                <a href ng-click="editBusinessClick()">
+                    <img ng-src="img/write-a-review-icon.png" alt="Edit business" width="60px" />
+                </a>
+            </div>
+    	</div>
+   		<div class="clear:both;"></div>
+        <div id="wrapper" ng-show="bs.geocode_lat!='' && bs.geocode_lat!=null">
+		   	<div id="map" style="height:100px;"></div>
+		</div>
+		<div class="button-bar">
+  			<a class="button button-small button-outline button-positive" ng-click="writeReviewClick()"><i class="icon ion-ios-star-half"></i> Write Review</a>
+  			<a class="button button-small button-outline button-positive" ng-click="claimBusinessClick()"><i class="icon ion-clipboard"></i> Claim Business</a>
+		</div>
+        <div style="clear:both;"></div>
+        <div style="margin-top:10px;">
+            <div class="list">
+                <a class="item item-icon-left" href="#">
+		          <i class="icon ion-speakerphone"></i>
+			    {{bs.hours}}
+			    </a>
+		        <div class="item item-icon-left item-icon-right" ng-click="addressClick()" style="color:#000000;">
+                    <i class="icon ion-ios-home"></i>
+				    {{bs.street}},&nbsp;{{bs.city}}
+		            <p>&nbsp;{{bs.distance}}&nbsp;</p>
+			  		<i class="icon ion-ios-navigate-outline"></i>
+                </div>
+                <a class="item item-icon-left item-icon-right" href="tel://{{bs.phone}}">
+				    <i class="icon ion-chatbubble-working"></i>
+				    {{bs.phone}}
+					<i class="icon ion-ios-telephone-outline"></i>
+				</a>
+                <a class="item item-icon-left item-icon-right" href="mailto://{{bs.email}}">
+				    <i class="icon ion-email"></i>
+				    {{bs.email}}
+				    <i class="icon ion-ios-paperplane-outline"></i>
+				</a>
+
+				<!--<a class="item item-icon-left item-icon-right" target='' href ng-click="openWebsiteScreen('{{bs.website}}')">-->
+                <a class="item item-icon-left item-icon-right" target='' href ng-href="{{bs.website}}">
+				    <i class="icon ion-link"></i>
+				    {{bs.website}}
+					<i class="icon ion-ios-world-outline"></i>
+				</a>
+				<a class="item item-icon-left" target='' href ng-click="moreBusinessInfoClick(bs)">
+                    <i class="icon ion-more"></i>
+                    More details
+				</a>
+                <div ng-show="showMoreDetails" style="padding:0px;">
+                    <div class="list">
+                        <a class="item item-icon-left" target='' href>
+                           <i class="icon ion-ios-paper-outline" style="font-size:20px;"></i>
+                           <b>Category:</b>&nbsp;{{bs.category}}
+                        </a>
+                        <a class="item item-icon-left" target='' href>
+                            <i class="icon ion-android-archive" style="font-size:20px;"></i>
+                            <b>Chiefdom:</b>&nbsp;{{bs.chiefdom}}
+                        </a>
+                        <a class="item item-icon-left" target='' href>
+                            <i class="icon ion-ios-recording-outline" style="font-size:20px;"></i>
+                            <b>Keywords:</b>&nbsp;{{bs.keywords}}
+                        </a>
+                        <a class="item item-icon-left" target='' href>
+                            <i class="icon ion-android-attach" style="font-size:20px;"></i>
+                            <b>Description:</b>&nbsp;{{bs.description}}
+                        </a>
+                        <a style="text-align:center;padding:10px;" class="item item-icon-center" target='' href ng-click="moreBusinessInfoClick(bs)">
+                            <i class="icon ion-chevron-up" style="font-size:24px;"></i>
+                        </a>
+                    </div>
+                    <!--<div>
+                        <b>Category:</b>&nbsp;{{bs.category}}
+                    </div>
+                    <div>
+                        <b>Chiefdom:</b>&nbsp;{{bs.chiefdom}}
+                    </div>
+                    <div>
+                        <b>Keywords:</b>&nbsp;{{bs.keywords}}
+                    </div>
+                    <div>
+                        <b>Description:</b>&nbsp;{{bs.description}}
+                    </div>-->
+                    <!--<div ng-click="moreBusinessInfoClick(bs)">
+                        <a href>Close</a>
+                    </div>-->
+                </div>
+			</div>
+        </div>
+   	</div>
+   	<div style="text-align:center;padding:15px;">
+   		<span>
+   			<b>Recommended Reviews</b>
+   		</span>
+   	</div>
+   	<div>
+   	<ion-list>
+   		<ion-item ng-repeat="bs in reviews" ng-click="reviewClicked(bs)" style="padding:5px;">
+        	<div>
+    			<div style="float:left;">
+    				<img ng-src="{{bs.picture.src}}" alt="{{bs.picture.alt}}" width="40" height="40" />
+    			</div>
+    			<div style="font-size:14px;color:#000000;float:left;margin-left:15px;margin-top:3px;">
+                    <div>{{bs.subject}}</div>
+                    <div style="font-size:10px;">
+                        <span ng-repeat="x in bs.starcount">
+                        <!--<i class="icon icon ion-star" style="font-size:18px;color:#FF0000"></i>-->
+                        <img ng-src="img/{{bs.starimage[$index]}}" width="12px" height="12px" />
+                        </span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        2 months ago
+                    </div>
+                    <div>
+                    {{bs.realname}}
+                    </div>
+    	        </div>
+    	        <div style="float:right;margin-right:10px;">
+    		      <i class="icon ion-chevron-right icon-accessory"></i>
+    	        </div>
+    	        <div style="clear:both;"></div>
+            </div>
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
