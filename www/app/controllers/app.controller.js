@@ -12,20 +12,55 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
-    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-     businessesService.getBusinesses()
+
+    if($stateParams.bid){
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+      businessesService.getBusinesses()
         .then(function (biz) {
           console.log($stateParams.bid);
           for (a=0;a<biz.nodes.length;a++){
             if(biz.nodes[a].node.nid === $stateParams.bid){
-              $rootScope.businesses = biz.nodes[a].node;
-              console.log($rootScope.businesses);
+              $rootScope.businessesDetails = biz.nodes[a].node;
+              console.log($rootScope.businessesDetails);
               break;
             }
           }
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+    }
+     
   });
+  $scope.getTimeFormat = function (argument) {
+    var val = argument.split('-');
+    return val[1]+'-'+val[2];
+  }
+  $scope.getStatus = function (argument) {
+    var val = argument.split('-');
+    //var status = val[0].split(' ');
+    return val[0];
+  }
+  $scope.showMoreDetails = false;
+  $scope.showMoreBizDetail = function () {
+    return $scope.showMoreDetails = !$scope.showMoreDetails;
+  }
+  $scope.writeReviewClick = function () {
+    $state.go('app.writeReview');
+  }
+  //-------------------------
+  $scope.ratingsObject = {
+        iconOn : 'ion-ios-star',
+        iconOff : 'ion-ios-star-outline',
+        iconOnColor: 'rgb(200, 200, 100)',
+        iconOffColor:  'rgb(200, 100, 100)',
+        rating:  0,
+        minRating:0,
+        callback: function(rating) {
+          $scope.ratingsCallback(rating);
+        }
+      };
 
+      $scope.ratingsCallback = function(rating) {
+        console.log('Selected rating is : ', rating);
+      };
 });
 
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$rootScope,$localStorage,ProfileService,businessesService) {

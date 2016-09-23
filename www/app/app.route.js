@@ -338,7 +338,15 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       }
     }
   })
-
+  .state('app.writeReview',{
+    url:'/writeReview',
+    views: {
+      'menu-writeReview': {
+        templateUrl: 'app/templates/biz/write-review.html',
+        controller: 'bizCtrl'
+      }
+    }
+  })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('splash');
 });

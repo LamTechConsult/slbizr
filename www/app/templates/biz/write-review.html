@@ -1,0 +1,18 @@
+<ion-view view-title="Write a review">
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-back-button side="left">Back </ion-nav-back-button>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="saveWriteReview(writeReviewForm)">Done</button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+  <ion-content>
+    <div class="card" ng-if="serverErrors.lenght">
+      <div class="item item-text-wrap" ng-repeat="serverError in serverErrors">
+        {{serverError}}
+      </div>
+    </div>
+    <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+
+  </ion-content>
+</ion-view>

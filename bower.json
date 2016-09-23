@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "ngstorage": "^0.3.11",
-    "ng-cordova-oauth": "^0.2.10"
+    "ng-cordova-oauth": "^0.2.10",
+    "ionic-ratings": "^0.3.0"
   }
 }
