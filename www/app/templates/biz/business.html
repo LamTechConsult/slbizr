@@ -1,10 +1,11 @@
 <ion-view view-title="">
-   <ion-nav-bar class="bar-header bar-positive">
+  <ion-nav-bar class="bar-header bar-positive">
     <ion-nav-back-button side="left">Back </ion-nav-back-button>
-    <div class="logo padding-t2x"><img src="assets/img/splash_logo_small.png"/></div>
+    <ion-nav-title><img src="assets/img/splash_logo_small.png"/></ion-nav-title>
   </ion-nav-bar>
+
   <ion-content>
-    <div ng-repeat="bs in businesses" style="padding:5px;margin:0;width:100%;">
+    <div ng-repeat="bs in businesses">
     	<div id="wrapper">
     		<div style="background-image:url('{{bs.image.src}}');height:130px;">
     			<div style="font-size:16px;font-weight:bold;color:#FFFFFF;background-color:#000000;opacity:0.75;padding:5px;">{{bs.title}}</div>

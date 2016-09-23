@@ -8,35 +8,20 @@
     <button class="button button-clear" ng-click="getFilterView()">Filter</button>
   </ion-header-bar>
 
-  <ion-content class="padding">
-    <ion-item ng-repeat="bs in displayBusinesses" ng-click="businessDetails(bs.node.nid)" style="padding:5px;padding-right:5px;">
-      <div style="color:#000000;">
-        <div style="float:left;">
-          <img ng-src="{{bs.node.image.src}}" width="60px" alt="{{bs.node.image.alt}}" style="min-height:60px;max-height:80px;" />
+  <ion-content>
+    <ion-list class="biz-list">
+      <ion-item class="item-thumbnail-left item-icon-right" ng-repeat="bs in displayBusinesses" ng-click="businessDetails(bs.node.nid)">
+        <img ng-src="{{bs.node.image.src}}" alt="{{bs.node.image.alt}}">
+	    <h2>{{bs.node.title}}</h2>
+	    <div class="biz-ratings">
+          <span ng-repeat="x in bs.node.starcount"><img ng-src="assets/img/{{bs.node.starimage[$index]}}" width="15px" height="15px" /></span> {{bs.node.reviewcount}} Reviews
         </div>
-        <div style="float:left;margin-left:15px;width:50%;">
-          <div style="color:#000000;font-weight:bold;font-size:11px;width:100%;overflow:hidden;">{{bs.node.title}}</div>
-            <div style="font-size:10px;color:#797979;width:75%;overflow:hidden;">
-              <span ng-repeat="x in bs.node.starcount">
-                <!--<i class="icon icon ion-star" style="font-size:14px;color:#FF0000"></i>-->
-                  <img ng-src="assets/img/{{bs.node.starimage[$index]}}" width="15px" height="15px" />
-              </span>
-              &nbsp;&nbsp;
-              {{bs.node.reviewcount}}&nbsp;Reviews
-            </div>
-            <div style="color:#797979;font-size:10px;width:100%;overflow:hidden;">
-              <span>{{bs.node.category}}</span>
-            </div>
-            <div style="color:#797979;font-size:10px;width:100%;overflow:hidden;">
-              <span>Hours Today: {{getTimeFormat(bs.node.hours)}}</span>
-              <span class="{{getStatus(bs.node.hours)}}">{{getStatus(bs.node.hours)}}</span>
-            </div>
-        </div>
-        <div style="float:right;overflow:hidden;">
-          <span style="font-size:10px;color:#343434">{{bs.node.distance}} mi</span>
-        </div>
-        <div style="clear:both;"></div>
-      </div>
-    </ion-item> 
+        <div class="biz-category">{{bs.node.category}}</div>
+        <div class="biz-hours">Hours Today{{getTimeFormat(bs.node.hours)}}</div>
+        <span class="mi">{{bs.node.distance}} mi</span>
+        <span class="{{getStatus(bs.node.hours)}}">{{getStatus(bs.node.hours)}}</span>
+        <i class="icon ion-ios-arrow-right icon-small"></i>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>
