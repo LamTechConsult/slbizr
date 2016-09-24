@@ -21,6 +21,9 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
           for (a=0;a<biz.nodes.length;a++){
             if(biz.nodes[a].node.nid === $stateParams.bid){
               $rootScope.businessesDetails = biz.nodes[a].node;
+              businessesService.getBusinessesReview($stateParams.bid).then(function(review) {
+                $rootScope.businessesReview = review;
+              });
               console.log($rootScope.businessesDetails);
               break;
             }
@@ -30,10 +33,14 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
      
   });
   $scope.getTimeFormat = function (argument) {
+    if(!argument)
+      return;
     var val = argument.split('-');
     return val[1]+'-'+val[2];
   }
   $scope.getStatus = function (argument) {
+    if(!argument)
+      return;
     var val = argument.split('-');
     //var status = val[0].split(' ');
     return val[0];
@@ -52,7 +59,7 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
         iconOnColor: 'rgb(200, 200, 100)',
         iconOffColor:  'rgb(200, 100, 100)',
         rating:  0,
-        minRating:0,
+        minRating:1,
         callback: function(rating) {
           $scope.ratingsCallback(rating);
         }
@@ -141,7 +148,7 @@ SLBizReviews.controller('otherCtrl', function($scope,$state,$ionicHistory,$rootS
   });
 });
 
-SLBizReviews.controller('AccountCtrl', function($scope,AuthenticationService,$ionicHistory,$stateParams,$state,$rootScope,myAccountService) {
+SLBizReviews.controller('AccountCtrl', function($scope,AuthenticationService,$localStorage,$ionicHistory,$stateParams,$state,$rootScope,myAccountService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -191,7 +198,8 @@ SLBizReviews.controller('AccountCtrl', function($scope,AuthenticationService,$io
   $scope.doLogout = function () {
     $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
     AuthenticationService.logout().then(function (data) {
-      //$localStorage.isLogedin = false;
+      //$localStorage.$reset({isLogedin:false});
+      delete $localStorage.isLogedin;
       $state.go('splash', {}, {reload: true});
       $ionicHistory.clearHistory();
     }).finally(function () {$rootScope.$broadcast('loading:hide');});

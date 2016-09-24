@@ -15,12 +15,12 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
   // if (!$localStorageProvider.get('isRegistered')) {
   //   $urlRouterProvider.otherwise('splash');
   // }
-  // if (!$localStorageProvider.get('isLogedin')) {
-  //   $urlRouterProvider.otherwise('login');
-  // }
-  // else {
-  //   $urlRouterProvider.otherwise('app/nearby');
-  // }
+  if (!$localStorageProvider.get('isLogedin')) {
+    $urlRouterProvider.otherwise('splash');
+  }
+  else {
+    $urlRouterProvider.otherwise('app/nearby');
+  }
 
   $stateProvider
 
@@ -348,7 +348,7 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
     }
   })
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('splash');
+  //$urlRouterProvider.otherwise('splash');
 });
 
 SLBizReviews.run(function ($rootScope, AuthenticationService, $state, $localStorage, DrupalApiConstant, $urlRouter, $ionicLoading) {

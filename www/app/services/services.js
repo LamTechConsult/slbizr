@@ -1,18 +1,43 @@
 /**
  * BiZ Services :
  */
-SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,DataService) {
+SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,DataService,NodeResource) {
     var businessesService = {
 		  getBusinesses: getBusinesses,
-		  saveBusinessesData:saveBusinessesData
+		  saveBusinessesData:saveBusinessesData,
+		  getBusinessesReview:getBusinessesReview
 		}
     var lastFetched = null;
     var businesses = null;
+    var reviews = null;
 	var defer = $q.defer();
 
+//////////////////////////////////////////////////////////
+	function getBusinessesReview(bid) {
+		var defer = $q.defer();
+			NodeResource
+	          .comments({nid: bid})
+	          .success(function (data) {
+	          	reviews = data;
+	          	console.log(data);
+	            saveBusinessesReviewData(data);
+	            defer.resolve(reviews);
+	          })
+	          .catch(function (error) {
+	            defer.reject(error);
+	          });
+        return defer.promise;
+	}
+	function saveBusinessesReviewData(reviews) {
+      var preparedReviews = reviews;
+      for (a=0;a<reviews.length;a++){
+        	startRating(reviews[a]);
+        }
+      reviews = preparedReviews;
+    }
 	function getBusinesses() {
 		var defer = $q.defer();
-		if (businesses == null || (Date.now() - lastFetched) > 120 * 1000) {
+		if (businesses == null || (Date.now() - lastFetched) > 60 * 10000) {
 			DataService.fetchBusinesses().success(function (data) {
 		       businesses = data;
 		       saveBusinessesData(data);
@@ -38,34 +63,34 @@ SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,Da
         bs.starimage=[];
 
         if (bs.reviewcount>0){
-            bs.starimage=["red-star.png","grey-star.png","grey-star.png","grey-star.png","grey-star.png"];
+            bs.starimage=["red-star","grey-star","grey-star","grey-star","grey-star"];
         }else{
-            bs.starimage=["grey-star.png","grey-star.png","grey-star.png","grey-star.png","grey-star.png"];
+            bs.starimage=["grey-star","grey-star","grey-star","grey-star","grey-star"];
         }
 
         if (bs.ratings){
             percentVal=parseFloat(bs.ratings);
             if (percentVal==20){
                 //bs.starcount=[1];
-                bs.starimage=["red-star.png","grey-star.png","grey-star.png","grey-star.png","grey-star.png"];
+                bs.starimage=["red-star","grey-star","grey-star","grey-star","grey-star"];
             }else if (percentVal==30){
                 //bs.starcount=[1,2];
-                bs.starimage=["red-star.png","half-red-star.png","grey-star.png","grey-star.png","grey-star.png"];
+                bs.starimage=["red-star","half-red-star","grey-star","grey-star","grey-star"];
             }else if (percentVal==40){
                 //bs.starcount=[1,2];
-                bs.starimage=["yellow-star.png","yello-star.png","grey-star.png","grey-star.png","grey-star.png"];
+                bs.starimage=["yellow-star","yello-star","grey-star","grey-star","grey-star"];
             }else if (percentVal==50){
                 //bs.starcount=[1,2,3];
-                bs.starimage=["yellow-star.png","yellow-star.png","half-yellow-star.png","grey-star.png","grey-star.png"];
+                bs.starimage=["yellow-star","yellow-star","half-yellow-star","grey-star","grey-star"];
             }else if (percentVal==60){
                 //bs.starcount=[1,2,3];
-                bs.starimage=["yellow-star.png","yellow-star.png","yellow-star.png","grey-star.png","grey-star.png"];
+                bs.starimage=["yellow-star","yellow-star","yellow-star","grey-star","grey-star"];
             }else if (percentVal==80){
                 //bs.starcount=[1,2,3,4];
-                bs.starimage=["green-star.png","green-star.png","green-star.png","green-star.png","grey-star.png"];
+                bs.starimage=["green-star","green-star","green-star","green-star","grey-star"];
             }else if (percentVal==100){
                 //bs.starcount=[1,2,3,4,5];
-                bs.starimage=["green-star.png","green-star.png","green-star.png","green-star.png","green-star.png"];
+                bs.starimage=["green-star","green-star","green-star","green-star","green-star"];
             }
         }
     }
@@ -95,7 +120,7 @@ SLBizReviews.service('myAccountService', function($q,$http,DrupalApiConstant,Dat
 
 	function getMyFriends(uid) {
 		var defer = $q.defer();
-		if (myFriends == null || (Date.now() - lastFetched) > 60 * 1000) {
+		if (myFriends == null || (Date.now() - lastFetched) > 60 * 10000) {
 			DataService.fetchMyFriends(uid).success(function (data) {
 		       myFriends = data;
 		        defer.resolve(myFriends);
@@ -112,7 +137,7 @@ SLBizReviews.service('myAccountService', function($q,$http,DrupalApiConstant,Dat
 
 	function getMyFollowers(uid) {
 		var defer = $q.defer();
-		if (myFollowers == null || (Date.now() - lastFetched) > 60 * 1000) {
+		if (myFollowers == null || (Date.now() - lastFetched) > 60 * 10000) {
 			DataService.fetchFollowers(uid).success(function (data) {
 		        myFollowers = data;
 		        defer.resolve(myFollowers);
@@ -127,7 +152,7 @@ SLBizReviews.service('myAccountService', function($q,$http,DrupalApiConstant,Dat
 	}
 	function getMyFollowings(uid) {
 		var defer = $q.defer();
-		if (myFollowings == null || (Date.now() - lastFetched) > 60 * 1000) {
+		if (myFollowings == null || (Date.now() - lastFetched) > 60 * 10000) {
 			DataService.fetchMyFollowings(uid).success(function (data) {
 		        myFollowings = data;
 		        defer.resolve(myFollowings);
@@ -142,7 +167,7 @@ SLBizReviews.service('myAccountService', function($q,$http,DrupalApiConstant,Dat
 	}
 	function getMyMessages(uid) {
 		var defer = $q.defer();
-		if (myMessages == null || (Date.now() - lastFetched) > 60 * 1000) {
+		if (myMessages == null || (Date.now() - lastFetched) > 60 * 10000) {
 			DataService.fetchMyMessages(uid).success(function (data) {
 		         myMessages = data;
 		         defer.resolve(myMessages);
@@ -157,7 +182,7 @@ SLBizReviews.service('myAccountService', function($q,$http,DrupalApiConstant,Dat
 	}
 	function getMyBookmarks() {
 		var defer = $q.defer();
-		if (myBookmarks == null || (Date.now() - lastFetched) > 60 * 1000) {
+		if (myBookmarks == null || (Date.now() - lastFetched) > 60 * 10000) {
 			DataService.fetchMyBookmarks().success(function (data) {
 		         myBookmarks = data;
 		         defer.resolve(myBookmarks);

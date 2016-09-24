@@ -14,7 +14,10 @@
         <img ng-src="{{bs.node.image.src}}" alt="{{bs.node.image.alt}}">
 	    <h2>{{bs.node.title}}</h2>
 	    <div class="biz-ratings">
-          <span ng-repeat="x in bs.node.starcount"><img ng-src="assets/img/{{bs.node.starimage[$index]}}" width="15px" height="15px" /></span> {{bs.node.reviewcount}} Reviews
+          <span ng-repeat="x in bs.node.starcount">
+              <i class="icon icon ion-star {{bs.node.starimage[$index]}}"></i>
+              <!-- <img ng-src="assets/img/{{bs.node.starimage[$index]}}" width="15px" height="15px" /> -->
+          </span> {{bs.node.reviewcount}} Reviews
         </div>
         <div class="biz-category">{{bs.node.category}}</div>
         <div class="biz-hours">Hours Today{{getTimeFormat(bs.node.hours)}}</div>

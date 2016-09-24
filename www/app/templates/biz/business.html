@@ -8,7 +8,8 @@
         <h4>{{businessesDetails.title}}</h4>
         <div class="biz-ratings">
           <span ng-repeat="x in businessesDetails.starcount">
-            <img ng-src="assets/img/{{businessesDetails.starimage[$index]}}" width="15px" height="15px" />
+            <span>{{}}5/5</span>
+            <i class="icon ion-star {{businessesDetails.starimage[$index]}}"></i>
             </span>{{businessesDetails.reviewcount}} Reviews
         </div>
 
@@ -112,32 +113,30 @@
     <div>
         <span>Recommended Reviews</span>
     </div>
-    <!-- <ion-list ng-hide="showMoreDetails">
-        <ion-item ng-repeat="bs in reviews" ng-click="reviewClicked(bs)" style="padding:5px;">
-            <div>
-                <div style="float:left;">
-                    <img ng-src="{{bs.picture.src}}" alt="{{bs.picture.alt}}" width="40" height="40" />
-                </div>
-                <div style="font-size:14px;color:#000000;float:left;margin-left:15px;margin-top:3px;">
-                    <div>{{bs.subject}}</div>
-                    <div style="font-size:10px;">
-                        <span ng-repeat="x in bs.starcount">
-                        <i class="icon icon ion-star" style="font-size:18px;color:#FF0000"></i>
-                        <img ng-src="img/{{bs.starimage[$index]}}" width="12px" height="12px" />
-                        </span>
+    <ion-list ng-hide="showMoreDetails">
+        <ion-item ng-repeat="bs in businessesReview" ng-click="reviewClicked(bs)" style="padding:5px;">
+            <div style="float:left;">
+                <img ng-src="{{bs.field_ltc_biz_photos.und[0].src}}" alt="{{bs.picture.alt}}" width="40" height="40" />
+            </div>
+            <div style="font-size:14px;color:#000000;float:left;margin-left:15px;margin-top:3px;">
+                <div>{{bs.subject}}</div>
+                <div style="font-size:10px;">
+                    <span ng-repeat="x in bs.starcount">
+                        <i class="icon icon ion-star {{bs.starimage[$index]}}"></i>
+                    </span>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         2 months ago
-                    </div>
-                    <div>
-                    {{bs.realname}}
-                    </div>
                 </div>
-                <div style="float:right;margin-right:10px;">
-                  <i class="icon ion-chevron-right icon-accessory"></i>
+                <div>
+                    <p>{{bs.realname}}</p>
+                    <p>{{bs.comment_body.und[0]['value']}}</p>
                 </div>
-                <div style="clear:both;"></div>
             </div>
+            <div style="float:right;margin-right:10px;">
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+            <div style="clear:both;"></div>
         </ion-item>
-    </ion-list> -->
+    </ion-list>
   </ion-content>
 </ion-view>
