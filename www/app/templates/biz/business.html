@@ -112,6 +112,9 @@
     </div>
     <div>
         <span>Recommended Reviews</span>
+        <div class="list">
+          <i class="icon ion-ios-loop-strong" ng-if="!businessesReview.length" ></i> 
+        </div>
     </div>
     <ion-list ng-hide="showMoreDetails">
         <ion-item ng-repeat="bs in businessesReview" ng-click="reviewClicked(bs)" style="padding:5px;">

@@ -6,13 +6,63 @@ SLBizReviews.controller('MainCtrl', function($scope,$localStorage,$rootScope,$st
   $rootScope.isLogedin = 'false';
 });
 
+SLBizReviews.controller('writeReviewCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,businessesService) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+      
+  // set the rate and max variables
+  $scope.rating = {};
+  $scope.rating.rate = 0;
+  $scope.rating.max = 5;
+
+  $scope.writeReviewData={
+    // subject:'',
+    //comment_body:{und:[{value:''}]},
+    nid:parseInt($stateParams.bid),
+    //uid:1,
+    //field_ltc_biz_rating:{und:[{rating:$scope.rating,target:null}]}
+  };
+  
+  $scope.serverErrors = [];
+  $scope.saveWriteReview = function () {
+    if($scope.rating.rate>0){
+       var percentRating = $scope.rating.rate*20;
+    }
+   
+    $scope.writeReviewData.field_ltc_biz_rating = {und:[{rating:percentRating,target:null}]}
+    $scope.serverErrors = [];
+    if($scope.writeReviewData.subject == undefined){
+      $scope.serverErrors.push('subject is required');
+    }
+    if($scope.writeReviewData.comment_body == undefined || $scope.writeReviewData.comment_body.und[0].value == '' ){
+      $scope.serverErrors.push('review is required');
+    }else{
+      console.log($scope.writeReviewData);
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+      businessesService.postReviews($scope.writeReviewData).then(function (data) {
+        $state.go('app.businessDetails',{bid:$stateParams.bid});
+      },function (errorResult) {
+          if (errorResult.status >= 400 && errorResult.status < 500) {
+              $scope.serverErrors.push(errorResult.data[0]);
+          }
+          else {
+            $scope.serverErrors.push(errorResult.statusText);
+          }
+      }).finally(function () { 
+        $rootScope.$broadcast('loading:hide');
+        
+      });
+    }  
+  }
+});
 
 SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
-
+    $rootScope.businessesReview = [];
     if($stateParams.bid){
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       businessesService.getBusinesses()
@@ -50,38 +100,10 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
     return $scope.showMoreDetails = !$scope.showMoreDetails;
   }
   $scope.writeReviewClick = function () {
-    $state.go('app.writeReview');
+    $state.go('app.writeReview',{bid:$stateParams.bid});
   }
-  //-------------------------
-  $scope.ratingsObject = {
-        iconOn : 'ion-ios-star',
-        iconOff : 'ion-ios-star-outline',
-        iconOnColor: 'rgb(200, 200, 100)',
-        iconOffColor:  'rgb(200, 100, 100)',
-        rating:  1,
-        minRating:0,
-        callback: function(rating) {
-          $scope.ratingsCallback(rating);
-        }
-      };
-
-      $scope.ratingsCallback = function(rating) {
-        console.log('Selected rating is : ', rating);
-      };
-      
-  $scope.serverErrors = [];
-  $scope.writeReviewData = {};
-  $scope.saveWriteReview = function () {
-    $scope.serverErrors = [];
-    if($scope.writeReviewData.subject == undefined){
-      $scope.serverErrors.push('subject is required');
-      console.log('subject is required');
-    }else{
-      console.log($scope.writeReviewData);
-    }  
-  }
+  
 });
-
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$rootScope,$localStorage,ProfileService,businessesService) {
   
   $scope.$on("$ionicView.enter", function(event, data){
@@ -146,7 +168,6 @@ SLBizReviews.controller('DashCtrl', function($scope,$state,$ionicHistory,$rootSc
   });
 
 });
-
 SLBizReviews.controller('otherCtrl', function($scope,$state,$ionicHistory,$rootScope,$localStorage,ProfileService) {
 
   $scope.$on("$ionicView.enter", function(event, data){
@@ -224,8 +245,6 @@ SLBizReviews.controller('subProfileCtrl', function($scope,$state,$rootScope,$loc
   });
 });
 
-
-
 SLBizReviews.controller('ProfileCtrl', function($scope,$rootScope,ProfileService,$ionicHistory,$localStorage,$state,AuthenticationServiceConstant, AuthenticationService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
@@ -278,10 +297,6 @@ SLBizReviews.controller('ProfileCtrl', function($scope,$rootScope,ProfileService
     $state.go('app.viewProfile');
   }
 });
-
-// SLBizReviews.controller('SignupCtrl',function($rootScope,$scope,$state,$window,UserResource, AuthenticationService, $localStorage){
-//
-// });
 
 SLBizReviews.controller('ForgetPassCtrl',function($rootScope,$scope,$state,$window,$ionicSlideBoxDelegate){
   $rootScope.doSignup = function () {

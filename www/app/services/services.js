@@ -1,11 +1,12 @@
 /**
  * BiZ Services :
  */
-SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,DataService,NodeResource) {
+SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,DataService,NodeResource,CommentResource) {
     var businessesService = {
 		  getBusinesses: getBusinesses,
 		  saveBusinessesData:saveBusinessesData,
-		  getBusinessesReview:getBusinessesReview
+		  getBusinessesReview:getBusinessesReview,
+		  postReviews:postReviews
 		}
     var lastFetched = null;
     var businesses = null;
@@ -13,6 +14,20 @@ SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,Da
 	var defer = $q.defer();
 
 //////////////////////////////////////////////////////////
+	function postReviews(reviewData){
+		console.log(reviewData);
+		var defer = $q.defer();
+			CommentResource
+	          .create(reviewData)
+	          .success(function (data) {
+	          	console.log(data);
+	            defer.resolve(data);
+	          })
+	          .catch(function (error) {
+	            defer.reject(error);
+	          });
+        return defer.promise;
+	}
 	function getBusinessesReview(bid) {
 		var defer = $q.defer();
 			NodeResource

@@ -339,11 +339,11 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
     }
   })
   .state('app.writeReview',{
-    url:'/writeReview',
+    url:'/writeReview/:bid',
     views: {
       'menu-writeReview': {
         templateUrl: 'app/templates/biz/write-review.html',
-        controller: 'bizCtrl'
+        controller: 'writeReviewCtrl'
       }
     }
   })

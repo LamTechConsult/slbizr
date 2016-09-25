@@ -2,7 +2,7 @@
 // 'SLBizReviews' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'dependencies'
 
-var SLBizReviews = angular.module('SLBizReviews', ['ionic','ngCordova','d7-services','ngCordovaOauth','ionic-ratings','ngStorage','SLBizReviews.config']);
+var SLBizReviews = angular.module('SLBizReviews', ['ionic','ngCordova','d7-services','ngCordovaOauth','ionic.rating','ngStorage','SLBizReviews.config']);
 
 SLBizReviews.run(function($ionicPlatform,$state, $ionicHistory) {
   $ionicPlatform.ready(function() {
