@@ -31,7 +31,7 @@ SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,Da
 	function saveBusinessesReviewData(reviews) {
       var preparedReviews = reviews;
       for (a=0;a<reviews.length;a++){
-        	startRating(reviews[a]);
+        	startRating(reviews[a],'reviews');
         }
       reviews = preparedReviews;
     }
@@ -54,20 +54,26 @@ SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,Da
 	function saveBusinessesData(Businesses) {
       var preparedBusinesses = Businesses;
       for (a=0;a<Businesses.nodes.length;a++){
-        	startRating(Businesses.nodes[a].node);
+        	startRating(Businesses.nodes[a].node,'businesses');
         }
       businesses = preparedBusinesses;
     }
-    function startRating(bs) {
+
+
+    function startRating(bs,type) {
     	bs.starcount=[1,2,3,4,5];
         bs.starimage=[];
 
+        if(type =='reviews' && angular.isObject(bs.field_ltc_biz_rating.und)){
+        	bs.ratings = bs.field_ltc_biz_rating.und[0].rating;
+        }
+        
         if (bs.reviewcount>0){
             bs.starimage=["red-star","grey-star","grey-star","grey-star","grey-star"];
         }else{
             bs.starimage=["grey-star","grey-star","grey-star","grey-star","grey-star"];
         }
-
+        
         if (bs.ratings){
             percentVal=parseFloat(bs.ratings);
             if (percentVal==20){

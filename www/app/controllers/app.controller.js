@@ -58,8 +58,8 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
         iconOff : 'ion-ios-star-outline',
         iconOnColor: 'rgb(200, 200, 100)',
         iconOffColor:  'rgb(200, 100, 100)',
-        rating:  0,
-        minRating:1,
+        rating:  1,
+        minRating:0,
         callback: function(rating) {
           $scope.ratingsCallback(rating);
         }
@@ -68,6 +68,18 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
       $scope.ratingsCallback = function(rating) {
         console.log('Selected rating is : ', rating);
       };
+      
+  $scope.serverErrors = [];
+  $scope.writeReviewData = {};
+  $scope.saveWriteReview = function () {
+    $scope.serverErrors = [];
+    if($scope.writeReviewData.subject == undefined){
+      $scope.serverErrors.push('subject is required');
+      console.log('subject is required');
+    }else{
+      console.log($scope.writeReviewData);
+    }  
+  }
 });
 
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$rootScope,$localStorage,ProfileService,businessesService) {

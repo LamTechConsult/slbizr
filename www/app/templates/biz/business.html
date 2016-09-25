@@ -7,9 +7,10 @@
     <div class="header">
         <h4>{{businessesDetails.title}}</h4>
         <div class="biz-ratings">
+        <span>{{}}5/5</span>
           <span ng-repeat="x in businessesDetails.starcount">
-            <span>{{}}5/5</span>
-            <i class="icon ion-star {{businessesDetails.starimage[$index]}}"></i>
+            <!-- <i class="icon ion-star {{businessesDetails.starimage[$index]}}"></i> -->
+            <img ng-src="assets/img/{{businessesDetails.starimage[$index]}}.png" width="15px" height="15px" />
             </span>{{businessesDetails.reviewcount}} Reviews
         </div>
 
@@ -86,13 +87,13 @@
             <div class="item item-icon-left last">
                 <i class="icon ion-aperture"></i>
                 <div class="slr-item-text">
-                  <h2>chiefdom</h2>
+                  <h2>Chiefdom</h2>
                   <p>{{businessesDetails.chiefdom}}</p>
                 </div>
             </div>
             <div class="item item-icon-left last">
                 <i class="icon ion-document-text"></i>
-                <div class="slr-item-text">
+                <div class="slr-item-text item-text-wrap">
                   <h2>Description</h2>
                   <p>{{businessesDetails.description}}Venenatis arcu ipsa provident possimus quos. Ullamcorper, explicabo qui quis? Nemo eligendi habitant ullamcorper delectus ullamco dicta deserunt vulputate quidem blanditiis, ratione commodi cupiditate,</p>
                 </div>
@@ -102,8 +103,7 @@
                 <div class="slr-item-text">
                   <h2>Photos</h2>
                     <div class="slr-item-text biz-ratings">
-                      <span ng-repeat="x in businessesDetails.starcount">
-                        <img ng-src="assets/img/{{businessesDetails.starimage[$index]}}" width="15px" height="15px" />
+                        <img ng-src="{{businessesDetails.image.src}}" width="100px" height="100px" />     
                     </div>
                 </div>
             </div>            
@@ -121,14 +121,16 @@
             <div style="font-size:14px;color:#000000;float:left;margin-left:15px;margin-top:3px;">
                 <div>{{bs.subject}}</div>
                 <div style="font-size:10px;">
+                    <span>{{}}5/5</span>
                     <span ng-repeat="x in bs.starcount">
-                        <i class="icon icon ion-star {{bs.starimage[$index]}}"></i>
+                        <!-- <i class="icon icon ion-star {{bs.starimage[$index]}}"></i> -->
+                        <img ng-src="assets/img/{{bs.starimage[$index]}}.png" width="15px" height="15px" />
                     </span>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         2 months ago
                 </div>
-                <div>
-                    <p>{{bs.realname}}</p>
+                <div class="item-text-wrap">
+                    <!-- <p>{{bs.realname}}</p> -->
                     <p>{{bs.comment_body.und[0]['value']}}</p>
                 </div>
             </div>

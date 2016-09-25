@@ -2,17 +2,27 @@
   <ion-nav-bar class="bar-positive">
     <ion-nav-back-button side="left">Back </ion-nav-back-button>
     <ion-nav-buttons side="right">
-      <button class="button button-icon button-clear" ng-click="saveWriteReview(writeReviewForm)">Done</button>
+      <button class="button button-icon button-clear" ng-click="saveWriteReview()">Done</button>
     </ion-nav-buttons>
   </ion-nav-bar>
 
   <ion-content>
+    <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+    
     <div class="card" ng-if="serverErrors.lenght">
       <div class="item item-text-wrap" ng-repeat="serverError in serverErrors">
         {{serverError}}
       </div>
     </div>
-    <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
 
+    <div class="list list-inset">
+      <label class="item item-input">
+        <input type="text" placeholder="Subject:" ng-model="writeReviewData.subject">
+      </label>
+      <label class="item item-input">
+        <textarea placeholder="Review:" ng-model="writeReviewData.body"></textarea>
+      </label>
+    </div>
+    <button class="button  button-full icon ion-ios-camera" ng-click="getPicture()"></button>
   </ion-content>
 </ion-view>
