@@ -9,7 +9,7 @@
       <ion-item>
 	    <h2>{{businessesDetails.title}}</h2>
 	    <div class="biz-ratings">
-		  <span class="rating-numbers">{{}}5/5</span><div class="star-rating"><span style="width:{{businessesDetails.ratings}}"></span></div> {{businessesDetails.reviewcount}} Reviews
+		  <span class="rating-numbers">{{businessesDetails.ratings | rating}}/5</span><div class="star-rating"><span style="width:{{businessesDetails.ratings}}"></span></div> {{businessesDetails.reviewcount}} Reviews
         </div>
         <div class="biz-category"><span>{{businessesDetails.keywords}}</span>, <span>{{businessesDetails.category}}</span></div>
         <div class="biz-hours">Hours Today{{getTimeFormat(businessesDetails.hours)}}</div>
@@ -35,27 +35,27 @@
     </div>
 
     <div class="list slr-list border-top border-bottom m-none">
-      <div class="item item-icon-left">
+      <a class="item item-icon-left" ng-click="getBizLocation()">
         <i class="icon ion-ios-navigate-outline"></i>
         <div class="slr-item-text">
           <h4>Get Direction to Business</h4>
           <p>{{businessesDetails.distance}}</p>
         </div>
-      </div>
-      <div class="item item-icon-left">
+      </a>
+      <a class="item item-icon-left" href="tel://{{businessesDetails.phone}}">
         <i class="icon ion-ios-telephone"></i>
         <div class="slr-item-text">
           <h4>Call Business</h4>
           <p>{{businessesDetails.phone}}</p>
         </div>
-      </div>
-      <div class="item item-icon-left">
+      </a>
+      <a class="item item-icon-left"  href="mailto:{{businessesDetails.email}}">
         <i class="icon ion-ios-email"></i>
         <div class="slr-item-text">
           <h4>Send Business and Email</h4>
           <p>{{businessesDetails.email}}</p>
         </div>
-      </div>
+      </a>
       <div class="item item-icon-left last" ng-if="!showMoreDetails" ng-click="showMoreBizDetail()">
         <i class="icon ion-more"></i>
         <div class="slr-item-text">
@@ -101,15 +101,16 @@
       <div class="button button-full ion-chevron-up shadow-none m-none" ng-click="showMoreBizDetail()" ng-if="showMoreDetails"></div>
     </div>
 
-    <div class="recommended-reviews">
+    <div class="recommended-reviews"  ng-hide="showMoreDetails">
 	  <h5 class="dark-bg light padding m-none">Recommended Reviews</h5>
 	  <div class="padding text-center" ng-if="!businessesReview.length"><ion-spinner icon="spiral"></ion-spinner></div>
-      <ion-list class="biz-list" ng-hide="showMoreDetails">
+      <ion-list class="biz-list">
         <ion-item class="item-thumbnail-left item-icon-right" ng-repeat="bs in businessesReview" ng-click="reviewClicked(bs)">
-          <img ng-src="{{bs.field_ltc_biz_photos.und[0].src}}" alt="{{bs.picture.alt}}" />
+          <img ng-if="bs.field_ltc_biz_photos.und" ng-src="{{bs.field_ltc_biz_photos.und[0].src}}">
+          <img ng-if="!bs.field_ltc_biz_photos.und" src="assets/img/fullsize_biz.png">
 	      <h4>{{bs.subject}}</h4>
 	      <div class="biz-ratings">
-		    <span class="rating-numbers">{{}}5/5</span><div class="star-rating"><span style="width:{{bs.ratings}}"></span></div> 2 months ago
+		    <span class="rating-numbers">{{bs.field_ltc_biz_rating.und[0].rating | rating}}/5</span><div class="star-rating"><span style="width:{{bs.field_ltc_biz_rating.und[0].rating | ratingPercentage}}"></span></div> <span am-time-ago="bs.created" am-preprocess="unix"></span>
           </div>
           <p>{{bs.comment_body.und[0]['value']}}</p>
           <i class="icon ion-ios-arrow-right icon-small"></i>

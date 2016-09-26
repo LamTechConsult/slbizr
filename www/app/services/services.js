@@ -4,7 +4,6 @@
 SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,DataService,NodeResource,CommentResource) {
     var businessesService = {
 		  getBusinesses: getBusinesses,
-		  saveBusinessesData:saveBusinessesData,
 		  getBusinessesReview:getBusinessesReview,
 		  postReviews:postReviews
 		}
@@ -20,7 +19,6 @@ SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,Da
 			CommentResource
 	          .create(reviewData)
 	          .success(function (data) {
-	          	console.log(data);
 	            defer.resolve(data);
 	          })
 	          .catch(function (error) {
@@ -33,9 +31,8 @@ SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,Da
 			NodeResource
 	          .comments({nid: bid})
 	          .success(function (data) {
-	          	reviews = data;
-	          	console.log(data);
-	            saveBusinessesReviewData(data);
+	          	reviews = data;	 
+	          	console.log(data);     
 	            defer.resolve(reviews);
 	          })
 	          .catch(function (error) {
@@ -43,19 +40,12 @@ SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,Da
 	          });
         return defer.promise;
 	}
-	function saveBusinessesReviewData(reviews) {
-      var preparedReviews = reviews;
-      for (a=0;a<reviews.length;a++){
-        	startRating(reviews[a],'reviews');
-        }
-      reviews = preparedReviews;
-    }
+
 	function getBusinesses() {
 		var defer = $q.defer();
 		if (businesses == null || (Date.now() - lastFetched) > 60 * 10000) {
 			DataService.fetchBusinesses().success(function (data) {
 		       businesses = data;
-		       saveBusinessesData(data);
 		        defer.resolve(businesses);
 		        lastFetched = Date.now();
 		    }).catch(function (error) {
@@ -66,55 +56,7 @@ SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,Da
 		}
         return defer.promise;
 	}
-	function saveBusinessesData(Businesses) {
-      var preparedBusinesses = Businesses;
-      for (a=0;a<Businesses.nodes.length;a++){
-        	startRating(Businesses.nodes[a].node,'businesses');
-        }
-      businesses = preparedBusinesses;
-    }
 
-
-    function startRating(bs,type) {
-    	bs.starcount=[1,2,3,4,5];
-        bs.starimage=[];
-
-        if(type =='reviews' && angular.isObject(bs.field_ltc_biz_rating.und)){
-        	bs.ratings = bs.field_ltc_biz_rating.und[0].rating;
-        }
-        
-        if (bs.reviewcount>0){
-            bs.starimage=["red-star","grey-star","grey-star","grey-star","grey-star"];
-        }else{
-            bs.starimage=["grey-star","grey-star","grey-star","grey-star","grey-star"];
-        }
-        
-        if (bs.ratings){
-            percentVal=parseFloat(bs.ratings);
-            if (percentVal==20){
-                //bs.starcount=[1];
-                bs.starimage=["red-star","grey-star","grey-star","grey-star","grey-star"];
-            }else if (percentVal==30){
-                //bs.starcount=[1,2];
-                bs.starimage=["red-star","half-red-star","grey-star","grey-star","grey-star"];
-            }else if (percentVal==40){
-                //bs.starcount=[1,2];
-                bs.starimage=["yellow-star","yello-star","grey-star","grey-star","grey-star"];
-            }else if (percentVal==50){
-                //bs.starcount=[1,2,3];
-                bs.starimage=["yellow-star","yellow-star","half-yellow-star","grey-star","grey-star"];
-            }else if (percentVal==60){
-                //bs.starcount=[1,2,3];
-                bs.starimage=["yellow-star","yellow-star","yellow-star","grey-star","grey-star"];
-            }else if (percentVal==80){
-                //bs.starcount=[1,2,3,4];
-                bs.starimage=["green-star","green-star","green-star","green-star","grey-star"];
-            }else if (percentVal==100){
-                //bs.starcount=[1,2,3,4,5];
-                bs.starimage=["green-star","green-star","green-star","green-star","green-star"];
-            }
-        }
-    }
 	return businessesService;	
 });
 
