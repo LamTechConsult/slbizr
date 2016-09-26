@@ -28,7 +28,8 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
   .state('app', {
     url: '/app',
       abstract: true,
-      templateUrl: 'app/templates/tabs.html'
+      templateUrl: 'app/templates/tabs.html',
+      controller: 'mainCtrl'
   })
 
   // Each tab has its own nav history stack:

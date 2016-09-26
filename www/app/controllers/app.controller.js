@@ -1,9 +1,16 @@
 
-SLBizReviews.controller('MainCtrl', function($scope,$localStorage,$rootScope,$state) {
-  $rootScope.currentUser = '';
-  $rootScope.profile = '';
-  $localStorage.isLogedin = 'false';
-  $rootScope.isLogedin = 'false';
+SLBizReviews.controller('mainCtrl', function($scope,$localStorage,$cordovaGeolocation,$rootScope,$state) {
+  $rootScope.storage = $localStorage;
+  // var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  // $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+  //   var lat  = position.coords.latitude
+  //   var long = position.coords.longitude
+  //   console.log("lat:"+lat+"Log:"+long);
+  //   $rootScope.lat = lat;
+  //   $rootScope.long = long;
+  // }, function(err) {
+  //   console.log(err);
+  // });
 });
 
 SLBizReviews.controller('writeReviewCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,businessesService) {
@@ -104,9 +111,10 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
   }
   
 });
-SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$rootScope,$localStorage,ProfileService,businessesService) {
+SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
   
   $scope.$on("$ionicView.enter", function(event, data){
+    console.log($localStorage.lat);
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       $ionicHistory.clearHistory(); //hide the back button.
 
@@ -304,7 +312,7 @@ SLBizReviews.controller('ForgetPassCtrl',function($rootScope,$scope,$state,$wind
   }
 });
 
-SLBizReviews.controller('LoginCtrl',function($scope,$rootScope,AuthService,$ionicPopup,$state,$ionicLoading,$localStorage,AuthenticationService){
+SLBizReviews.controller('LoginCtrl',function($scope,$rootScope,$cordovaGeolocation,AuthService,$ionicPopup,$state,$ionicLoading,$localStorage,AuthenticationService){
   //data for vm.loginForm
   $scope.user = {};
   $scope.serverErrors = [];
@@ -353,6 +361,16 @@ SLBizReviews.controller('LoginCtrl',function($scope,$rootScope,AuthService,$ioni
 
       confirmPopup.then(function(res) {
         if(res) {
+            var posOptions = {timeout: 10000, enableHighAccuracy: false};
+            $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+                var lat  = position.coords.latitude
+                var long = position.coords.longitude
+                console.log("lat:"+lat+"Log:"+long);
+                $localStorage.lat = lat;
+                $localStorage.long = long;
+              }, function(err) {
+                console.log(err);
+              });
             $state.go('app.nearBy', {}, {reload: true});
             $localStorage.isLocationAllowed = true;
          } else {

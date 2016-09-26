@@ -1,11 +1,13 @@
 /**
  * BiZ Services :
  */
-SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,DataService,NodeResource,CommentResource) {
+SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,DrupalApiConstant,DataService,NodeResource,CommentResource) {
     var businessesService = {
 		  getBusinesses: getBusinesses,
 		  getBusinessesReview:getBusinessesReview,
-		  postReviews:postReviews
+		  sortBusinessesByDistance:sortBusinessesByDistance,
+		  postReviews:postReviews,
+		  saveBizDistance:saveBizDistance
 		}
     var lastFetched = null;
     var businesses = null;
@@ -46,6 +48,8 @@ SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,Da
 		if (businesses == null || (Date.now() - lastFetched) > 60 * 10000) {
 			DataService.fetchBusinesses().success(function (data) {
 		       businesses = data;
+		       //saveBizDistance(businesses.nodes);
+		       //sortBusinessesByDistance(businesses.nodes);
 		        defer.resolve(businesses);
 		        lastFetched = Date.now();
 		    }).catch(function (error) {
@@ -55,6 +59,26 @@ SLBizReviews.service('businessesService', function($q,$http,DrupalApiConstant,Da
 			defer.resolve(businesses);
 		}
         return defer.promise;
+	}
+	function saveBizDistance(biz){
+		for (a=0;a<biz.length;a++){
+			biz[a].node.distance = $filter('distance')($rootScope.storage.lat,$rootScope.storage.long,biz[a].node.geocode_lat,biz.node[a].geocode_long,"N");
+		}
+		businesses = biz;
+	}
+	function sortBusinessesByDistance(businesses) {
+		// console.log("sortBusinessesByDistance: "+businesses.length);
+  //   	for (a=0;a<businesses.length;a++){
+  //   		for (b=a+1;b<businesses.length;b++){
+  //   			bsA=businesses[a].node;
+  //   			bsB=businesses[b].node;
+  //   			if (bsA.distance>bsB.distance){
+  //   				tmp=businesses[a].node;
+  //   				businesses[a].node=bsB;
+  //   				businesses[b].node=tmp;
+  //   			}
+  //   		}
+  //   	}
 	}
 
 	return businessesService;	

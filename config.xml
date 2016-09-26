@@ -20,10 +20,14 @@
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
+  
+  <feature name="Geolocation">
+    <param name="android-package" value="org.apache.cordova.GeoBroker" />
+  </feature>
+  
   <platform name="android">
     <access origin="tel:*" launch-external="yes"/>
     <allow-intent href="tel:*"/>
-
     <access origin="mailto:*" launch-external="yes"/>
       
     <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>

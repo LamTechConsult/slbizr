@@ -13,7 +13,7 @@
         </div>
         <div class="biz-category"><span>{{businessesDetails.keywords}}</span>, <span>{{businessesDetails.category}}</span></div>
         <div class="biz-hours">Hours Today{{getTimeFormat(businessesDetails.hours)}}</div>
-        <span class="mi">{{businessesDetails.distance}} mi</span>
+        <span class="mi">{{storage.lat|distance:storage.long:businessesDetails.geocode_lat:businessesDetails.geocode_long:"N"}} mi</span>
         <span class="{{getStatus(businessesDetails.hours)}}">{{getStatus(businessesDetails.hours)}}</span>
       </ion-item>
     </ion-list>
@@ -42,14 +42,14 @@
           <p>{{businessesDetails.distance}}</p>
         </div>
       </a>
-      <a class="item item-icon-left" href="tel://{{businessesDetails.phone}}">
+      <a class="item item-icon-left" ng-href="tel:{{businessesDetails.phone}}">
         <i class="icon ion-ios-telephone"></i>
         <div class="slr-item-text">
           <h4>Call Business</h4>
           <p>{{businessesDetails.phone}}</p>
         </div>
       </a>
-      <a class="item item-icon-left"  href="mailto:{{businessesDetails.email}}">
+      <a class="item item-icon-left"  ng-href="mailto:{{businessesDetails.email}}">
         <i class="icon ion-ios-email"></i>
         <div class="slr-item-text">
           <h4>Send Business and Email</h4>
