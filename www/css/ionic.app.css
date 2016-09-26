@@ -9825,6 +9825,12 @@ img {
   width: auto\9;
   /* ie8 */ }
 
+.m-none {
+  margin: 0px !important; }
+
+.p-none {
+  padding: 0px !important; }
+
 .padding2x {
   padding: 20px; }
 
@@ -9935,10 +9941,25 @@ img {
   min-height: 42px; }
   .button ~ .item-input-wrapper {
     margin-left: 10px; }
+  .button.shadow-none {
+    box-shadow: none; }
+  .button.button-full, .button .button-full > .button {
+    border-radius: 0; }
+  .button.icon-top::before {
+    display: block;
+    margin: 0 auto;
+    height: 22px; }
+  .button.button-small.icon-top::before {
+    height: 15px; }
 
 .bar .button, .bar button {
   padding-left: 30px;
   padding-right: 30px; }
+
+.button-bar .button {
+  box-shadow: none;
+  border-radius: 0 !important;
+  border-color: #c6c6c6; }
 
 .bar-footer {
   padding-top: 10px;
@@ -10014,6 +10035,71 @@ img {
   border-radius: 3px;
   box-shadow: 0px 3px 0px #444;
   color: #444; }
+
+/*---- star rating ---*/
+.star-rating {
+  overflow: hidden;
+  position: relative;
+  height: 14px;
+  line-height: 14px;
+  font-size: 9px;
+  width: 70px;
+  font-family: 'Ionicons'; }
+  .star-rating::before, .star-rating::after {
+    content: '\f24e\f24e\f24e\f24e\f24e';
+    float: left;
+    top: 0px;
+    left: 3px;
+    position: absolute;
+    letter-spacing: 6px;
+    color: #fff; }
+  .star-rating::before {
+    content: '\f21b\f21b\f21b\f21b\f21b';
+    color: #a5a5a5;
+    font-size: 16px;
+    letter-spacing: 1px;
+    left: 0px; }
+  .star-rating span {
+    overflow: hidden;
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding-top: 14px; }
+    .star-rating span::before, .star-rating span::after {
+      content: '\f24e\f24e\f24e\f24e\f24e';
+      top: 0px;
+      position: absolute;
+      left: 3px;
+      letter-spacing: 6px;
+      color: #fff; }
+    .star-rating span::before {
+      content: '\f21b\f21b\f21b\f21b\f21b';
+      color: #86dc00;
+      font-size: 16px;
+      letter-spacing: 1px;
+      left: 0px; }
+
+/*--- ionic ratings ---*/
+.ionic_ratings .icon {
+  font-size: 25px; }
+
+ul.rating li {
+  display: inline;
+  border: 0px;
+  background: none;
+  padding: 2px;
+  color: #fff; }
+  ul.rating li i {
+    font-size: 25px;
+    width: 30px;
+    height: 30px;
+    padding: 2px;
+    background-color: #a5a5a5;
+    border-radius: 50%;
+    display: inline-block; }
+  ul.rating li i.ion-ios-star {
+    background-color: #86dc00; }
 
 /*--- loading screen ---*/
 .backdrop {
@@ -10109,10 +10195,25 @@ img {
     max-height: 55px;
     height: auto; }
 
-.biz-list .biz-ratings span {
-  vertical-align: middle;
-  display: inline-block;
+.biz-list .item-icon-right .icon {
+  height: 30px; }
+
+.biz-list .biz-ratings {
   line-height: 1em; }
+  .biz-list .biz-ratings .rating-numbers {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 2px;
+    color: #86dc00; }
+  .biz-list .biz-ratings .star-rating {
+    display: inline-block;
+    vertical-align: middle; }
+  .biz-list .biz-ratings.grey .rating-numbers {
+    color: #a5a5a5; }
+  .biz-list .biz-ratings.red .rating-numbers, .biz-list .biz-ratings.red .star-rating span::before {
+    color: #ff3c28; }
+  .biz-list .biz-ratings.yellow .rating-numbers, .biz-list .biz-ratings.yellow .star-rating span::before {
+    color: #ffea00; }
 
 .biz-list .closed, .biz-list .open, .biz-list .mi {
   position: absolute;
@@ -10128,3 +10229,15 @@ img {
 .biz-list .open {
   color: #86dc00;
   bottom: 10px; }
+
+/*----- biz page ---*/
+.biz-details .closed, .biz-details .open, .biz-details .mi {
+  right: 16px; }
+
+.biz-page {
+  line-height: 1.5em;
+  font-size: 11px; }
+  .biz-page .map {
+    height: 100px; }
+  .biz-page .item p {
+    font-size: 11px; }

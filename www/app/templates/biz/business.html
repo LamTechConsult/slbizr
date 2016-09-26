@@ -3,145 +3,118 @@
     <ion-nav-back-button side="left">Back </ion-nav-back-button>
     <ion-nav-title><img src="assets/img/splash_logo_small.png"/></ion-nav-title>
   </ion-nav-bar>
-  <ion-content>
-    <div class="header">
-        <h4>{{businessesDetails.title}}</h4>
-        <div class="biz-ratings">
-        <span>{{}}5/5</span>
-          <span ng-repeat="x in businessesDetails.starcount">
-            <!-- <i class="icon ion-star {{businessesDetails.starimage[$index]}}"></i> -->
-            <img ng-src="assets/img/{{businessesDetails.starimage[$index]}}.png" width="15px" height="15px" />
-            </span>{{businessesDetails.reviewcount}} Reviews
-        </div>
 
-        <div class="">
-            <span class="mi">{{businessesDetails.distance}} mi</span>
-            <span>{{businessesDetails.keywords}}</span>,
-            <span>{{businessesDetails.category}}</span>
-            <div class="biz-hours">Hours Today{{getTimeFormat(businessesDetails.hours)}}</div>
-            <span class="{{getStatus(businessesDetails.hours)}}">{{getStatus(businessesDetails.hours)}}</span>
+  <ion-content class="biz-page">
+    <ion-list class="biz-list biz-details">
+      <ion-item>
+	    <h2>{{businessesDetails.title}}</h2>
+	    <div class="biz-ratings">
+		  <span class="rating-numbers">{{}}5/5</span><div class="star-rating"><span style="width:{{businessesDetails.ratings}}"></span></div> {{businessesDetails.reviewcount}} Reviews
         </div>
-        <button class="button button-full button-positive icon ion-compose" ng-click="writeReviewClick()">
-           Write a Review
-        </button>
-       
-        <div class="button-bar">
-            <a class="button button-small button-stable icon ion-android-bookmark" ng-click="bookmarkClick()">Bookmark</a>
-            <a class="button button-small button-stable icon ion-ios-locked-outline" ng-click="claimBusinessClick()">Claim Business</a>
-            <a class="button button-small button-stable icon ion-edit" ng-click="editBusinessClick()">Edit Business</a>
-        </div>
-    </div>
-    <div id="wrapper">
-        <div class="clear:both;"></div>
-        <div id="wrapper" ng-show="businessesDetails.geocode_lat!='' && businessesDetails.geocode_lat!=null">
-            <div id="map" style="height:100px;"></div>
-        </div>
-        <div id="over_map">
-            <div class="button button-full button-stable" "> 
-                <span>{{businessesDetails.street}}</span>,
-                <span>{{businessesDetails.city}}</span>,
-                <span>{{businessesDetails.country}}</span>
-                <i class="icon ion-ios-arrow-right icon-small" ng-click="writeReviewClick()"></i>
-            </div>
-        </div>
-    </div>
-       
-    <div class="list slr-list border-bottom">
-        <div class="item item-icon-left">
-            <i class="icon ion-ios-navigate-outline"></i>
-            <div class="slr-item-text">
-              <h2>Get Direction to Business</h2>
-              <p>{{businessesDetails.distance}}</p>
-            </div>
-        </div>
-        <div class="item item-icon-left">
-            <i class="icon ion-ios-telephone"></i>
-            <div class="slr-item-text">
-              <h2>Call Business</h2>
-              <p>{{businessesDetails.phone}}</p>
-            </div>
-        </div>
-        <div class="item item-icon-left">
-            <i class="icon ion-ios-email"></i>
-            <div class="slr-item-text">
-              <h2>Send Business and Email</h2>
-              <p>{{businessesDetails.email}}</p>
-            </div>
-        </div>
-        <div class="item item-icon-left last" ng-if="!showMoreDetails" ng-click="showMoreBizDetail()">
-            <i class="icon ion-more"></i>
-            <div class="slr-item-text">
-              <h2>View More Info</h2>
-              <p>description, photo, category, chiefdom</p>
-            </div>
-        </div>
-
-        <div class="toggleBiz" ng-if="showMoreDetails">
-            <div class="item item-icon-left last" >
-                <i class="icon ion-ios-pricetag"></i>
-                <div class="slr-item-text">
-                  <h2>Category</h2>
-                  <p>{{businessesDetails.category}}</p>
-                </div>
-            </div>
-            <div class="item item-icon-left last">
-                <i class="icon ion-aperture"></i>
-                <div class="slr-item-text">
-                  <h2>Chiefdom</h2>
-                  <p>{{businessesDetails.chiefdom}}</p>
-                </div>
-            </div>
-            <div class="item item-icon-left last">
-                <i class="icon ion-document-text"></i>
-                <div class="slr-item-text item-text-wrap">
-                  <h2>Description</h2>
-                  <p>{{businessesDetails.description}}Venenatis arcu ipsa provident possimus quos. Ullamcorper, explicabo qui quis? Nemo eligendi habitant ullamcorper delectus ullamco dicta deserunt vulputate quidem blanditiis, ratione commodi cupiditate,</p>
-                </div>
-            </div>
-            <div class="item item-icon-left last">
-                <i class="icon ion-ios-camera"></i>
-                <div class="slr-item-text">
-                  <h2>Photos</h2>
-                    <div class="slr-item-text biz-ratings">
-                        <img ng-src="{{businessesDetails.image.src}}" width="100px" height="100px" />     
-                    </div>
-                </div>
-            </div>            
-        </div>
-        <div class="button button-full ion-chevron-up" ng-click="showMoreBizDetail()" ng-if="showMoreDetails"></div>
-    </div>
-    <div>
-        <span>Recommended Reviews</span>
-        <div class="list">
-          <i class="icon ion-ios-loop-strong" ng-if="!businessesReview.length" ></i> 
-        </div>
-    </div>
-    <ion-list ng-hide="showMoreDetails">
-        <ion-item ng-repeat="bs in businessesReview" ng-click="reviewClicked(bs)" style="padding:5px;">
-            <div style="float:left;">
-                <img ng-src="{{bs.field_ltc_biz_photos.und[0].src}}" alt="{{bs.picture.alt}}" width="40" height="40" />
-            </div>
-            <div style="font-size:14px;color:#000000;float:left;margin-left:15px;margin-top:3px;">
-                <div>{{bs.subject}}</div>
-                <div style="font-size:10px;">
-                    <span>{{}}5/5</span>
-                    <span ng-repeat="x in bs.starcount">
-                        <!-- <i class="icon icon ion-star {{bs.starimage[$index]}}"></i> -->
-                        <img ng-src="assets/img/{{bs.starimage[$index]}}.png" width="15px" height="15px" />
-                    </span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        2 months ago
-                </div>
-                <div class="item-text-wrap">
-                    <!-- <p>{{bs.realname}}</p> -->
-                    <p>{{bs.comment_body.und[0]['value']}}</p>
-                </div>
-            </div>
-            <div style="float:right;margin-right:10px;">
-                <i class="icon ion-chevron-right icon-accessory"></i>
-            </div>
-            <div style="clear:both;"></div>
-        </ion-item>
+        <div class="biz-category"><span>{{businessesDetails.keywords}}</span>, <span>{{businessesDetails.category}}</span></div>
+        <div class="biz-hours">Hours Today{{getTimeFormat(businessesDetails.hours)}}</div>
+        <span class="mi">{{businessesDetails.distance}} mi</span>
+        <span class="{{getStatus(businessesDetails.hours)}}">{{getStatus(businessesDetails.hours)}}</span>
+      </ion-item>
     </ion-list>
+
+    <button class="button button-full button-calm shadow-none m-none" ng-click="writeReviewClick()"><i class="icon ion-compose"></i> Write a Review</button>
+    <div class="button-bar">
+      <button class="button button-small icon icon-top ion-android-bookmark" ng-click="bookmarkClick()">Bookmark</button>
+      <button class="button button-small icon icon-top ion-ios-locked-outline" ng-click="claimBusinessClick()">Claim Business</button>
+      <button class="button button-small icon icon-top ion-edit" ng-click="editBusinessClick()">Edit Business</button>
+    </div>
+
+    <div class="map-address">
+      <div class="map" ng-show="businessesDetails.geocode_lat!='' && businessesDetails.geocode_lat!=null"></div>
+      <div class="button button-full button-stable shadow-none m-none icon-right ion-ios-arrow-right address">
+        <span>{{businessesDetails.street}}</span>,
+        <span>{{businessesDetails.city}}</span>,
+        <span>{{businessesDetails.country}}</span>
+      </div>
+    </div>
+
+    <div class="list slr-list border-top border-bottom m-none">
+      <div class="item item-icon-left">
+        <i class="icon ion-ios-navigate-outline"></i>
+        <div class="slr-item-text">
+          <h4>Get Direction to Business</h4>
+          <p>{{businessesDetails.distance}}</p>
+        </div>
+      </div>
+      <div class="item item-icon-left">
+        <i class="icon ion-ios-telephone"></i>
+        <div class="slr-item-text">
+          <h4>Call Business</h4>
+          <p>{{businessesDetails.phone}}</p>
+        </div>
+      </div>
+      <div class="item item-icon-left">
+        <i class="icon ion-ios-email"></i>
+        <div class="slr-item-text">
+          <h4>Send Business and Email</h4>
+          <p>{{businessesDetails.email}}</p>
+        </div>
+      </div>
+      <div class="item item-icon-left last" ng-if="!showMoreDetails" ng-click="showMoreBizDetail()">
+        <i class="icon ion-more"></i>
+        <div class="slr-item-text">
+          <h4>View More Info</h4>
+          <p>description, photo, category, chiefdom</p>
+        </div>
+      </div>
+      <div class="toggleBiz" ng-if="showMoreDetails">
+        <div class="item item-icon-left" >
+          <i class="icon ion-ios-pricetag"></i>
+          <div class="slr-item-text">
+            <h4>Category</h4>
+            <p>{{businessesDetails.category}}</p>
+          </div>
+        </div>
+        <div class="item item-icon-left">
+          <i class="icon ion-aperture"></i>
+          <div class="slr-item-text">
+            <h4>Chiefdom</h4>
+            <p>{{businessesDetails.chiefdom}}</p>
+          </div>
+        </div>
+        <div class="item item-icon-left">
+          <i class="icon ion-document-text"></i>
+          <div class="slr-item-text item-text-wrap">
+            <h4>Description</h4>
+            <p>{{businessesDetails.description}} Venenatis arcu ipsa provident possimus quos. Ullamcorper, explicabo qui quis? Nemo eligendi habitant 
+	            ullamcorper delectus ullamco dicta deserunt vulputate quidem blanditiis, ratione commodi cupiditate,</p>
+          </div>
+        </div>
+        <div class="item item-icon-left">
+          <i class="icon ion-ios-camera"></i>
+          <div class="slr-item-text">
+            <h4>Photos</h4>
+          </div>
+        </div>
+        <div class="item item-icon-left last">
+          <div class="slr-item-text">
+            <img ng-src="{{businessesDetails.image.src}}" width="50px" height="50px" />     
+          </div>
+        </div>
+      </div>
+      <div class="button button-full ion-chevron-up shadow-none m-none" ng-click="showMoreBizDetail()" ng-if="showMoreDetails"></div>
+    </div>
+
+    <div class="recommended-reviews">
+	  <h5 class="dark-bg light padding m-none">Recommended Reviews</h5>
+	  <div class="padding text-center" ng-if="!businessesReview.length"><ion-spinner icon="spiral"></ion-spinner></div>
+      <ion-list class="biz-list" ng-hide="showMoreDetails">
+        <ion-item class="item-thumbnail-left item-icon-right" ng-repeat="bs in businessesReview" ng-click="reviewClicked(bs)">
+          <img ng-src="{{bs.field_ltc_biz_photos.und[0].src}}" alt="{{bs.picture.alt}}" />
+	      <h4>{{bs.subject}}</h4>
+	      <div class="biz-ratings">
+		    <span class="rating-numbers">{{}}5/5</span><div class="star-rating"><span style="width:{{bs.ratings}}"></span></div> 2 months ago
+          </div>
+          <p>{{bs.comment_body.und[0]['value']}}</p>
+          <i class="icon ion-ios-arrow-right icon-small"></i>
+        </ion-item>
+      </ion-list>
+    </div>
   </ion-content>
 </ion-view>
