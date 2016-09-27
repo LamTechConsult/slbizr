@@ -4,7 +4,7 @@
 
 var SLBizReviews = angular.module('SLBizReviews', ['ionic','ngCordova','angularMoment','d7-services','ngCordovaOauth','ionic.rating','ngStorage','SLBizReviews.config']);
 
-SLBizReviews.run(function($ionicPlatform,$state, $ionicHistory) {
+SLBizReviews.run(function($ionicPlatform, $rootScope, $cordovaStatusbar, $ionicHistory, $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -17,6 +17,8 @@ SLBizReviews.run(function($ionicPlatform,$state, $ionicHistory) {
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
+      //StatusBar.styleLightContent();
+      //$cordovaStatusbar.overlaysWebView(true);
       StatusBar.styleDefault();
     }
   });

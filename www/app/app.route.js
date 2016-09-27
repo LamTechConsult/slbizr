@@ -348,6 +348,15 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       }
     }
   })
+  .state('app.camSource',{
+    url:'/camSource/:bid',
+    views: {
+      'menu-camSource': {
+        templateUrl: 'app/templates/biz/cam-source.html',
+        controller: 'writeReviewCtrl'
+      }
+    }
+  })
   // if none of the above states are matched, use this as the fallback
   //$urlRouterProvider.otherwise('splash');
 });

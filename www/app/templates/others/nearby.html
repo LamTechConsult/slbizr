@@ -19,7 +19,7 @@
         </div>
         <div class="biz-category">{{bs.node.category}}</div>
         <div class="biz-hours">Hours Today{{getTimeFormat(bs.node.hours)}}</div>
-        <span class="mi">{{storage.lat|distance:storage.long:bs.node.geocode_lat:bs.node.geocode_long:"N"}} mi</span>
+        <span class="mi">{{bs.node.distance}} mi</span>
         <span class="{{getStatus(bs.node.hours)}}">{{getStatus(bs.node.hours)}}</span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
       </ion-item>

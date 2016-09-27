@@ -1,19 +1,9 @@
 
 SLBizReviews.controller('mainCtrl', function($scope,$localStorage,$cordovaGeolocation,$rootScope,$state) {
   $rootScope.storage = $localStorage;
-  // var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  // $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-  //   var lat  = position.coords.latitude
-  //   var long = position.coords.longitude
-  //   console.log("lat:"+lat+"Log:"+long);
-  //   $rootScope.lat = lat;
-  //   $rootScope.long = long;
-  // }, function(err) {
-  //   console.log(err);
-  // });
 });
 
-SLBizReviews.controller('writeReviewCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,businessesService) {
+SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,$ionicHistory,$rootScope,$stateParams,$localStorage,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -62,6 +52,59 @@ SLBizReviews.controller('writeReviewCtrl', function($scope,$state,$ionicHistory,
       });
     }  
   }
+
+  $scope.takePicture = function(){
+    $state.go('app.camSource',{bid:$stateParams.bid});
+  }
+  $scope.useCamera = function(){
+      var options = {
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        quality: 50,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 100,
+        targetHeight: 100,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: false,
+        correctOrientation:true
+      };
+
+      CameraService.getPicture(options).then(function(imageURI) {
+        //var image = document.getElementById('myImage');
+        $rootScope.pictureURL = imageURI;
+        //state.go('app.writeReview',{bid:$stateParams.bid});
+        $ionicHistory.goBack();
+      }, function(err) {
+          alert(error);;
+      });
+     $cordovaCamera.cleanup().then(); // only for FILE_URI
+  }
+  $scope.useGallery = function(){
+        var options = {
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: 0,
+        quality: 50,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 100,
+        targetHeight: 100,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: false,
+        correctOrientation:true
+      };
+
+      CameraService.getPicture(options).then(function(imageURI) {
+        //var image = document.getElementById('myImage');
+        $rootScope.pictureURL = imageURI;
+        //state.go('app.writeReview',{bid:$stateParams.bid});
+        $ionicHistory.goBack();
+      }, function(err) {
+          alert(error);;
+      });
+     $cordovaCamera.cleanup().then(); // only for FILE_URI
+  }
+
 });
 
 SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,ProfileService,businessesService) {
@@ -74,7 +117,7 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       businessesService.getBusinesses()
         .then(function (biz) {
-          console.log($stateParams.bid);
+
           for (a=0;a<biz.nodes.length;a++){
             if(biz.nodes[a].node.nid === $stateParams.bid){
               $rootScope.businessesDetails = biz.nodes[a].node;
@@ -86,8 +129,7 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
             }
           }
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
-    }
-     
+    } 
   });
   $scope.getTimeFormat = function (argument) {
     if(!argument)
@@ -114,7 +156,7 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
   
   $scope.$on("$ionicView.enter", function(event, data){
-    console.log($localStorage.lat);
+
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       $ionicHistory.clearHistory(); //hide the back button.
 
