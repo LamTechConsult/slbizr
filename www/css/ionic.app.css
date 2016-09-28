@@ -10040,45 +10040,45 @@ img {
 .star-rating {
   overflow: hidden;
   position: relative;
-  height: 14px;
-  line-height: 14px;
-  font-size: 9px;
-  width: 70px;
+  height: 1.6em;
+  line-height: 1.6em;
+  font-size: 0.8em;
+  width: 8.2em;
   font-family: 'Ionicons'; }
   .star-rating::before, .star-rating::after {
     content: '\f24e\f24e\f24e\f24e\f24e';
     float: left;
-    top: 0px;
-    left: 3px;
     position: absolute;
-    letter-spacing: 6px;
+    top: 0px;
+    left: 0.3em;
+    letter-spacing: 0.77em;
     color: #fff; }
   .star-rating::before {
     content: '\f21b\f21b\f21b\f21b\f21b';
     color: #a5a5a5;
-    font-size: 16px;
-    letter-spacing: 1px;
-    left: 0px; }
+    font-size: 1.8em;
+    letter-spacing: 0.1em;
+    left: 0; }
   .star-rating span {
     overflow: hidden;
     float: left;
     top: 0;
     left: 0;
     position: absolute;
-    padding-top: 14px; }
+    padding-top: 1.6em; }
     .star-rating span::before, .star-rating span::after {
       content: '\f24e\f24e\f24e\f24e\f24e';
-      top: 0px;
       position: absolute;
-      left: 3px;
-      letter-spacing: 6px;
+      top: 0;
+      left: 0.3em;
+      letter-spacing: 0.77em;
       color: #fff; }
     .star-rating span::before {
       content: '\f21b\f21b\f21b\f21b\f21b';
       color: #86dc00;
-      font-size: 16px;
-      letter-spacing: 1px;
-      left: 0px; }
+      font-size: 1.8em;
+      letter-spacing: 0.1em;
+      left: 0; }
 
 /*--- ionic ratings ---*/
 .ionic_ratings .icon {
