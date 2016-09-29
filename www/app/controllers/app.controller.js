@@ -26,7 +26,6 @@ SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,
     if($scope.rating.rate>0){
        var percentRating = $scope.rating.rate*20;
     }
-    //$scope.writeReviewData.field_ltc_biz_photos = $rootScope.pictureURL;
     $scope.writeReviewData.field_ltc_biz_rating = {und:[{rating:percentRating,target:null}]}
     $scope.serverErrors = [];
     if($scope.writeReviewData.subject == undefined){
@@ -38,6 +37,7 @@ SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,
       console.log($scope.writeReviewData);
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       businessesService.postReviews($scope.writeReviewData).then(function (data) {
+        $scope.writeReviewData = {};
         $state.go('app.businessDetails',{bid:$stateParams.bid});
       },function (errorResult) {
           if (errorResult.status >= 400 && errorResult.status < 500) {
@@ -60,49 +60,47 @@ SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,
       var options = {
         destinationType: Camera.DestinationType.DATA_URL,//Camera.DestinationType.FILE_URI,
         sourceType: Camera.PictureSourceType.CAMERA,
-        quality: 50,
+        quality: 80,
         allowEdit: true,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100,
+        targetWidth: 200,
+        targetHeight: 200,
         popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: true,
-        correctOrientation:true
+        saveToPhotoAlbum: false,
+        //correctOrientation:true
       };
 
       CameraService.getPicture(options).then(function(imageData) {
-        //var image = document.getElementById('myImage');
-        $rootScope.pictureURL =  imageData;//"data:image/jpeg;base64," +//imageURI;
-        //state.go('app.writeReview',{bid:$stateParams.bid});
+
+        $rootScope.pictureURL =  imageData;
         $ionicHistory.goBack();
       }, function(err) {
-          alert(error);;
+          alert(JSON.stingify(error));
       });
-     $cordovaCamera.cleanup().then(); // only for FILE_URI
+     //$cordovaCamera.cleanup().then(); // only for FILE_URI
   }
   $scope.useGallery = function(){
         var options = {
         destinationType: Camera.DestinationType.DATA_URL,//Camera.DestinationType.FILE_URI,
         sourceType: 0,
-        quality: 50,
+        quality: 80,
         allowEdit: true,
         encodingType: Camera.EncodingType.JPEG,
         targetWidth: 100,
         targetHeight: 100,
         popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: true,
-        correctOrientation:true
+        saveToPhotoAlbum: false,
+        //correctOrientation:true
       };
 
       CameraService.getPicture(options).then(function(imageData) {
-        //var image = document.getElementById('myImage');
-        $rootScope.pictureURL =  imageData;//"data:image/jpeg;base64," + imageData;//imageURI;
-        //state.go('app.writeReview',{bid:$stateParams.bid});
+
+        $rootScope.pictureURL =  imageData;
         $ionicHistory.goBack();
       }, function(err) {
-          alert(error);;
+          alert(JSON.stingify(error));
       });
-     $cordovaCamera.cleanup().then(); // only for FILE_URI
+     //$cordovaCamera.cleanup().then(); // only for FILE_URI
   }
 
 });

@@ -49,10 +49,9 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 	        .then(
 	        function (result) {
 	          reviewData.field_ltc_biz_photos = DrupalHelperService.structureField({fid: result.data.fid});
-	          //alert(JSON.stringify(reviewData.field_ltc_biz_photos));
 	        },
 	        function (error) {
-	        	alert(JSON.stringify(error));
+	        	alert('error:'+JSON.stringify(error));
 	          //resolve without image
 	          return $q.resolve(true);
 	        })
@@ -71,16 +70,20 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 	        if ($rootScope.pictureURL) {
 	     	
 	          var imgData = $rootScope.pictureURL;
-	          //delete reviewData.field_ltc_biz_photos.base64;
-
+	          delete $rootScope.pictureURL;
+	          //Create a new name for the photo
+			  var d = new Date(),
+			      n = d.getTime(),
+			      newFileName = n + ".jpg";
+			      
 	          var newImage = {};
 
 	          newImage.file = imgData;
-	          newImage.filename = 'drupal.jpg';
+	          newImage.filename = newFileName;
 	          newImage.filesize = newImage.file.length;
 	          newImage.filepath = 'photos/biz/reviews/';
 	          newImage.filemime = "image/jpeg",
-	          newImage.image_file_name = 'drupal.jpg';
+	          newImage.image_file_name = newFileName;
 
 	          return FileResource.create(newImage);
 	        }
