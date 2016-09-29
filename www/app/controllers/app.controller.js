@@ -18,7 +18,7 @@ SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,
     //comment_body:{und:[{value:''}]},
     nid:parseInt($stateParams.bid),
     //uid:1,
-    //field_ltc_biz_rating:{und:[{rating:$scope.rating,target:null}]}
+    //field_ltc_biz_photos:{und:[{rating:$scope.rating,target:null}]}
   };
   
   $scope.serverErrors = [];
@@ -26,7 +26,7 @@ SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,
     if($scope.rating.rate>0){
        var percentRating = $scope.rating.rate*20;
     }
-   
+    //$scope.writeReviewData.field_ltc_biz_photos = $rootScope.pictureURL;
     $scope.writeReviewData.field_ltc_biz_rating = {und:[{rating:percentRating,target:null}]}
     $scope.serverErrors = [];
     if($scope.writeReviewData.subject == undefined){
@@ -58,7 +58,7 @@ SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,
   }
   $scope.useCamera = function(){
       var options = {
-        destinationType: Camera.DestinationType.FILE_URI,
+        destinationType: Camera.DestinationType.DATA_URL,//Camera.DestinationType.FILE_URI,
         sourceType: Camera.PictureSourceType.CAMERA,
         quality: 50,
         allowEdit: true,
@@ -66,13 +66,13 @@ SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,
         targetWidth: 100,
         targetHeight: 100,
         popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: false,
+        saveToPhotoAlbum: true,
         correctOrientation:true
       };
 
-      CameraService.getPicture(options).then(function(imageURI) {
+      CameraService.getPicture(options).then(function(imageData) {
         //var image = document.getElementById('myImage');
-        $rootScope.pictureURL = imageURI;
+        $rootScope.pictureURL =  imageData;//"data:image/jpeg;base64," +//imageURI;
         //state.go('app.writeReview',{bid:$stateParams.bid});
         $ionicHistory.goBack();
       }, function(err) {
@@ -82,7 +82,7 @@ SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,
   }
   $scope.useGallery = function(){
         var options = {
-        destinationType: Camera.DestinationType.FILE_URI,
+        destinationType: Camera.DestinationType.DATA_URL,//Camera.DestinationType.FILE_URI,
         sourceType: 0,
         quality: 50,
         allowEdit: true,
@@ -90,13 +90,13 @@ SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,
         targetWidth: 100,
         targetHeight: 100,
         popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: false,
+        saveToPhotoAlbum: true,
         correctOrientation:true
       };
 
-      CameraService.getPicture(options).then(function(imageURI) {
+      CameraService.getPicture(options).then(function(imageData) {
         //var image = document.getElementById('myImage');
-        $rootScope.pictureURL = imageURI;
+        $rootScope.pictureURL =  imageData;//"data:image/jpeg;base64," + imageData;//imageURI;
         //state.go('app.writeReview',{bid:$stateParams.bid});
         $ionicHistory.goBack();
       }, function(err) {

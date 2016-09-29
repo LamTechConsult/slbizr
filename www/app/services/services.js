@@ -17,13 +17,12 @@ SLBizReviews.service('CameraService', function($q,$cordovaCamera) {
 /**
  * BiZ Services :
  */
-SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,DrupalApiConstant,DataService,NodeResource,CommentResource) {
+SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHelperService,DrupalApiConstant,DataService,NodeResource,FileResource,CommentResource) {
     var businessesService = {
 		  getBusinesses: getBusinesses,
 		  getBusinessesReview:getBusinessesReview,
 		  sortBusinessesByDistance:sortBusinessesByDistance,
-		  postReviews:postReviews,
-		  saveBizDistance:saveBizDistance
+		  postReviews:postReviews
 		}
     var lastFetched = null;
     var businesses = null;
@@ -38,14 +37,58 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 	 */
 	function postReviews(reviewData){
 
-		var defer = $q.defer();
-		CommentResource.create(reviewData).success(function (data) {
-		    defer.resolve(data);
-		}).catch(function (error) {
-		    defer.reject(error);
-		});
-	    return defer.promise;
-	}
+		// var defer = $q.defer();
+		// CommentResource.create(reviewData).success(function (data) {
+		//     defer.resolve(data);
+		// }).catch(function (error) {
+		//     defer.reject(error);
+		// });
+	 	// return defer.promise;
+
+    	return uploadImage()
+	        .then(
+	        function (result) {
+	          reviewData.field_ltc_biz_photos = DrupalHelperService.structureField({fid: result.data.fid});
+	          //alert(JSON.stringify(reviewData.field_ltc_biz_photos));
+	        },
+	        function (error) {
+	        	alert(JSON.stringify(error));
+	          //resolve without image
+	          return $q.resolve(true);
+	        })
+
+	        .finally(
+	        function () {
+	        	//console.log(reviewData);
+	          return CommentResource.create(reviewData);
+	        });
+   
+		//returns promise
+	    // - resolve after saved image to server
+	    // - rejects if saving image fails or no image given
+	    function uploadImage() {
+	        //if data is given
+	        if ($rootScope.pictureURL) {
+	     	
+	          var imgData = $rootScope.pictureURL;
+	          //delete reviewData.field_ltc_biz_photos.base64;
+
+	          var newImage = {};
+
+	          newImage.file = imgData;
+	          newImage.filename = 'drupal.jpg';
+	          newImage.filesize = newImage.file.length;
+	          newImage.filepath = 'photos/biz/reviews/';
+	          newImage.filemime = "image/jpeg",
+	          newImage.image_file_name = 'drupal.jpg';
+
+	          return FileResource.create(newImage);
+	        }
+	        //else fail
+	        return $q.reject(false);
+	    }
+    }
+
 	/**
 	 * Get active business reviews from backend.
 	 */
@@ -54,13 +97,35 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 		var defer = $q.defer();
 		NodeResource.comments({nid: bid}).success(function (data) {
 			reviews = data;	 
-		    // console.log(data);     
+		    //console.log(data.length);
+		    if (reviews.length != 0) {
+            	prepareReviews(data);
+            	console.log(reviews);
+          	}
 		    defer.resolve(reviews);
 	    }).catch(function (error) {
 		    defer.reject(error);
 		});
 	    return defer.promise;
 	}
+
+	function prepareReviews(reviews){
+		angular.forEach(reviews, function (value, key) {
+			if("field_ltc_biz_photos" in reviews[key] && "und" in reviews[key].field_ltc_biz_photos) {
+				angular.forEach(reviews[key].field_ltc_biz_photos.und, function (value, key1) {
+
+			        var imgPath = reviews[key].field_ltc_biz_photos.und[key1].uri.split('//')[1].replace(/^\/+/, "");
+			        reviews[key].field_ltc_biz_photos.und[key1].imgPath = DrupalHelperService.getDrupalPath()+'sites/default/files/' + imgPath;
+			       //console.log(reviews[key].field_ltc_biz_photos.und[key1].imgPath);
+	        	});
+			}
+		});
+    	return reviews;
+	}
+
+
+
+
 	/**
 	 * Get active business from backend.
 	 */

@@ -24,6 +24,6 @@
       </label>
     </div>
     <button class="button button-full shadow-none icon icon-top ion-ios-camera" ng-click="takePicture()">Add Photos</button>
-    <img ng-src="{{pictureURL}}" id="myImage">
+    <img ng-src="data:image/jpeg;base64,{{pictureURL}}">
   </ion-content>
 </ion-view>

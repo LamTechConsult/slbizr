@@ -106,7 +106,7 @@
 	  <div class="padding text-center" ng-if="!businessesReview.length"><ion-spinner icon="spiral"></ion-spinner></div>
       <ion-list class="biz-list">
         <ion-item class="item-thumbnail-left item-icon-right" ng-repeat="bs in businessesReview" ng-click="reviewClicked(bs)">
-          <img ng-if="bs.field_ltc_biz_photos.und" ng-src="{{bs.field_ltc_biz_photos.und[0].src}}">
+          <img ng-if="bs.field_ltc_biz_photos.und" ng-src="{{bs.field_ltc_biz_photos.und[0].imgPath}}">
           <img ng-if="!bs.field_ltc_biz_photos.und" src="assets/img/fullsize_biz.png">
 	      <h4>{{bs.subject}}</h4>
 	      <div class="biz-ratings">

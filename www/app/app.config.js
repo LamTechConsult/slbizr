@@ -8,6 +8,7 @@
 
     /** @ngInject */
     function configFunction(DrupalApiConstant) {
+      DrupalApiConstant.filesPath = "sites/default/files";
       //drupal services configurations
       //DrupalApiConstant.drupal_instance = 'http://localhost/2016slbrapp/ionic-d7/slbizreviewslinode/docroot/';
       //DrupalApiConstant.drupal_instance = 'http://slbizreviewslinode.local/';
