@@ -1,6 +1,33 @@
 
 SLBizReviews.controller('mainCtrl', function($scope,$localStorage,$cordovaGeolocation,$rootScope,$state) {
   $rootScope.storage = $localStorage;
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+    var lat  = position.coords.latitude
+    var long = position.coords.longitude
+    console.log("lat:"+lat+"Log:"+long);
+      $localStorage.lat = lat;
+      $localStorage.long = long;
+    }, function(err) {
+      console.log(err);
+    });
+});
+SLBizReviews.controller('reviewDetailsCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,businessesService) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    $rootScope.reviewsDetails = {};
+    if($stateParams.rid){
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+      businessesService.getBusinessesReviewById($stateParams.rid)
+        .then(function (bizReviewDetail) {
+          $rootScope.reviewsDetails = bizReviewDetail;
+          console.log($rootScope.reviewsDetails);
+      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+    } 
+  });
+ 
 });
 
 SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,$ionicHistory,$rootScope,$stateParams,$localStorage,businessesService) {
@@ -121,6 +148,7 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
               $rootScope.businessesDetails = biz.nodes[a].node;
               businessesService.getBusinessesReview($stateParams.bid).then(function(review) {
                 $rootScope.businessesReview = review;
+
               });
               console.log($rootScope.businessesDetails);
               break;
@@ -149,7 +177,13 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
   $scope.writeReviewClick = function () {
     $state.go('app.writeReview',{bid:$stateParams.bid});
   }
-  
+  $scope.reviewerDetails = function (rid) {
+    console.log(rid);
+    $state.go('app.reviewDetails',{rid:rid});
+  }
+  $scope.reviewerProfile = function(uid){
+    $state.go('app.reviewerProfile',{uid:uid});
+  }
 });
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
   
@@ -217,15 +251,11 @@ SLBizReviews.controller('DashCtrl', function($scope,$state,$ionicHistory,$rootSc
 
 });
 SLBizReviews.controller('otherCtrl', function($scope,$state,$ionicHistory,$rootScope,$localStorage,ProfileService) {
-
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
   $scope.$on("$ionicView.enter", function(event, data){
-      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-      $ionicHistory.clearHistory(); //hide the back button.
-      ProfileService.getProfile()
-        .then(function (profile) {
-          $rootScope.currentUser = profile;
-          console.log($rootScope.currentUser);
-      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+     
   });
 });
 
@@ -287,9 +317,20 @@ SLBizReviews.controller('AccountCtrl', function($scope,AuthenticationService,$lo
   }
 });
 
-SLBizReviews.controller('subProfileCtrl', function($scope,$state,$rootScope,$localStorage,ProfileService) {
+SLBizReviews.controller('reviewerProfileCtrl', function($scope,$state,$stateParams,businessesService,$rootScope,$localStorage,ProfileService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    $rootScope.reviewerProfile = {};
+    if($stateParams.uid){
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+      businessesService.getReviewerProfile($stateParams.uid)
+        .then(function (data) {
+          $rootScope.reviewerProfile = data;
+          console.log($rootScope.reviewerProfile);
+      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+    } 
   });
 });
 

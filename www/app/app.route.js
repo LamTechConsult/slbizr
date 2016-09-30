@@ -258,14 +258,23 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       }
   })
 
-  .state('app.myReviewer',{
-      url:'/myReviewers',
+  .state('app.myReviews',{
+      url:'/myReviews',
       views: {
-        'menu-myReviewers': {
-          templateUrl: 'app/templates/profile/my-reviewers.html',
+        'menu-myReviews': {
+          templateUrl: 'app/templates/profile/my-reviews.html',
           controller: 'ProfileCtrl'
         }
       }
+  })
+  .state('app.reviewerProfile',{
+    url:'/reviewerProfile/:uid',
+    views: {
+      'menu-reviewerProfile': {
+        templateUrl: 'app/templates/profile/reviewer-profile.html',
+        controller: 'reviewerProfileCtrl'
+      }
+    }
   })
   .state('app.myBookMarks',{
       url:'/myBookMarks',
@@ -348,6 +357,16 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       }
     }
   })
+  .state('app.reviewDetails',{
+    url:'/reviewDetails/:rid',
+    views: {
+      'menu-reviewDetails': {
+        templateUrl: 'app/templates/biz/review-details.html',
+        controller: 'reviewDetailsCtrl'
+      }
+    }
+  })
+
   .state('app.camSource',{
     url:'/camSource/:bid',
     views: {
@@ -357,6 +376,7 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       }
     }
   })
+
   // if none of the above states are matched, use this as the fallback
   //$urlRouterProvider.otherwise('splash');
 });

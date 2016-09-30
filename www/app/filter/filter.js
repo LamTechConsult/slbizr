@@ -19,6 +19,29 @@ SLBizReviews.filter('cut', function () {
 });
 
 // Setup the filter
+SLBizReviews.filter('ratingClass', function() {
+
+  // Create the return function
+  return function(rating) {
+
+    if(angular.isUndefined(rating)){
+      return 'grey';
+    }
+    // Ensure that the passed in data is a number
+    numRating = parseInt(rating);
+    if(numRating == 20 || numRating == 40 || numRating == 1 || numRating == 2){
+      return 'red';
+    }
+    if(numRating == 60 | numRating == 3) {
+      return 'yellow';
+    } 
+    else {
+       return;
+    }
+  }
+});
+
+// Setup the filter
 SLBizReviews.filter('rating', function() {
 
   // Create the return function

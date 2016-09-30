@@ -1,0 +1,32 @@
+<ion-view view-title="{{businessesDetails.title}}">
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-back-button side="left">Back </ion-nav-back-button>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear ion-more" ng-click="viewReviewerProfile()"></button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+  <ion-content>
+    <div class="item item-avatar avatar-top text-center">
+  	  <img ng-if="reviewsDetails.user.picture" ng-src="{{reviewsDetails.user.picture.url}}">
+      <img ng-if="!reviewsDetails.user.picture" src="assets/img/user/default-avatar.png">
+  	  <h2 ng-if="reviewsDetails.user.field_user_nick_name">{{reviewsDetails.user.field_user_nick_name.und[0].value}}</h2>
+  	  <h2 ng-if="!reviewsDetails.user.field_user_nick_name">{{reviewsDetails.user.name}}</h2>
+      <span>Member for <span am-time-ago="reviewsDetails.user.created" am-preprocess="unix"></span>
+  	</div>
+    <div class="recommended-reviews" >
+        <div class="biz-ratings {{reviewsDetails.field_ltc_biz_rating.und[0].rating | ratingClass}}">
+          <span class="rating-numbers">{{reviewsDetails.field_ltc_biz_rating.und[0].rating | rating}}/5</span>
+          <div class="star-rating">
+            <span style="width:{{reviewsDetails.field_ltc_biz_rating.und[0].rating | ratingPercentage}}"></span>
+          </div> <span am-time-ago="reviewsDetails.created" am-preprocess="unix"></span>
+        </div>
+    </div>
+    <div class="list slr-list border-bottom"></div>
+      <div class="item item-body">{{reviewsDetails.comment_body.und[0].value}}</div>
+      <div ng-repeat="bs in reviewsDetails.field_ltc_biz_photos.und">
+        <img ng-if="bs.field_ltc_biz_photos.und" ng-src="{{bs.field_ltc_biz_photos.und[0].imgPath}}">
+        <img ng-if="!bs.field_ltc_biz_photos.und" src="assets/img/fullsize_biz.png">
+    </div>
+  </ion-content>
+</ion-view>

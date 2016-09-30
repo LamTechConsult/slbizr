@@ -17,12 +17,15 @@ SLBizReviews.service('CameraService', function($q,$cordovaCamera) {
 /**
  * BiZ Services :
  */
-SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHelperService,DrupalApiConstant,DataService,NodeResource,FileResource,CommentResource) {
+SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {
     var businessesService = {
 		  getBusinesses: getBusinesses,
 		  getBusinessesReview:getBusinessesReview,
+		  getBusinessesReviewById:getBusinessesReviewById,
 		  sortBusinessesByDistance:sortBusinessesByDistance,
-		  postReviews:postReviews
+		  postReviews:postReviews,
+		  getReviewerProfile:getReviewerProfile,
+		  //setReviewUser:setReviewUser
 		}
     var lastFetched = null;
     var businesses = null;
@@ -31,6 +34,47 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
     return businessesService;
 
 //////////////////////////////////////////////////////////
+	/**
+	 * Get getReviewerProfile from backend.
+	 */
+	function getReviewerProfile(uid) {
+		var reviewerProfile = null;
+		var defer = $q.defer();
+		UserResource.retrieve({uid:uid}).success(function (data) {
+	 			reviewerProfile = data;
+		    	defer.resolve(reviewerProfile);
+		}).catch(function (error) {
+		    defer.reject(error);
+		});
+	    return defer.promise;
+	}
+
+	/**
+	 * Post getBusinessesReviewById.
+	 */
+	 function getBusinessesReviewById(rid){
+	 	console.log(rid);
+	 	var defer = $q.defer();
+	 	var reviewsDetails = '';
+	 	if(reviews!==null){
+	 		angular.forEach(reviews, function (value, key) {
+	 			if(value.cid == rid){
+	 				reviewsDetails = value;
+	 			}
+	 		});
+	 		UserResource.retrieve({uid:reviewsDetails.uid}).success(function (data) {
+	 			reviewsDetails.user = data;
+		    	defer.resolve(reviewsDetails);
+			}).catch(function (error) {
+			    defer.reject(error);
+			});
+	 		
+	 		//console.log(reviewsDetails);
+	 	}else{
+	 		defer.reject();
+	 	}
+	    return defer.promise;
+	 }
 
 	/**
 	 * Post review to the business.

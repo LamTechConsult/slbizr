@@ -7,7 +7,7 @@
   </ion-nav-bar>
 
   <ion-content>
-    <rating ng-model="rating.rate" max="rating.max" class="text-center padding-t2x"></rating>
+    <rating ng-model="rating.rate" max="rating.max" class="text-center {{rating.rate | ratingClass}} padding-t2x"></rating>
 
     <div class="card" ng-if="serverErrors.length">
       <div class="item item-text-wrap" ng-repeat="serverError in serverErrors">
