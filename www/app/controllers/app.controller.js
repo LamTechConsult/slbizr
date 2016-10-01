@@ -1,25 +1,32 @@
 
 SLBizReviews.controller('mainCtrl', function($scope,$localStorage,$cordovaGeolocation,$rootScope,$state) {
   $rootScope.storage = $localStorage;
-  var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-    var lat  = position.coords.latitude
-    var long = position.coords.longitude
-    console.log("lat:"+lat+"Log:"+long);
-      $localStorage.lat = lat;
-      $localStorage.long = long;
-    }, function(err) {
-      console.log(err);
+  $rootScope.serverErrors = [];
+  if(!$rootScope.storage){
+    var posOptions = {timeout: 10000, enableHighAccuracy: false};
+    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+      var lat  = position.coords.latitude
+      var long = position.coords.longitude
+      console.log("lat:"+lat+"Log:"+long);
+        $localStorage.lat = lat;
+        $localStorage.long = long;
+      }, function(err) {
+        $rootScope.serverErrors.push('Unable to get loacation try manually.');
+        console.log(err);
     });
+  }else{
+    $rootScope.serverErrors.push('Unable to get loacation try manually.');
+  }
+  
 });
 SLBizReviews.controller('reviewDetailsCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
     $rootScope.reviewsDetails = {};
     if($stateParams.rid){
-      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       businessesService.getBusinessesReviewById($stateParams.rid)
         .then(function (bizReviewDetail) {
           $rootScope.reviewsDetails = bizReviewDetail;

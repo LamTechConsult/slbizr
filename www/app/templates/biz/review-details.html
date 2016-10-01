@@ -25,8 +25,9 @@
     <div class="list slr-list border-bottom"></div>
       <div class="item item-body">{{reviewsDetails.comment_body.und[0].value}}</div>
       <div ng-repeat="bs in reviewsDetails.field_ltc_biz_photos.und">
-        <img ng-if="bs.field_ltc_biz_photos.und" ng-src="{{bs.field_ltc_biz_photos.und[0].imgPath}}">
-        <img ng-if="!bs.field_ltc_biz_photos.und" src="assets/img/fullsize_biz.png">
+        <img ng-if="bs.imgPath" ng-src="{{bs.imgPath}}">
+        <img ng-if="!bs.imgPath" src="assets/img/fullsize_biz.png">
+        <span class="image-description">{{bs.title}}</span>
     </div>
   </ion-content>
 </ion-view>
