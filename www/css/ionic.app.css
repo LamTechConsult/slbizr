@@ -10098,8 +10098,14 @@ ul.rating li {
     background-color: #a5a5a5;
     border-radius: 50%;
     display: inline-block; }
-  ul.rating li i.ion-ios-star {
-    background-color: #86dc00; }
+    ul.rating li i.ion-ios-star {
+      background-color: #86dc00; }
+
+ul.rating.red li i.ion-ios-star {
+  background-color: #ff3c28; }
+
+ul.rating.yellow li i.ion-ios-star {
+  background-color: #ffea00; }
 
 /*--- loading screen ---*/
 .backdrop {

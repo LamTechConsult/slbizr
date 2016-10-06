@@ -14,15 +14,17 @@
     </div>
 
     <div class="item item-avatar avatar-top text-center">
-    <img ng-if="reviewerProfile.picture" ng-src="{{reviewerProfile.picture.url}}">
+      <img ng-if="reviewerProfile.picture" ng-src="{{reviewerProfile.picture.url}}">
       <img ng-if="!reviewerProfile.picture" src="assets/img/user/default-avatar.png">
-    <h2 ng-if="reviewerProfile.field_user_nick_name">{{reviewerProfile.field_user_nick_name.und[0].value}}</h2>
-    <h2 ng-if="!reviewerProfile.field_user_nick_name">{{reviewerProfile.name}}</h2>
+      <h2 ng-if="reviewerProfile.field_user_nick_name">{{reviewerProfile.field_user_nick_name.und[0].value}}</h2>
+      <h2 ng-if="!reviewerProfile.field_user_nick_name">{{reviewerProfile.name}}</h2>
     </div>
+
     <div class="button-bar">
       <button class="button button-small icon icon-top ion-ios-plus-outline" ng-click="addFriend()">Add Friend</button>
       <button class="button button-small icon icon-top ion-arrow-right-c" ng-click="Follow()">Follow</button>
     </div>
+
     <div class="list slr-list border-bottom">
       <div class="item item-icon-left">
         <i class="icon ion-person"></i>
@@ -31,7 +33,6 @@
           <p>{{reviewerProfile.field_user_nick_name.und[0].value}}</p>
         </div>
       </div>
-
       <div class="item item-icon-left last">
         <i class="icon ion-document-text"></i>
         <div class="slr-item-text">
@@ -40,6 +41,7 @@
         </div>
       </div>
     </div>
+
     <div class="recommended-reviews"  ng-hide="showMoreDetails">
       <h5 class="dark-bg light padding m-none">Recent Reviews by 
       {{reviewerProfile.field_user_nick_name.und[0].value}}</h5>
