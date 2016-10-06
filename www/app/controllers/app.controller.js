@@ -155,14 +155,10 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
               $rootScope.businessesDetails = biz.nodes[a].node;
 			   var latm  = $rootScope.businessesDetails.geocode_lat
       		   var longm = $rootScope.businessesDetails.geocode_long
-			   var citym = $rootScope.businessesDetails.city
-			   var street = $rootScope.businessesDetails.street
                //console.log("lat:"+lat+"Log:"+long);
                $localStorage.latm = latm;
                $localStorage.longm = longm;
-			   $localStorage.citym = citym;
-			   localStorage.street = street;
-              businessesService.getBusinessesReview($stateParams.bid).then(function(review) {
+			   businessesService.getBusinessesReview($stateParams.bid).then(function(review) {
                 $rootScope.businessesReview = review;
 
               });
@@ -204,15 +200,13 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
   //////////////////////////////////////////////////////// map
   // Show map on business detail page
    var mapOptions = {
-        zoom: 16,
+        zoom: 15,
         center: new google.maps.LatLng($localStorage.latm, $localStorage.longm),
         mapTypeId: google.maps.MapTypeId.TERRAIN
     }
 //Data
 var cities = [
     {
-        city : $localStorage.citym,
-        desc : localStorage.street,
         lat : $localStorage.latm,
         long : $localStorage.longm
     }
@@ -221,34 +215,21 @@ var cities = [
 
     $scope.markers = [];
     
-    var infoWindow = new google.maps.InfoWindow();
-    
+       
     var createMarker = function (info){
         
         var marker = new google.maps.Marker({
             map: $scope.map,
             position: new google.maps.LatLng(info.lat, info.long),
-            title: info.city
-        });
-        marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
-        
-        google.maps.event.addListener(marker, 'click', function(){
-            infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
-            infoWindow.open($scope.map, marker);
-        });
-        
+         });
+               
+          
         $scope.markers.push(marker);
         
     }  
     
-    for (i = 0; i < cities.length; i++){
-        createMarker(cities[i]);
-    }
-
-    $scope.openInfoWindow = function(e, selectedMarker){
-        e.preventDefault();
-        google.maps.event.trigger(selectedMarker, 'click');
-    }
+        createMarker(cities[0]);
+   
 });
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
   
