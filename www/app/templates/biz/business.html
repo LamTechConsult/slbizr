@@ -27,15 +27,15 @@
 
     <div class="map-address">
       <div class="map" id="map"></div>
-      <div class="button button-full button-stable shadow-none m-none icon-right ion-ios-arrow-right address">
+      <button class="button button-full button-stable shadow-none m-none icon-right ion-ios-arrow-right address" ng-click="businessDetailsMapClick()">
         <span>{{businessesDetails.street}}</span>,
         <span>{{businessesDetails.city}}</span>,
         <span>{{businessesDetails.country}}</span>
-      </div>
+      </button>
     </div>
 
     <div class="list slr-list border-top border-bottom m-none">
-      <a class="item item-icon-left" ng-click="getBizLocation()">
+      <a class="item item-icon-left" ng-click="showDirectionMapClick()">
         <i class="icon ion-ios-navigate-outline"></i>
         <div class="slr-item-text">
           <h4>Get Direction to Business</h4>

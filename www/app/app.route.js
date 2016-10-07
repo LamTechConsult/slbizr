@@ -348,6 +348,15 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       }
     }
   })
+  .state('app.businessDetailsMap',{
+    url:'/businessDetailsMap/:bid',
+    views: {
+      'menu-businessDetailsMap': {
+        templateUrl: 'app/templates/biz/business-map.html',
+        controller: 'bizCtrlMap'
+      }
+    }
+  })
   .state('app.writeReview',{
     url:'/writeReview/:bid',
     views: {

@@ -139,7 +139,7 @@ SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,
 
 });
 
-SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,ProfileService,businessesService) {
+SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -197,12 +197,38 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
     $state.go('app.reviewerProfile',{uid:uid});
   }
   
+  $scope.businessDetailsMapClick = function(){
+    $state.go('app.businessDetailsMap',{bid:$stateParams.bid});
+  }
+  
+  ///// Get Direction
+  
+    var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  $cordovaGeolocation
+    .getCurrentPosition(posOptions)
+    .then(function (position) {
+      var lat  = position.coords.latitude //here you get latitude
+      var long = position.coords.longitude //here you get the longitude
+	  $localStorage.lat=lat;
+	  $localStorage.long=long;
+          }
+      // error
+    );
+	
+  $scope.reviewerProfile = function(uid){
+    $state.go('app.reviewerProfile',{uid:uid});
+  }
+ $scope.showDirectionMapClick = function () {
+           var link = ""+"http://maps.google.com/maps?saddr="+$localStorage.latm+","+$localStorage.longm+" &daddr="+$localStorage.lat+","+$localStorage.long;
+            // $location.path(link);
+            window.location = link;
+        }
   //////////////////////////////////////////////////////// map
   // Show map on business detail page
    var mapOptions = {
         zoom: 15,
         center: new google.maps.LatLng($localStorage.latm, $localStorage.longm),
-        mapTypeId: google.maps.MapTypeId.TERRAIN
+        mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 //Data
 var latlong = [
@@ -231,6 +257,98 @@ var latlong = [
         createMarker(latlong[0]);
    
 });
+
+SLBizReviews.controller('bizCtrlMap', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    if($stateParams.bid){
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+	  businessesService.getBusinesses()
+        .then(function (biz) {
+
+          for (a=0;a<biz.nodes.length;a++){
+            if(biz.nodes[a].node.nid === $stateParams.bid){
+              $rootScope.businessesDetailsMap = biz.nodes[a].node;
+			   var latm  = $rootScope.businessesDetailsMap.geocode_lat
+      		   var longm = $rootScope.businessesDetailsMap.geocode_long
+			   var city = $rootScope.businessesDetailsMap.city
+			   var title = $rootScope.businessesDetailsMap.title
+               //console.log("lat:"+lat+"Log:"+long);
+               $localStorage.latm = latm;
+               $localStorage.longm = longm;
+			   $localStorage.city = city;
+			   $localStorage.title = title;
+			   
+			   console.log($rootScope.businessesDetailsMap);
+			   break;
+            }
+          }
+      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+    } 
+  });
+  
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  $cordovaGeolocation
+    .getCurrentPosition(posOptions)
+    .then(function (position) {
+      var lat  = position.coords.latitude //here you get latitude
+      var long = position.coords.longitude //here you get the longitude
+	  $localStorage.lat=lat;
+	  $localStorage.long=long;
+          }
+      // error
+    );
+	
+  $scope.reviewerProfile = function(uid){
+    $state.go('app.reviewerProfile',{uid:uid});
+  }
+ $scope.showDirectionMapClick = function () {
+           var link = ""+"http://maps.google.com/maps?saddr="+$localStorage.latm+","+$localStorage.longm+" &daddr="+$localStorage.lat+","+$localStorage.long;
+            // $location.path(link);
+            window.location = link;
+        }
+  //////////////////////////////////////////////////////// map
+  // Show map on business detail page
+   var mapOptions = {
+        zoom: 15,
+        center: new google.maps.LatLng($localStorage.latm, $localStorage.longm),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+//Data
+var latlong = [
+    {
+        lat : $localStorage.latm,
+        long : $localStorage.longm,
+		title: $localStorage.title
+    }
+];
+    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    $scope.markers = [];
+    var infoWindow = new google.maps.InfoWindow();
+       
+    var createMarker = function (info){
+        
+        var marker = new google.maps.Marker({
+            map: $scope.map,
+            position: new google.maps.LatLng(info.lat, info.long),
+			title: info.title
+         });
+         marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';      
+          google.maps.event.addListener(marker, 'click', function(){
+            infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
+            infoWindow.open($scope.map, marker);
+        });
+        $scope.markers.push(marker);
+        
+    }  
+    
+        createMarker(latlong[0]);
+   
+});
+
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
   
   $scope.$on("$ionicView.enter", function(event, data){
