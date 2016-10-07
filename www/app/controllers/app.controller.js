@@ -205,7 +205,7 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
         mapTypeId: google.maps.MapTypeId.TERRAIN
     }
 //Data
-var cities = [
+var latlong = [
     {
         lat : $localStorage.latm,
         long : $localStorage.longm
@@ -228,7 +228,7 @@ var cities = [
         
     }  
     
-        createMarker(cities[0]);
+        createMarker(latlong[0]);
    
 });
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
