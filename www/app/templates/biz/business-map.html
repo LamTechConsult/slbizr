@@ -3,15 +3,20 @@
     <ion-nav-back-button side="left">Back </ion-nav-back-button>
     <ion-nav-title><img src="assets/img/splash_logo_small.png"/></ion-nav-title>
   </ion-nav-bar>
-		<ion-content>
-<div class="biz-map-page">
- <div class="map" id="map"></div> 
- </div>    
-  <a class="item item-icon-left" ng-click="showDirectionMapClick()">
-        <i class="icon ion-ios-navigate-outline"></i>
-        <div class="slr-item-text">
-          <h4>Get Direction to Business</h4>
-        </div>
-      </a>
-</ion-content>
+
+  <ion-content class="ion-biz-map-content">
+    <div class="row biz-map-details">
+      <div class="col col-75">
+	    <h4>Biz Name</h4>
+	    <p>Biz Address</p>
+      </div>
+      <div class="col text-right">
+	    <button class="button button-light shadow-none icon icon-top ion-ios-navigate-outline" ng-click="showDirectionMapClick()">Direction</button>
+      </div>
+    </div>
+
+    <div class="biz-map-page">
+	  <div class="map" id="map"></div>
+	</div>    
+  </ion-content>
 </ion-view>

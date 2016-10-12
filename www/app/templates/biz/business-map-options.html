@@ -1,11 +1,25 @@
-<ion-view view-title="Map Options">
+<ion-view view-title="Directions">
    <ion-nav-bar class="bar-header bar-positive">
     <ion-nav-back-button side="left">Back </ion-nav-back-button>
-    <ion-nav-title><img src="assets/img/splash_logo_small.png"/></ion-nav-title>
   </ion-nav-bar>
-		<ion-content>
 
-          <h4>Get Direction to Business</h4>
-      
-</ion-content>
+  <ion-content>
+    <div class="list">
+      <a class="item item-icon-right" href="#/app/business-map-start-point">
+        <i class="icon ion-ios-arrow-forward icon-small"></i> Start Point
+      </a>
+      <a class="item item-icon-right" href="#/app/business-map-end-point">
+        <i class="icon ion-ios-arrow-forward icon-small"></i> End Point
+      </a>
+    </div>
+    <div class="get-direction-map">
+	  <h4 class="dark-bg light padding m-none">View In</h4>
+	  <ion-list>
+	    <ion-radio ng-model="choice" ng-value="'apple'">Apple Map</ion-radio>
+	    <ion-radio ng-model="choice" ng-value="'google'">Google Map</ion-radio>
+	    <ion-radio ng-model="choice" ng-value="'waze'">Waze Map</ion-radio>
+	  </ion-list>
+	  <button class="button button-full button-calm">Get Directions</button>
+    </div>
+  </ion-content>
 </ion-view>

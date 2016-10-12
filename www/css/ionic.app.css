@@ -9825,6 +9825,9 @@ img {
   width: auto\9;
   /* ie8 */ }
 
+.grey, a.grey {
+  color: #cccccc; }
+
 .m-none {
   margin: 0px !important; }
 
@@ -10247,3 +10250,16 @@ ul.rating.yellow li i.ion-ios-star {
     height: 100px; }
   .biz-page .item p {
     font-size: 11px; }
+
+/*--- biz map detail page ---*/
+.ion-biz-map-content .scroll {
+  height: 100%; }
+
+.ion-biz-map-content .biz-map-page {
+  position: absolute;
+  top: 80px;
+  bottom: 0;
+  width: 100%; }
+  .ion-biz-map-content .biz-map-page .map {
+    width: 100%;
+    height: 100%; }
