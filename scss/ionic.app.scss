@@ -42,6 +42,9 @@ img {
 .grey, a.grey {
   color: $grey;
 }
+.grey-bg {
+  background-color: $grey;
+}
 .m-none {
   margin: 0px !important;
 }
@@ -570,6 +573,9 @@ ul.rating {
   .scroll {
     height: 100%;
   }
+  .biz-map-details {
+    h4 { margin: 0; }
+  }
   .biz-map-page {
     position: absolute;
     top: 80px;
@@ -582,4 +588,13 @@ ul.rating {
   }
 }
 
+/*----- biz-search-form-list ---*/
+.biz-search-form-list {
+  background-color: transparent;
+  .item-input {
+    margin-bottom: 15px;
+    padding: 0 0 0 16px;
+    border-radius: 4px !important;
+  }
+}
 
