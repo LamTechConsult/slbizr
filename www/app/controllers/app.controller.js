@@ -222,8 +222,9 @@ var latlong = [
         long : $localStorage.longm
     }
 ];
+	$scope.window = new google.maps.event.trigger(map, 'resize');
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
+    
     $scope.markers = [];
     
        
@@ -296,6 +297,7 @@ var latlong = [
 		title: $localStorage.title
     }
 ];
+	$scope.window = new google.maps.event.trigger(map, 'resize');
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
     $scope.markers = [];
@@ -364,10 +366,13 @@ SLBizReviews.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$i
       // error
     );
 	
- $scope.directionMap = function () {
+	$scope.directionMap = function (choice) {
+	 
+	if(choice=="google"){
            var link = ""+"http://maps.google.com/maps?saddr="+$localStorage.latm+","+$localStorage.longm+" &daddr="+$localStorage.lat+","+$localStorage.long;
             // $location.path(link);
             window.location = link;
+	 }
         }
     
 });
