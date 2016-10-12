@@ -201,27 +201,12 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
     $state.go('app.businessDetailsMap',{bid:$stateParams.bid});
   }
   
-  ///// Get Direction
-  
-    var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  $cordovaGeolocation
-    .getCurrentPosition(posOptions)
-    .then(function (position) {
-      var lat  = position.coords.latitude //here you get latitude
-      var long = position.coords.longitude //here you get the longitude
-	  $localStorage.lat=lat;
-	  $localStorage.long=long;
-          }
-      // error
-    );
-	
   $scope.reviewerProfile = function(uid){
     $state.go('app.reviewerProfile',{uid:uid});
   }
- $scope.showDirectionMapClick = function () {
-           var link = ""+"http://maps.google.com/maps?saddr="+$localStorage.latm+","+$localStorage.longm+" &daddr="+$localStorage.lat+","+$localStorage.long;
-            // $location.path(link);
-            window.location = link;
+  
+  $scope.showDirectionMapClick = function () {
+           $state.go('app.businessDirectionsMapOptions',{bid:$stateParams.bid});
         }
   //////////////////////////////////////////////////////// map
   // Show map on business detail page
@@ -289,26 +274,13 @@ SLBizReviews.controller('bizCtrlMap', function($scope,$state,$ionicHistory,$root
     } 
   });
   
-  var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  $cordovaGeolocation
-    .getCurrentPosition(posOptions)
-    .then(function (position) {
-      var lat  = position.coords.latitude //here you get latitude
-      var long = position.coords.longitude //here you get the longitude
-	  $localStorage.lat=lat;
-	  $localStorage.long=long;
-          }
-      // error
-    );
-	
   $scope.reviewerProfile = function(uid){
     $state.go('app.reviewerProfile',{uid:uid});
   }
- $scope.showDirectionMapClick = function () {
-           var link = ""+"http://maps.google.com/maps?saddr="+$localStorage.latm+","+$localStorage.longm+" &daddr="+$localStorage.lat+","+$localStorage.long;
-            // $location.path(link);
-            window.location = link;
-        }
+  
+  $scope.showDirectionMapClick = function () {
+    $state.go('app.businessDirectionsMapOptions',{bid:$stateParams.bid});
+  }
   //////////////////////////////////////////////////////// map
   // Show map on business detail page
    var mapOptions = {
@@ -348,6 +320,58 @@ var latlong = [
         createMarker(latlong[0]);
    
 });
+
+SLBizReviews.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    if($stateParams.bid){
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+	  businessesService.getBusinesses()
+        .then(function (biz) {
+
+          for (a=0;a<biz.nodes.length;a++){
+            if(biz.nodes[a].node.nid === $stateParams.bid){
+              $rootScope.businessesDetailsMap = biz.nodes[a].node;
+			   var latm  = $rootScope.businessesDetailsMap.geocode_lat
+      		   var longm = $rootScope.businessesDetailsMap.geocode_long
+			   var city = $rootScope.businessesDetailsMap.city
+			   var title = $rootScope.businessesDetailsMap.title
+               //console.log("lat:"+lat+"Log:"+long);
+               $localStorage.latm = latm;
+               $localStorage.longm = longm;
+			   $localStorage.city = city;
+			   $localStorage.title = title;
+			   
+			   console.log($rootScope.businessesDetailsMap);
+			   break;
+            }
+          }
+      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+    } 
+  });
+  
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  $cordovaGeolocation
+    .getCurrentPosition(posOptions)
+    .then(function (position) {
+      var lat  = position.coords.latitude //here you get latitude
+      var long = position.coords.longitude //here you get the longitude
+	  $localStorage.lat=lat;
+	  $localStorage.long=long;
+          }
+      // error
+    );
+	
+ $scope.directionMap = function () {
+           var link = ""+"http://maps.google.com/maps?saddr="+$localStorage.latm+","+$localStorage.longm+" &daddr="+$localStorage.lat+","+$localStorage.long;
+            // $location.path(link);
+            window.location = link;
+        }
+    
+});
+
 
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
   
