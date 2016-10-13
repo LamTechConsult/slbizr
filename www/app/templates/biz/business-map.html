@@ -7,8 +7,10 @@
   <ion-content class="ion-biz-map-content">
     <div class="row biz-map-details">
       <div class="col col-75">
-	    <h4>Biz Name</h4>
-	    <p>Biz Address</p>
+	    <h4>{{businessesDetailsMap.title}}</h4>
+	    <p><span>{{businessesDetailsMap.street}}</span>
+        <span ng-if="businessesDetailsMap.city">, {{businessesDetailsMap.city}}</span>
+        <span ng-if="businessesDetailsMap.country">, {{businessesDetailsMap.country}}</span></p>
       </div>
       <div class="col text-right">
 	    <button class="button button-light shadow-none icon icon-top ion-ios-navigate-outline" ng-click="showDirectionMapClick()">Direction</button>

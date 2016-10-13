@@ -366,6 +366,24 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       }
     }
   })
+   .state('app.businessDirectionsMapStartPoint',{
+    url:'/businessDirectionsMapStartPoint/:bid',
+    views: {
+      'menu-businessDirectionsMapStartPoint': {
+        templateUrl: 'app/templates/biz/business-map-start-point.html',
+        controller: 'bizCtrlMapDirectionsStartPoint'
+      }
+    }
+  })
+    .state('app.businessDirectionsMapEndPoint',{
+    url:'/businessDirectionsMapEndPoint/:bid',
+    views: {
+      'menu-businessDirectionsMapEndPoint': {
+        templateUrl: 'app/templates/biz/business-map-end-point.html',
+        controller: 'bizCtrlMapDirectionsEndPoint'
+      }
+    }
+  })
   .state('app.writeReview',{
     url:'/writeReview/:bid',
     views: {

@@ -284,6 +284,12 @@ SLBizReviews.controller('bizCtrlMap', function($scope,$state,$ionicHistory,$root
   }
   //////////////////////////////////////////////////////// map
   // Show map on business detail page
+  $scope.$on('mapInitialized', function (event, map) {
+    window.setTimeout(function() {
+        map.setCenter(new google.maps.LatLng($localStorage.latm, $localStorage.longm));
+    	}, 100)
+	});
+  
    var mapOptions = {
         zoom: 15,
         center: new google.maps.LatLng($localStorage.latm, $localStorage.longm),
@@ -297,7 +303,8 @@ var latlong = [
 		title: $localStorage.title
     }
 ];
-	$scope.window = new google.maps.event.trigger(map, 'resize');
+	
+	
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
     $scope.markers = [];
@@ -320,6 +327,7 @@ var latlong = [
     }  
     
         createMarker(latlong[0]);
+		
    
 });
 
@@ -354,6 +362,12 @@ SLBizReviews.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$i
     } 
   });
   
+  $scope.directionStartPoint = function () {
+    $state.go('app.businessDirectionsMapStartPoint',{bid:$stateParams.bid});
+  }
+  $scope.directionEndPoint = function () {
+    $state.go('app.businessDirectionsMapEndPoint',{bid:$stateParams.bid});
+  }
   var posOptions = {timeout: 10000, enableHighAccuracy: false};
   $cordovaGeolocation
     .getCurrentPosition(posOptions)
@@ -370,13 +384,65 @@ SLBizReviews.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$i
 	 
 	if(choice=="google"){
            var link = ""+"http://maps.google.com/maps?saddr="+$localStorage.latm+","+$localStorage.longm+" &daddr="+$localStorage.lat+","+$localStorage.long;
-            // $location.path(link);
             window.location = link;
 	 }
-        }
+	 if(choice=="apple"){
+           
+		var link= ""+"http://maps.apple.com/?ll="+$localStorage.latm+","+$localStorage.longm+"&dirflg=d&t=h";
+            window.location = link;
+	 }
+	 if(choice=="waze"){
+           var link = ""+"http://maps.google.com/maps?saddr="+$localStorage.latm+","+$localStorage.longm+" &daddr="+$localStorage.lat+","+$localStorage.long;
+            window.location = link;
+	 }
+	 
+        } 
     
 });
 
+SLBizReviews.controller('bizCtrlMapDirectionsStartPoint', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    if($stateParams.bid){
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+	  businessesService.getBusinesses()
+        .then(function (biz) {
+
+          for (a=0;a<biz.nodes.length;a++){
+            if(biz.nodes[a].node.nid === $stateParams.bid){
+              $rootScope.businessesDetailsMap = biz.nodes[a].node;
+			   console.log($rootScope.businessesDetailsMap);
+			   break;
+            }
+          }
+      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+    } 
+  });
+});
+
+SLBizReviews.controller('bizCtrlMapDirectionsEndPoint', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    if($stateParams.bid){
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+	  businessesService.getBusinesses()
+        .then(function (biz) {
+
+          for (a=0;a<biz.nodes.length;a++){
+            if(biz.nodes[a].node.nid === $stateParams.bid){
+              $rootScope.businessesDetailsMap = biz.nodes[a].node;
+			   console.log($rootScope.businessesDetailsMap);
+			   break;
+            }
+          }
+      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+    } 
+  });
+});
 
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
   
