@@ -375,12 +375,33 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       }
     }
   })
+   
+   .state('app.businessDirectionsMapStartPointLocation',{
+    url:'/businessDirectionsMapStartPointLocation/:bid',
+    views: {
+      'menu-businessDirectionsMapStartPointLocation': {
+        templateUrl: 'app/templates/biz/business-map-an-address-location-form.html',
+        controller: 'bizCtrlMapDirectionsStartPointLocation'
+      }
+    }
+  })
+   
     .state('app.businessDirectionsMapEndPoint',{
     url:'/businessDirectionsMapEndPoint/:bid',
     views: {
       'menu-businessDirectionsMapEndPoint': {
         templateUrl: 'app/templates/biz/business-map-end-point.html',
         controller: 'bizCtrlMapDirectionsEndPoint'
+      }
+    }
+  })
+	
+	.state('app.businessDirectionsMapEndPointLocation',{
+    url:'/businessDirectionsMapEndPointLocation/:bid',
+    views: {
+      'menu-businessDirectionsMapEndPointLocation': {
+        templateUrl: 'app/templates/biz/business-map-an-address-location-form.html',
+        controller: 'bizCtrlMapDirectionsEndPointLocation'
       }
     }
   })

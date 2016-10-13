@@ -392,7 +392,7 @@ SLBizReviews.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$i
             window.location = link;
 	 }
 	 if(choice=="waze"){
-           var link = ""+"http://maps.google.com/maps?saddr="+$localStorage.latm+","+$localStorage.longm+" &daddr="+$localStorage.lat+","+$localStorage.long;
+           var link = ""+"waze://?ll="+$localStorage.latm+","+$localStorage.longm+"&navigate=yes";
             window.location = link;
 	 }
 	 
@@ -401,6 +401,53 @@ SLBizReviews.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$i
 });
 
 SLBizReviews.controller('bizCtrlMapDirectionsStartPoint', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    if($stateParams.bid){
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+	  businessesService.getBusinesses()
+        .then(function (biz) {
+
+          for (a=0;a<biz.nodes.length;a++){
+            if(biz.nodes[a].node.nid === $stateParams.bid){
+              $rootScope.businessesDetailsMap = biz.nodes[a].node;
+			   console.log($rootScope.businessesDetailsMap);
+			   break;
+            }
+          }
+      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+    } 
+  });
+  $scope.directionStartPointLocation = function () {
+    $state.go('app.businessDirectionsMapStartPointLocation',{bid:$stateParams.bid});
+  }
+});
+
+SLBizReviews.controller('bizCtrlMapDirectionsStartPointLocation', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    if($stateParams.bid){
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+	  businessesService.getBusinesses()
+        .then(function (biz) {
+
+          for (a=0;a<biz.nodes.length;a++){
+            if(biz.nodes[a].node.nid === $stateParams.bid){
+              $rootScope.businessesDetailsMap = biz.nodes[a].node;
+			   console.log($rootScope.businessesDetailsMap);
+			   break;
+            }
+          }
+      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+    } 
+  });
+});
+
+SLBizReviews.controller('bizCtrlMapDirectionsEndPointLocation', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -442,6 +489,9 @@ SLBizReviews.controller('bizCtrlMapDirectionsEndPoint', function($scope,$state,$
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
     } 
   });
+  $scope.directionEndPointLocation = function () {
+    $state.go('app.businessDirectionsMapEndPointLocation',{bid:$stateParams.bid});
+  }
 });
 
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
