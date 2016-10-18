@@ -19,6 +19,7 @@ SLBizReviews.controller('mainCtrl', function($scope,$localStorage,$cordovaGeoloc
   }
   
 });
+
 SLBizReviews.controller('reviewDetailsCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
@@ -493,6 +494,15 @@ SLBizReviews.controller('bizCtrlMapDirectionsEndPoint', function($scope,$state,$
     $state.go('app.businessDirectionsMapEndPointLocation',{bid:$stateParams.bid});
   }
 });
+SLBizReviews.controller('filterCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    
+  });
+});
+
 
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
   
@@ -525,6 +535,9 @@ SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordov
   }
   $scope.businessDetails = function (bid) {
     $state.go('app.businessDetails',{bid:bid});
+  }
+  $scope.getFilterView = function () {
+    $state.go('app.filter');
   }
 });
 

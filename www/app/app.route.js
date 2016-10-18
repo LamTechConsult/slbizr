@@ -110,6 +110,15 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       'access': AuthenticationServiceConstant.accessLevels.user
     }
   })
+  .state('app.filter', {
+    url: '/filter',
+    views: {
+      'tab-filter': {
+        templateUrl: 'app/templates/others/filter.html',
+        controller: 'filterCtrl'
+      }
+    }
+  })
   .state('app.search', {
     url: '/search',
     views: {
