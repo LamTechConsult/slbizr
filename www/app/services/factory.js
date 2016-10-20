@@ -50,11 +50,16 @@ SLBizReviews.factory('DataService', function($http,DrupalApiConstant) {
     url = basePath + "slbiz/app-business-home.json";
     return $http.get(url,config);
   }
-  // //fetchMyBookmarks
-  // dataService.fetchBusinessesById = function(bid) {
-  //   url = basePath + "slbiz/"+bid+"/app-business-home.json";
-  //   return $http.get(url,config);
-  // }
+  //fetchcategory
+  dataService.fetchCategory = function() {
+    url = basePath + "slbiz/app-category-home.json";
+    return $http.get(url,config);
+  }
+  //fetchcategory
+  dataService.fetchKeywords = function() {
+    url = basePath + "slbiz/filter/keywords.json";
+    return $http.get(url,config);
+  }
 
   //fetchBusinessesReview
   // dataService.fetchBusinessesReview = function(bid) {

@@ -24,16 +24,75 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 		  getBusinessesReviewById:getBusinessesReviewById,
 		  sortBusinessesByDistance:sortBusinessesByDistance,
 		  postReviews:postReviews,
+		  getCategory:getCategory,
+		  getKeywords:getKeywords,
 		  getReviewerProfile:getReviewerProfile,
 		  //setReviewUser:setReviewUser
 		}
     var lastFetched = null;
     var businesses = null;
     var reviews = null;
+    var category = null;
+    var keywords = null;
 
     return businessesService;
 
 //////////////////////////////////////////////////////////
+	/**
+	 * Get active Category from backend.
+	 */
+	function getCategory() {
+			
+		var defer = $q.defer();
+		if (category == null || (Date.now() - lastFetched) > 60 * 10000) {
+			DataService.fetchCategory().success(function (data) {	
+				category = data.nodes;	
+				prepareCategory(category);
+
+			    defer.resolve(category);
+			    lastFetched = Date.now();
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(category);
+		}
+	    return defer.promise;
+	}
+	function prepareCategory(category){
+		angular.forEach(category, function (value, key) {
+			category[key].name = category[key].node.name;
+		});
+    	return category;
+	}
+	/**
+	 * Get active Keywords from backend.
+	 */
+	function getKeywords() {
+			
+		var defer = $q.defer();
+		if (keywords == null || (Date.now() - lastFetched) > 60 * 10000) {
+			DataService.fetchKeywords().success(function (data) {	
+				keywords = data.Keywords;	
+				prepareKeywords(data.Keywords);
+
+				console.log(data);
+			    defer.resolve(keywords);
+			    lastFetched = Date.now();
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(keywords);
+		}
+	    return defer.promise;
+	}
+	function prepareKeywords(keywords){
+		angular.forEach(keywords, function (value, key) {
+			keywords[key].name = keywords[key].keyword.keyword;
+		});
+    	return keywords;
+	}
 	/**
 	 * Get getReviewerProfile from backend.
 	 */
@@ -169,9 +228,6 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 		});
     	return reviews;
 	}
-
-
-
 
 	/**
 	 * Get active business from backend.

@@ -143,6 +143,18 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       'access': AuthenticationServiceConstant.accessLevels.user
     }
   })
+  .state('app.setBizFieldValue', {
+    url: '/setBizFieldValue',
+    views: {
+      'tab-addbusiness': {
+        templateUrl: 'app/templates/others/setbizfieldvalue.html',
+        controller: 'otherCtrl'
+      }
+    },
+    data: {
+      'access': AuthenticationServiceConstant.accessLevels.user
+    }
+  })
 
   .state('login', {
     url: '/login',

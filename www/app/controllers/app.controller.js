@@ -501,6 +501,7 @@ SLBizReviews.controller('filterCtrl', function($scope,$state,$ionicHistory,$cord
   $scope.$on("$ionicView.enter", function(event, data){
     
   });
+  
 });
 
 
@@ -571,14 +572,6 @@ SLBizReviews.controller('DashCtrl', function($scope,$state,$ionicHistory,$rootSc
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
   });
 
-});
-SLBizReviews.controller('otherCtrl', function($scope,$state,$ionicHistory,$rootScope,$localStorage,ProfileService) {
-  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
-    viewData.enableBack = true;
-  });
-  $scope.$on("$ionicView.enter", function(event, data){
-     
-  });
 });
 
 SLBizReviews.controller('AccountCtrl', function($scope,AuthenticationService,$localStorage,$ionicHistory,$stateParams,$state,$rootScope,myAccountService) {
