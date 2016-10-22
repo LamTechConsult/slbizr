@@ -26,6 +26,7 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 		  postReviews:postReviews,
 		  getCategory:getCategory,
 		  getKeywords:getKeywords,
+		  addBiz:addBiz,
 		  getReviewerProfile:getReviewerProfile,
 		  //setReviewUser:setReviewUser
 		}
@@ -277,6 +278,20 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 	   		}
 	   	}
 	   	businesses = sortedBizData;
+	}	
+	/**
+	 * add business to backend.
+	 */
+	function addBiz(newBizData) {
+			
+		var defer = $q.defer();
+		NodeResource.create(newBizData).success(function (data) {
+			console.log(data);
+		    defer.resolve(data);
+	    }).catch(function (error) {
+		    defer.reject(error);
+		});
+	    return defer.promise;
 	}	
 });
 

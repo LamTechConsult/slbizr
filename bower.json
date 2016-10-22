@@ -9,6 +9,7 @@
     "ng-cordova-oauth": "^0.2.10",
     "ionic-ratings": "^0.3.0",
     "angular-moment": "^0.10.3",
-    "ion-autocomplete": "^0.3.2"
+    "ion-autocomplete": "^0.3.2",
+    "ion-datetime-picker": "^0.4.0"
   }
 }
