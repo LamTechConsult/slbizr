@@ -77,7 +77,7 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 				keywords = data.Keywords;	
 				prepareKeywords(data.Keywords);
 
-				console.log(data);
+				// console.log(data);
 			    defer.resolve(keywords);
 			    lastFetched = Date.now();
 		    }).catch(function (error) {

@@ -10,13 +10,12 @@
   </ion-nav-bar>
 
 <ion-content>
- 
   <div ng-switch on="currentFieldName">
       
     <div ng-switch-when="Name">
       <div class="list">
         <label class="item item-input">
-          <input type="text" placeholder="LAMTECH Consulting">
+          <input type="text" placeholder="LAMTECH Consulting" ng-model="newBizData.title">
         </label>
         </div>
     </div>
@@ -45,13 +44,13 @@
           Fill with Current Location
         </button>
         <label class="item item-input">
-          <input type="text" placeholder="84 Kissy Road">
+          <input type="text" placeholder="84 Kissy Road" ng-model="newBizData.field_ltc_biz_address.und[0].thoroughfare">
         </label>
         <label class="item item-input">
-          <input type="text" placeholder="3rd Floor">
+          <input type="text" placeholder="3rd Floor" ng-model="newBizData.field_ltc_biz_address.und[0].premise">
         </label>
         <label class="item item-input">
-          <input type="text" placeholder="Freetown">
+          <input type="text" placeholder="Freetown" ng-model="newBizData.field_ltc_biz_address.und[0].locality">
         </label>
       </div>
     </div> 
@@ -90,7 +89,7 @@
     <div ng-switch-when="Email">
       <div class="list">
         <label class="item item-input">
-          <input type="text" placeholder="name@company.com">
+          <input type="text" placeholder="name@company.com" ng-model="newBizData.field_ltc_biz_email.und[0].email">
         </label>
       </div>
     </div>
@@ -98,7 +97,7 @@
     <div ng-switch-when="Phone">
       <div class="list">
         <label class="item item-input">
-          <input type="text" placeholder="+232-76-617-550">
+          <input type="text" placeholder="+232-76-617-550" ng-model="newBizData.field_ltc_biz_telephone.und[0].value">
         </label>
       </div>
     </div> 
@@ -199,14 +198,14 @@
     <div ng-switch-when="Description">
       <div class="list">
         <label class="item item-input">
-        <textarea placeholder="Say something nice about your business this is your opportunity to tell it all"></textarea>
+        <textarea placeholder="Say something nice about your business this is your opportunity to tell it all" ng-model="newBizData.field_ltc_biz_description.und[0].value"></textarea>
         </label>
       </div>
     </div> 
     <div ng-switch-when="Bebsite">
       <div class="list">
         <label class="item item-input">
-          <input type="text" placeholder="http://www.company.com">
+          <input type="text" placeholder="http://www.company.com" ng-model="newBizData.field_ltc_biz_website.und[0].url">
         </label>
         </div>
     </div>
