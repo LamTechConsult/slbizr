@@ -1,0 +1,223 @@
+<ion-view view-title="Edit {{currentFieldName}}">
+   <ion-nav-bar class="bar-positive">
+    <ion-nav-buttons side="left">
+      <button class="button button-icon button-clear" ng-click="doCancel()">Cancel</button>
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="doSaveBizFieldValue()">Done</button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+<ion-content>
+  <div ng-switch on="currentFieldName">
+      
+    <div ng-switch-when="Name">
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="LAMTECH Consulting" ng-model="editBizData.title">
+        </label>
+        </div>
+    </div>
+
+    <div ng-switch-when="Category">
+         <div class="list">
+         <label>Provide only one Category that best describe the core focus of your business</label>
+          <div class="">
+            <ionic-autocomplete autocomplete-input="autocompleteInput"></ionic-autocomplete>
+          </div>
+        </div>
+    </div> 
+
+    <div ng-switch-when="Keywords">
+      <div class="list">
+         <label>Provide up to three keywords that best describe the core focus of your business</label>
+          <div class="">
+            <ionic-autocomplete autocomplete-input="autocompleteInput"></ionic-autocomplete>
+          </div>
+      </div>
+    </div>
+
+    <div ng-switch-when="Address">
+      <div class="list">
+        <button class="button button-block button-positive">
+          Fill with Current Location
+        </button>
+        <label class="item item-input">
+          <input type="text" placeholder="84 Kissy Road" ng-model="editBizData.field_ltc_biz_address.und[0].thoroughfare">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="3rd Floor" ng-model="editBizData.field_ltc_biz_address.und[0].premise">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Freetown" ng-model="editBizData.field_ltc_biz_address.und[0].locality">
+        </label>
+      </div>
+    </div> 
+    <div ng-switch-when="Geocode">
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="LAMTECH Consulting">
+        </label>
+      </div>
+    </div>
+
+    <div ng-switch-when="Chiefdom">
+       <div class="list">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Provience
+          </div>
+          <select ng-model="Provience" ng-options="item.label for item in ProvienceItem"></select>
+        </label>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            District
+          </div>
+           <select ng-model="District" ng-options="item.label for item in DistrictItem"></select>
+        
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Chiefdom
+          </div>
+           <select ng-model="Chiefdom" ng-options="item.label for item in ChiefdomItem"></select>
+        </label>  
+      </div>
+    </div>
+    <div ng-switch-when="Email">
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="name@company.com" ng-model="editBizData.field_ltc_biz_email.und[0].email">
+        </label>
+      </div>
+    </div>
+
+    <div ng-switch-when="Phone">
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="+232-76-617-550" ng-model="editBizData.field_ltc_biz_telephone.und[0].value">
+        </label>
+      </div>
+    </div> 
+
+    <div ng-switch-when="Hours">  
+      <div class="list">
+        <div class="row">
+          <div class="col">
+            <select ng-model="Hours.days.mon" ng-options="item.label for item in days"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.opening.mon" ng-options="item.label for item in hours"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.closing.mon" ng-options="item.label for item in hours"></select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <select ng-model="Hours.days.tue" ng-options="item.label for item in days"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.opening.tue" ng-options="item.label for item in hours"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.closing.tue" ng-options="item.label for item in hours"></select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <select ng-model="Hours.days.wed" ng-options="item.label for item in days"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.opening.wed" ng-options="item.label for item in hours"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.closing.wed" ng-options="item.label for item in hours"></select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <select ng-model="Hours.days.thu" ng-options="item.label for item in days"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.opening.thu" ng-options="item.label for item in hours"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.closing.thu" ng-options="item.label for item in hours"></select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <select ng-model="Hours.days.fri" ng-options="item.label for item in days"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.opening.fri" ng-options="item.label for item in hours"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.closing.fri" ng-options="item.label for item in hours"></select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <select ng-model="Hours.days.sat" ng-options="item.label for item in days"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.opening.sat" ng-options="item.label for item in hours"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.closing.sat" ng-options="item.label for item in hours"></select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <select ng-model="Hours.days.sat" ng-options="item.label for item in days"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.opening.sat" ng-options="item.label for item in hours"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.closing.sat" ng-options="item.label for item in hours"></select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <select ng-model="Hours.days.sun" ng-options="item.label for item in days"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.opening.sun" ng-options="item.label for item in hours"></select>
+          </div>
+          <div class="col">
+            <select ng-model="Hours.closing.sun" ng-options="item.label for item in hours"></select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-switch-when="Description">
+      <div class="list">
+        <label class="item item-input">
+        <textarea placeholder="Say something nice about your business this is your opportunity to tell it all" ng-model="editBizData.field_ltc_biz_description.und[0].value"></textarea>
+        </label>
+      </div>
+    </div> 
+    <div ng-switch-when="Bebsite">
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="http://www.company.com" ng-model="editBizData.field_ltc_biz_website.und[0].url">
+        </label>
+        </div>
+    </div>
+    <div ng-switch-when="Logo">
+      <div class="list">
+       <div class="button-bar">
+        <button class="button button-full shadow-none icon icon-top ion-android-camera" ng-click="useCamera()">Take Photo</button>
+        <button class="button button-full shadow-none icon icon-top ion-android-image" ng-click="useGallery()">Select from library</button>
+    </div>
+      </div>
+    </div>
+     
+  </div>
+</ion-content>
+</ion-view>

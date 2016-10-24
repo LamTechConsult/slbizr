@@ -135,20 +135,32 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
     url: '/addbusiness',
     views: {
       'tab-addbusiness': {
-        templateUrl: 'app/templates/others/addbusiness.html',
-        controller: 'otherCtrl'
+        templateUrl: 'app/templates/biz/addbusiness.html',
+        controller: 'addBizCtrl'
       }
     },
     data: {
       'access': AuthenticationServiceConstant.accessLevels.user
     }
   })
-  .state('app.setBizFieldValue', {
-    url: '/setBizFieldValue',
+  .state('app.addBizsetBizFieldValue', {
+    url: '/addBizsetBizFieldValue',
     views: {
-      'tab-addbusiness': {
-        templateUrl: 'app/templates/others/setbizfieldvalue.html',
-        controller: 'otherCtrl'
+      'tab-addBizsetBizFieldValue': {
+        templateUrl: 'app/templates/biz/addbiz_setbizfieldvalue.html',
+        controller: 'addBizCtrl'
+      }
+    },
+    data: {
+      'access': AuthenticationServiceConstant.accessLevels.user
+    }
+  })
+  .state('app.editBizsetBizFieldValue', {
+    url: '/editBizsetBizFieldValue',
+    views: {
+      'tab-editBizsetBizFieldValue': {
+        templateUrl: 'app/templates/biz/editbz_setbizfieldvalue.html',
+        controller: 'editBizCtrl'
       }
     },
     data: {
@@ -364,8 +376,17 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
     url:'/businessDetails/:bid',
     views: {
       'menu-businessDetails': {
-        templateUrl: 'app/templates/biz/business.html',
+        templateUrl: 'app/templates/biz/business_details.html',
         controller: 'bizCtrl'
+      }
+    }
+  })
+  .state('app.editBusiness',{
+    url:'/editBusiness/:bid',
+    views: {
+      'menu-editBusiness': {
+        templateUrl: 'app/templates/biz/editbusiness.html',
+        controller: 'editBizCtrl'
       }
     }
   })

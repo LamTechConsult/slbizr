@@ -1,3 +1,6 @@
+/**
+ * Camera Services :
+ */
 SLBizReviews.service('CameraService', function($q,$cordovaCamera) {
 
    return {
@@ -26,6 +29,7 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 		  postReviews:postReviews,
 		  getCategory:getCategory,
 		  getKeywords:getKeywords,
+		  businessDetails:businessDetails,
 		  addBiz:addBiz,
 		  getReviewerProfile:getReviewerProfile,
 		  //setReviewUser:setReviewUser
@@ -287,6 +291,20 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 		var defer = $q.defer();
 		NodeResource.create(newBizData).success(function (data) {
 			console.log(data);
+		    defer.resolve(data);
+	    }).catch(function (error) {
+		    defer.reject(error);
+		});
+	    return defer.promise;
+	}	
+	/**
+	 * add business to backend.
+	 */
+	function businessDetails(bid) {
+			
+		var defer = $q.defer();
+		NodeResource.retrieve({nid:bid}).success(function (data) {
+	
 		    defer.resolve(data);
 	    }).catch(function (error) {
 		    defer.reject(error);
