@@ -146,7 +146,7 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
   .state('app.addBizsetBizFieldValue', {
     url: '/addBizsetBizFieldValue',
     views: {
-      'tab-addBizsetBizFieldValue': {
+      'tab-addbusiness': {
         templateUrl: 'app/templates/biz/addbiz_setbizfieldvalue.html',
         controller: 'addBizCtrl'
       }
@@ -158,7 +158,7 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
   .state('app.editBizsetBizFieldValue', {
     url: '/editBizsetBizFieldValue',
     views: {
-      'tab-editBizsetBizFieldValue': {
+      'menu-editBusiness': {
         templateUrl: 'app/templates/biz/editbz_setbizfieldvalue.html',
         controller: 'editBizCtrl'
       }

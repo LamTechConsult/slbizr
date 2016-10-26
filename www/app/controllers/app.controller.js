@@ -1,5 +1,105 @@
 
 SLBizReviews.controller('mainCtrl', function($scope,$localStorage,$cordovaGeolocation,$rootScope,$state) {
+  $rootScope.ProvienceItem = [
+      {label:'-select-', value:'null'},
+      {label:'Eastern', value:'Eastern'},
+      {label:'Northern', value:'Northern'},
+      {label:'Southern', value:'Southern'},
+      {label:'Western', value:'Western'},
+    ];
+  $rootScope.DistrictItem = [
+      {label:'-select-', value:'null'},
+      {label:'Kailahun', value:'Kailahun'},
+      {label:'Kenema', value:'Kenema'},
+      {label:'Kono', value:'Kono'},
+    ];
+  $rootScope.ChiefdomItem = [
+      {label:'-select-', value:'null'},
+      {label:'Dea', value:'Dea'},
+      {label:'Jawei', value:'Jawei'},
+      {label:'Kissi Kama', value:'Kissi Kama'},
+      {label:'Kisi Teng', value:'Kisi Teng'},
+      {label:'Kissi Tongi', value:'Kissi Tongi'},
+      {label:'Luawa', value:'Luawa'},
+      {label:'Malema', value:'Malema'},
+      {label:'Mandu', value:'Mandu'},
+      {label:'Peje Bongre', value:'Peje Bongre'},
+      {label:'Peje West', value:'Peje West'},
+      {label:'Penguia', value:'Penguia'},
+      {label:'Upper Bambara', value:'Upper Bambara'},
+      {label:'Yawei', value:'Yawei'},
+    ];
+  $rootScope.days = [
+      {label:'Mon', value:'Mon'},
+      {label:'Tue', value:'Tue'},
+      {label:'Wed', value:'Wed'},
+      {label:'Thu', value:'Thu'},
+      {label:'Fri', value:'Fri'},
+      {label:'Sat', value:'Sat'},
+      {label:'Sun', value:'Sun'},
+      {label:'Closed', value:'closed'}
+    ];
+  $rootScope.weekdays = [
+      {value:"mon"},
+      {value:"tue"},
+      {value:"wed"},
+      {value:"thu"},
+      {value:"fri"},
+      {value:"sat"},
+      {value:"sun"}
+    ];
+  $rootScope.hours = [
+      {label:'12:00 AM', value:'12:00 AM'},
+      {label:'12:30 AM', value:'12:30 AM'},
+      {label:'01:00 AM', value:'01:00 AM'},
+      {label:'01:30 AM', value:'01:30 AM'},
+      {label:'02:00 AM', value:'02:00 AM'},
+      {label:'02:30 AM', value:'02:30 AM'},
+      {label:'03:00 AM', value:'03:00 AM'},
+      {label:'03:30 AM', value:'03:30 AM'},
+      {label:'04:00 AM', value:'04:00 AM'},
+      {label:'04:30 AM', value:'04:30 AM'},
+      {label:'05:00 AM', value:'05:00 AM'},
+      {label:'05:30 AM', value:'05:30 AM'},
+      {label:'06:00 AM', value:'06:00 AM'},
+      {label:'06:30 AM', value:'06:30 AM'},
+      {label:'07:00 AM', value:'07:00 AM'},
+      {label:'07:30 AM', value:'07:30 AM'},
+      {label:'08:00 AM', value:'08:00 AM'},
+      {label:'08:30 AM', value:'08:30 AM'},
+      {label:'09:00 AM', value:'09:00 AM'},
+      {label:'09:30 AM', value:'09:30 AM'},
+      {label:'10:00 AM', value:'10:00 AM'},
+      {label:'10:30 AM', value:'10:30 AM'},
+      {label:'11:00 AM', value:'11:00 AM'},
+      {label:'11:30 AM', value:'11:30 AM'},
+      {label:'12:00 PM', value:'12:00 PM'},
+      {label:'12:30 PM', value:'12:30 AM'},
+      {label:'01:00 PM', value:'01:00 PM'},
+      {label:'01:30 PM', value:'01:30 PM'},
+      {label:'02:00 PM', value:'02:00 PM'},
+      {label:'02:30 PM', value:'02:30 PM'},
+      {label:'03:00 PM', value:'03:30 PM'},
+      {label:'03:30 PM', value:'03:30 PM'},
+      {label:'04:00 PM', value:'04:00 PM'},
+      {label:'04:30 PM', value:'04:30 PM'},
+      {label:'05:00 PM', value:'05:00 PM'},
+      {label:'05:30 PM', value:'05:30 PM'},
+      {label:'06:00 PM', value:'06:00 PM'},
+      {label:'06:30 PM', value:'06:30 PM'},
+      {label:'07:00 PM', value:'07:00 PM'},
+      {label:'07:30 PM', value:'07:30 PM'},
+      {label:'08:00 PM', value:'08:00 PM'},
+      {label:'08:30 PM', value:'08:30 PM'},
+      {label:'09:00 PM', value:'09:00 PM'},
+      {label:'09:30 PM', value:'09:30 PM'},
+      {label:'10:00 PM', value:'10:00 PM'},
+      {label:'10:30 PM', value:'10:30 PM'},
+      {label:'11:00 PM', value:'11:00 PM'},
+      {label:'11:30 PM', value:'11:30 PM'},
+      {label:'Closed', value:'closed'},
+    ];
+  console.log('mainCtrl');
   $rootScope.storage = $localStorage;
   $rootScope.serverErrors = [];
   if(!$rootScope.storage){
@@ -17,7 +117,6 @@ SLBizReviews.controller('mainCtrl', function($scope,$localStorage,$cordovaGeoloc
   }else{
     $rootScope.serverErrors.push('Unable to get loacation try manually.');
   }
-  
 });
 
 SLBizReviews.controller('reviewDetailsCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,businessesService) {
@@ -197,6 +296,7 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
     $state.go('app.reviewerProfile',{uid:uid});
   }
   $scope.editBusinessClick = function () {
+    $rootScope.editBizData = '';
     $state.go('app.editBusiness',{bid:$stateParams.bid});
   }
 

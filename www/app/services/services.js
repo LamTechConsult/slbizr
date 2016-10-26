@@ -31,6 +31,7 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 		  getKeywords:getKeywords,
 		  businessDetails:businessDetails,
 		  addBiz:addBiz,
+		  editBiz:editBiz,
 		  getReviewerProfile:getReviewerProfile,
 		  //setReviewUser:setReviewUser
 		}
@@ -298,7 +299,7 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 	    return defer.promise;
 	}	
 	/**
-	 * add business to backend.
+	 * get business details to backend.
 	 */
 	function businessDetails(bid) {
 			
@@ -311,6 +312,20 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 		});
 	    return defer.promise;
 	}	
+	/**
+	 * update business to backend.
+	 */
+	function editBiz(updateData) {
+			
+		var defer = $q.defer();
+		NodeResource.update(updateData).success(function (data) {
+			console.log(data);
+		    defer.resolve(data);
+	    }).catch(function (error) {
+		    defer.reject(error);
+		});
+	    return defer.promise;
+	}
 });
 
 /**
