@@ -6,111 +6,81 @@
     </ion-nav-buttons>
   </ion-nav-bar>
 
-<ion-content>
+  <ion-content>
     <div class="card" ng-if="serverErrors.length">
       <div class="item item-text-wrap" ng-repeat="serverError in serverErrors">
         {{serverError}}
       </div>
-    </div>
-  <ul class="list">
-    <div class="item item-divider">
-      Country
-    </div>
+    </div> 
+    <div class="list">
+      <div class="item item-divider">Country</div>
       <label class="item item-input">
         <input type="text" placeholder="Sierra Leone" value="Sierra Leone">
       </label>
 
-      <div class="item item-divider">
-          Required Information
-      </div>
+      <div class="item item-divider">Required Information</div>
       <a class="item item-icon-right" ng-click="setBizValFor('Name')">
-        Name
-        <span class="item-note">
-          Insert value
-        </span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note">Insert value</span>
+        Name
       </a>
        <a class="item item-icon-right" ng-click="setBizValFor('Category')">
-        Category
-        <span class="item-note">
-          Insert value
-        </span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note">Insert value</span>
+        Category
       </a>
       <a class="item item-icon-right" ng-click="setBizValFor('Keywords')">
-        Keywords
-        <span class="item-note">
-          Insert value
-        </span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note">Insert value</span>
+        Keywords
       </a>
       <a class="item item-icon-right" ng-click="setBizValFor('Address')">
-        Address
-        <span class="item-note">
-          Insert value
-        </span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note">Insert value</span>
+        Address
       </a>
       <a class="item item-icon-right" ng-click="setBizValFor('Geocode')">
-        Geocode
-        <span class="item-note">
-          Insert value
-        </span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note">Insert value</span>
+        Geocode
       </a>
       <a class="item item-icon-right" ng-click="setBizValFor('Chiefdom')">
-        Chiefdom
-        <span class="item-note">
-          Insert value
-        </span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note">Insert value</span>
+        Chiefdom
       </a>
       <a class="item item-icon-right" ng-click="setBizValFor('Email')">
-        Email
-        <span class="item-note">
-          Insert value
-        </span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note">Insert value</span>
+        Email
       </a>
       <a class="item item-icon-right" ng-click="setBizValFor('Phone')">
-        Phone
-        <span class="item-note">
-          Insert value
-        </span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note">Insert value</span>
+        Phone
       </a>
       <a class="item item-icon-right" ng-click="setBizValFor('Hours')">
-        Hours
-        <span class="item-note">
-          Insert value
-        </span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note">Insert value</span>
+        Hours
       </a>
       <a class="item item-icon-right" ng-click="setBizValFor('Description')">
+        <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note">Insert value</span>
         Description
-        <span class="item-note">
-          Insert value
-        </span>
-        <i class="icon ion-ios-arrow-right icon-small"></i>
       </a>
-      
-      <div class="item item-divider">
-          Optional Information
-      </div>
+
+      <div class="item item-divider">Optional Information</div>
       <a class="item item-icon-right" ng-click="setBizValFor('Bebsite')">
-        Bebsite
-        <span class="item-note">
-          Insert value
-        </span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note">Insert value</span>
+        Bebsite
       </a>
       <a class="item item-icon-right" ng-click="setBizValFor('Logo')">
-        Logo
-        <span class="item-note">
-          Insert value
-        </span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note">Insert value</span>
+        Logo
       </a>
-  </ul>
+    </div>
   </ion-content>
 </ion-view>

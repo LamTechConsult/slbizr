@@ -9,7 +9,7 @@
     </ion-nav-buttons>
   </ion-nav-bar>
 
-<ion-content>
+<ion-content class="grey-bg">
   <div ng-switch on="currentFieldName">
       
     <div ng-switch-when="Name">
@@ -20,22 +20,18 @@
         </div>
     </div>
 
-    <div ng-switch-when="Category">
-         <div class="list">
-         <label>Provide only one Category that best describe the core focus of your business</label>
-          <div class="">
-            <ionic-autocomplete autocomplete-input="autocompleteInput"></ionic-autocomplete>
-          </div>
-        </div>
-    </div> 
+    <div class="list" ng-switch-when="Category">
+      <label class="item">
+        <div class="padding-b2x">Provide only one Category that best describe the core focus of your business</div>
+          <ionic-autocomplete autocomplete-input="autocompleteInput"></ionic-autocomplete>
+      </label>
+    </div>
 
-    <div ng-switch-when="Keywords">
-      <div class="list">
-         <label>Provide up to three keywords that best describe the core focus of your business</label>
-          <div class="">
-            <ionic-autocomplete autocomplete-input="autocompleteInput"></ionic-autocomplete>
-          </div>
-      </div>
+    <div class="list" ng-switch-when="Keywords">
+      <label class="item">
+         <div class="padding-b2x">Provide up to three keywords that best describe the core focus of your business</div>
+         <ionic-autocomplete autocomplete-input="autocompleteInput"></ionic-autocomplete>
+      </label>
     </div>
 
     <div ng-switch-when="Address">

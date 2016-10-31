@@ -8,11 +8,10 @@
 
   <ion-content>
   	<div class="list">
-
   		<li class="item item-toggle">
 		    Open Now
 		    <label class="toggle toggle-balanced">
-		       <input type="checkbox">
+		       <input type="checkbox" ng-model="filter.openNow">
 		       <div class="track">
 		         <div class="handle"></div>
 		      </div>
@@ -21,7 +20,7 @@
 		<li class="item item-toggle">
 		    Claimed
 		    <label class="toggle toggle-balanced">
-		       <input type="checkbox" checked="true">
+		       <input type="checkbox" checked="true" ng-model="filter.claimed">
 		       <div class="track">
 		         <div class="handle"></div>
 		      </div>
@@ -32,40 +31,40 @@
 		    Category & Keywords
 		</div>
 
-			<a class="item" href="#">
+			<a class="item item-icon-right" ng-click="setFilterValFor('Category')">
 			   Category
 			   <i class="icon ion-ios-arrow-right icon-small"></i>
 			</a>
-			<a class="item" href="#">
+			<a class="item item-icon-right" ng-click="setFilterValFor('Keywords')">
 			   Keywords
 			   <i class="icon ion-ios-arrow-right icon-small"></i>
 			</a>
 		<div class="item item-divider">
 		    Location
 		</div>
-		    <a class="item" href="#">
+		    <a class="item item-icon-right" ng-click="setFilterValFor('District')">
 			   District
 			   <i class="icon ion-ios-arrow-right icon-small"></i>
 			</a>
-			<a class="item" href="#">
+			<a class="item item-icon-right" ng-click="setFilterValFor('Chiefdom')">
 			   Chiefdom
 			   <i class="icon ion-ios-arrow-right icon-small"></i>
 			</a>
-			<a class="item" href="#">
+			<a class="item item-icon-right" ng-click="setFilterValFor('Village')">
 			   Village/Town
 			   <i class="icon ion-ios-arrow-right icon-small"></i>
 			</a>
 		<div class="item item-divider">
 		    Distance
 		</div>
-			<a class="item" href="#">
+			<a class="item item-icon-right" ng-click="setFilterValFor('BestMatch')">
 			   Best Match
 			   <i class="icon ion-ios-arrow-right icon-small"></i>
 			</a>
 		<div class="item item-divider">
 		    Sort By
 		</div>
-			<a class="item" href="#">
+			<a class="item item-icon-right" ng-click="setFilterValFor('Distance')">
 			   Distance
 			   <i class="icon ion-ios-arrow-right icon-small"></i>
 			</a>

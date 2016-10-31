@@ -119,6 +119,15 @@ SLBizReviews.config(function($stateProvider, $localStorageProvider, Authenticati
       }
     }
   })
+  .state('app.filterSetFieldValue', {
+    url: '/filterSetFieldValue',
+    views: {
+      'tab-filter': {
+        templateUrl: 'app/templates/others/filter_setfieldvalue.html',
+        controller: 'filterCtrl'
+      }
+    }
+  })
   .state('app.search', {
     url: '/search',
     views: {

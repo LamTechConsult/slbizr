@@ -574,17 +574,6 @@ SLBizReviews.controller('bizCtrlMapDirectionsEndPoint', function($scope,$state,$
     $state.go('app.businessDirectionsMapEndPointLocation',{bid:$stateParams.bid});
   }
 });
-SLBizReviews.controller('filterCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
-  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
-    viewData.enableBack = true;
-  });
-  $scope.$on("$ionicView.enter", function(event, data){
-    
-  });
-  
-});
-
-
 SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
   
   $scope.$on("$ionicView.enter", function(event, data){
