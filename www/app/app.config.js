@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   angular
-    .module('SLBizReviews.config', ['d7-services.commons.configurations', 'd7-services.commons.http.configurations'])
+    .module('OBizR.config', ['d7-services.commons.configurations', 'd7-services.commons.http.configurations'])
     .config(configFunction);
     configFunction.$inject = ['DrupalApiConstant'];
 

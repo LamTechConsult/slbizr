@@ -1,7 +1,7 @@
 /**
  * Camera Services :
  */
-SLBizReviews.service('CameraService', function($q,$cordovaCamera) {
+OBizR.service('CameraService', function($q,$cordovaCamera) {
 
    return {
       getPicture: function(options) {
@@ -20,7 +20,7 @@ SLBizReviews.service('CameraService', function($q,$cordovaCamera) {
 /**
  * BiZ Services :
  */
-SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {
+OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {
     var businessesService = {
 		  getBusinesses: getBusinesses,
 		  getBusinessesReview:getBusinessesReview,
@@ -331,7 +331,7 @@ SLBizReviews.service('businessesService', function($q,$filter,$rootScope,$http,D
 /**
  * myAccountService :
  */
-SLBizReviews.service('myAccountService', function($q,$http,DrupalApiConstant,DataService) {
+OBizR.service('myAccountService', function($q,$http,DrupalApiConstant,DataService) {
 	var myAccountService = {
 		  getMyFriends: getMyFriends,
 		  getMyFollowers:getMyFollowers,

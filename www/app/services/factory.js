@@ -1,4 +1,4 @@
-SLBizReviews.factory('AuthService', function($http, DrupalApiConstant,UserResourceConstant,AuthenticationHttpInterceptor) {
+OBizR.factory('AuthService', function($http, DrupalApiConstant,UserResourceConstant,AuthenticationHttpInterceptor) {
   var authService = {};
   //var today = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
@@ -14,7 +14,7 @@ SLBizReviews.factory('AuthService', function($http, DrupalApiConstant,UserResour
 /**
  * DataService :
  */
-SLBizReviews.factory('DataService', function($http,DrupalApiConstant) {
+OBizR.factory('DataService', function($http,DrupalApiConstant) {
   var dataService = {};
   var basePath = DrupalApiConstant.drupal_instance +DrupalApiConstant.api_endpoint;
   var config = {};

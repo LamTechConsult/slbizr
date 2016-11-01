@@ -1,7 +1,7 @@
 {
-  "name": "slbizreviews",
+  "name": "OBizR",
   "version": "1.1.1",
-  "description": "SLBizReviews: An Ionic project",
+  "description": "OBizR: Open Business Reviews Hybrid App",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",

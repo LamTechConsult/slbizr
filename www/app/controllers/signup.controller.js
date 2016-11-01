@@ -1,4 +1,4 @@
-SLBizReviews.controller('SignupCtrl',function ($scope,$state,$ionicPopup,$rootScope,UserResource, AuthenticationService, $localStorage) {
+OBizR.controller('SignupCtrl',function ($scope,$state,$ionicPopup,$rootScope,UserResource, AuthenticationService, $localStorage) {
   // jshint validthis: true
   //data for $scope.registerForm
   $scope.serverErrors = [];

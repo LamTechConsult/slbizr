@@ -1,4 +1,4 @@
-SLBizReviews.service('ProfileService',ProfileService);
+OBizR.service('ProfileService',ProfileService);
 function ProfileService($q, $http, $filter, $rootScope,DrupalApiConstant, UserResource, AuthenticationService, AuthenticationChannel){
 
   var profile = false,
@@ -101,7 +101,7 @@ function ProfileService($q, $http, $filter, $rootScope,DrupalApiConstant, UserRe
   }
 };
 
-// SLBizReviews.service('accountService',ProfileService);
+// OBizR.service('accountService',ProfileService);
 // function accountService($q, $http, $filter, $rootScope,DrupalApiConstant, UserResource, AuthenticationService, AuthenticationChannel){
 
 //   var account = false,

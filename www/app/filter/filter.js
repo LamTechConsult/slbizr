@@ -1,4 +1,4 @@
-SLBizReviews.filter('cut', function () {
+OBizR.filter('cut', function () {
   return function (value, wordwise, max, tail) {
     if (!value) return '';
 
@@ -19,7 +19,7 @@ SLBizReviews.filter('cut', function () {
 });
 
 // Setup the filter
-SLBizReviews.filter('ratingClass', function() {
+OBizR.filter('ratingClass', function() {
 
   // Create the return function
   return function(rating) {
@@ -42,7 +42,7 @@ SLBizReviews.filter('ratingClass', function() {
 });
 
 // Setup the filter
-SLBizReviews.filter('rating', function() {
+OBizR.filter('rating', function() {
 
   // Create the return function
   return function(rating) {
@@ -60,7 +60,7 @@ SLBizReviews.filter('rating', function() {
 });
 
 // Setup the filter
-SLBizReviews.filter('ratingPercentage', function() {
+OBizR.filter('ratingPercentage', function() {
 
   // Create the return function
   return function(rating) {
@@ -73,7 +73,7 @@ SLBizReviews.filter('ratingPercentage', function() {
 });
 
 // Setup the filter
-SLBizReviews.filter('distance', function() {
+OBizR.filter('distance', function() {
 
   // Create the return function
   return function(lat1, lon1, lat2, lon2, unit) {

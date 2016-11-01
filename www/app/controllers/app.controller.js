@@ -1,5 +1,5 @@
 
-SLBizReviews.controller('mainCtrl', function($scope,$localStorage,$cordovaGeolocation,$rootScope,$state) {
+OBizR.controller('mainCtrl', function($scope,$localStorage,$cordovaGeolocation,$rootScope,$state) {
   $rootScope.ProvienceItem = [
       {label:'-select-', value:'null'},
       {label:'Eastern', value:'Eastern'},
@@ -119,7 +119,7 @@ SLBizReviews.controller('mainCtrl', function($scope,$localStorage,$cordovaGeoloc
   }
 });
 
-SLBizReviews.controller('reviewDetailsCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,businessesService) {
+OBizR.controller('reviewDetailsCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -137,7 +137,7 @@ SLBizReviews.controller('reviewDetailsCtrl', function($scope,$state,$ionicHistor
  
 });
 
-SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,$ionicHistory,$rootScope,$stateParams,$localStorage,businessesService) {
+OBizR.controller('writeReviewCtrl', function($scope,$state,CameraService,$ionicHistory,$rootScope,$stateParams,$localStorage,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -237,7 +237,7 @@ SLBizReviews.controller('writeReviewCtrl', function($scope,$state,CameraService,
   }
 });
 
-SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+OBizR.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -333,7 +333,7 @@ SLBizReviews.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootSco
   createMarker(latlong[0]); 
 });
 
-SLBizReviews.controller('bizCtrlMap', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+OBizR.controller('bizCtrlMap', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -412,7 +412,7 @@ SLBizReviews.controller('bizCtrlMap', function($scope,$state,$ionicHistory,$root
   createMarker(latlong[0]);   
 });
 
-SLBizReviews.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+OBizR.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -481,7 +481,7 @@ SLBizReviews.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$i
     
 });
 
-SLBizReviews.controller('bizCtrlMapDirectionsStartPoint', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+OBizR.controller('bizCtrlMapDirectionsStartPoint', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -506,7 +506,7 @@ SLBizReviews.controller('bizCtrlMapDirectionsStartPoint', function($scope,$state
   }
 });
 
-SLBizReviews.controller('bizCtrlMapDirectionsStartPointLocation', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+OBizR.controller('bizCtrlMapDirectionsStartPointLocation', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -528,7 +528,7 @@ SLBizReviews.controller('bizCtrlMapDirectionsStartPointLocation', function($scop
   });
 });
 
-SLBizReviews.controller('bizCtrlMapDirectionsEndPointLocation', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+OBizR.controller('bizCtrlMapDirectionsEndPointLocation', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -550,7 +550,7 @@ SLBizReviews.controller('bizCtrlMapDirectionsEndPointLocation', function($scope,
   });
 });
 
-SLBizReviews.controller('bizCtrlMapDirectionsEndPoint', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+OBizR.controller('bizCtrlMapDirectionsEndPoint', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -574,7 +574,7 @@ SLBizReviews.controller('bizCtrlMapDirectionsEndPoint', function($scope,$state,$
     $state.go('app.businessDirectionsMapEndPointLocation',{bid:$stateParams.bid});
   }
 });
-SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
+OBizR.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
   
   $scope.$on("$ionicView.enter", function(event, data){
 
@@ -611,7 +611,7 @@ SLBizReviews.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordov
   }
 });
 
-SLBizReviews.controller('SplashCtrl',function($rootScope,$scope,$state,$window,$ionicSlideBoxDelegate){
+OBizR.controller('SplashCtrl',function($rootScope,$scope,$state,$window,$ionicSlideBoxDelegate){
   $scope.signinClick = function () {
     $state.go('login');
   }
@@ -623,13 +623,13 @@ SLBizReviews.controller('SplashCtrl',function($rootScope,$scope,$state,$window,$
   }
 });
 
-SLBizReviews.controller('menuCtrl',function($rootScope,$scope,$state,$window,$ionicSlideBoxDelegate){
+OBizR.controller('menuCtrl',function($rootScope,$scope,$state,$window,$ionicSlideBoxDelegate){
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
 });
 
-SLBizReviews.controller('DashCtrl', function($scope,$state,$ionicHistory,$rootScope,$localStorage,ProfileService) {
+OBizR.controller('DashCtrl', function($scope,$state,$ionicHistory,$rootScope,$localStorage,ProfileService) {
   //$scope.currentUser = profile;
   $scope.$on("$ionicView.enter", function(event, data){
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
@@ -643,7 +643,7 @@ SLBizReviews.controller('DashCtrl', function($scope,$state,$ionicHistory,$rootSc
 
 });
 
-SLBizReviews.controller('AccountCtrl', function($scope,AuthenticationService,$localStorage,$ionicHistory,$stateParams,$state,$rootScope,myAccountService) {
+OBizR.controller('AccountCtrl', function($scope,AuthenticationService,$localStorage,$ionicHistory,$stateParams,$state,$rootScope,myAccountService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -701,7 +701,7 @@ SLBizReviews.controller('AccountCtrl', function($scope,AuthenticationService,$lo
   }
 });
 
-SLBizReviews.controller('reviewerProfileCtrl', function($scope,$state,$stateParams,businessesService,$rootScope,$localStorage,ProfileService) {
+OBizR.controller('reviewerProfileCtrl', function($scope,$state,$stateParams,businessesService,$rootScope,$localStorage,ProfileService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -718,7 +718,7 @@ SLBizReviews.controller('reviewerProfileCtrl', function($scope,$state,$statePara
   });
 });
 
-SLBizReviews.controller('ProfileCtrl', function($scope,$rootScope,ProfileService,$ionicHistory,$localStorage,$state,AuthenticationServiceConstant, AuthenticationService) {
+OBizR.controller('ProfileCtrl', function($scope,$rootScope,ProfileService,$ionicHistory,$localStorage,$state,AuthenticationServiceConstant, AuthenticationService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -771,13 +771,13 @@ SLBizReviews.controller('ProfileCtrl', function($scope,$rootScope,ProfileService
   }
 });
 
-SLBizReviews.controller('ForgetPassCtrl',function($rootScope,$scope,$state,$window,$ionicSlideBoxDelegate){
+OBizR.controller('ForgetPassCtrl',function($rootScope,$scope,$state,$window,$ionicSlideBoxDelegate){
   $rootScope.doSignup = function () {
     console.log($state.is);
   }
 });
 
-SLBizReviews.controller('LoginCtrl',function($scope,$rootScope,$cordovaGeolocation,AuthService,$ionicPopup,$state,$ionicLoading,$localStorage,AuthenticationService){
+OBizR.controller('LoginCtrl',function($scope,$rootScope,$cordovaGeolocation,AuthService,$ionicPopup,$state,$ionicLoading,$localStorage,AuthenticationService){
   //data for vm.loginForm
   $scope.user = {};
   $scope.serverErrors = [];
@@ -817,7 +817,7 @@ SLBizReviews.controller('LoginCtrl',function($scope,$rootScope,$cordovaGeolocati
   }
   $scope.iAgree = function () {
     var confirmPopup = $ionicPopup.confirm({
-         template: 'Allow SLBizReviews to access your location while you use the app?',
+         template: 'Allow OBizR to access your location while you use the app?',
          cancelText:"Don't Allow",
          okText: 'Allow',
          cancelType:'button button-clear button-positive',
@@ -869,7 +869,7 @@ SLBizReviews.controller('LoginCtrl',function($scope,$rootScope,$cordovaGeolocati
   }
   
 });
-SLBizReviews.controller('SocialCtrl',function($rootScope,$cordovaOauth,$scope,$state,$window,$ionicSlideBoxDelegate){
+OBizR.controller('SocialCtrl',function($rootScope,$cordovaOauth,$scope,$state,$window,$ionicSlideBoxDelegate){
   $scope.data = [];
   $scope.facebookLogin = function() {
     $cordovaOauth.facebook("325681044294287", ["email"]).then(function(result) {

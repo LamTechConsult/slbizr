@@ -1,7 +1,7 @@
 /*
  * Add bisuness controller
  */
-SLBizReviews.controller('addBizCtrl', function($scope,$http,$state,CameraService,$ionicHistory,$ionicLoading,$rootScope,$localStorage,ProfileService,businessesService) {
+OBizR.controller('addBizCtrl', function($scope,$http,$state,CameraService,$ionicHistory,$ionicLoading,$rootScope,$localStorage,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -234,7 +234,7 @@ SLBizReviews.controller('addBizCtrl', function($scope,$http,$state,CameraService
 /*
  * Edit bisuness controller
  */
-SLBizReviews.controller('editBizCtrl', function($scope,$http,$state,CameraService,$stateParams,$ionicHistory,$ionicLoading,$rootScope,$localStorage,ProfileService,businessesService) {
+OBizR.controller('editBizCtrl', function($scope,$http,$state,CameraService,$stateParams,$ionicHistory,$ionicLoading,$rootScope,$localStorage,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
