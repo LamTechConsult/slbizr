@@ -60,4 +60,51 @@ OBizR.controller('filterCtrl', function($scope,$state,$ionicHistory,$cordovaGeol
   
   $scope.$root.$broadcast($scope.autocompleteInput.ID);
   /////////////////////////////////////////////////////////////////////////////
+  $scope.dofilterSerarch = function () {
+    $state.go('app.searchResults',{srchId:'filter'});
+  }
+});
+
+OBizR.controller('searchCtrl', function($scope,$state,$ionicHistory,$rootScope) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    $scope.initializeSearchData();
+  });
+  $scope.initializeSearchData = function () {
+    if($rootScope.searchData == undefined){
+        $rootScope.searchData = {};
+    }
+  }
+  $scope.doSearch = function () {
+    if ($rootScope.searchData.name == '' || $rootScope.searchData.name == undefined) {
+      return;
+    }
+    $state.go('app.searchResults',{srchId:'search'});
+  }
+});
+
+OBizR.controller('srchResCtrl', function($scope,$state,$stateParams,$ionicHistory,$rootScope,businessesService) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+    if($stateParams.srchId == 'search'){
+      businessesService.searchBusinesses($rootScope.searchData.name)
+        .then(function (biz) {
+          $rootScope.searchedBusinesses = biz.nodes;
+          console.log($rootScope.searchedBusinesses);
+      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+    }
+    
+  });
+  $scope.businessDetails = function (bid) {
+    $state.go('app.businessDetails',{bid:bid});
+  }
+  $scope.getFilterView = function () {
+    $state.go('app.filter');
+  }
 });

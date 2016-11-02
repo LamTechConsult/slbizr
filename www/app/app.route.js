@@ -133,11 +133,20 @@ OBizR.config(function($stateProvider, $localStorageProvider, AuthenticationServi
     views: {
       'tab-search': {
         templateUrl: 'app/templates/others/search.html',
-        controller: 'otherCtrl'
+        controller: 'searchCtrl'
       }
     },
     data: {
       'access': AuthenticationServiceConstant.accessLevels.user
+    }
+  })
+  .state('app.searchResults', {
+    url: '/searchResults/:srchId',
+    views: {
+      'tab-search': {
+        templateUrl: 'app/templates/others/search_result.html',
+        controller: 'srchResCtrl'
+      }
     }
   })
   .state('app.addbusiness', {

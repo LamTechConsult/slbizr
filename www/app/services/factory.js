@@ -60,7 +60,11 @@ OBizR.factory('DataService', function($http,DrupalApiConstant) {
     url = basePath + "slbiz/filter/keywords.json";
     return $http.get(url,config);
   }
-
+  //query search business
+  dataService.fetchSearchedBusinesses = function(bizName) { 
+    url = basePath + "slbiz/search.json?name="+bizName;
+    return $http.get(url,config);
+  }
   //fetchBusinessesReview
   // dataService.fetchBusinessesReview = function(bid) {
   //    //NodeResourceConstant.resourcePath + '/' + bid + '/' + NodeResourceConstant.actions.comments;

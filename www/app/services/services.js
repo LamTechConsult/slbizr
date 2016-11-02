@@ -30,6 +30,7 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
 		  getCategory:getCategory,
 		  getKeywords:getKeywords,
 		  businessDetails:businessDetails,
+		  searchBusinesses:searchBusinesses,
 		  addBiz:addBiz,
 		  editBiz:editBiz,
 		  getReviewerProfile:getReviewerProfile,
@@ -40,7 +41,7 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
     var reviews = null;
     var category = null;
     var keywords = null;
-
+    var searchedBiz = null;
     return businessesService;
 
 //////////////////////////////////////////////////////////
@@ -244,7 +245,7 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
 		if (businesses == null || (Date.now() - lastFetched) > 60 * 10000) {
 			DataService.fetchBusinesses().success(function (data) {
 		       //businesses = data;
-		       saveBizDistance(data);
+		       saveBizDistance(data,'getBusinesses');
 			       
 			    defer.resolve(businesses);
 			    lastFetched = Date.now();
@@ -259,17 +260,17 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
 	/**
 	 * Add distance field to the populated business data.
 	 */
-	function saveBizDistance(bizData) {
+	function saveBizDistance(bizData,funNane) {
 	    var prepareBizData = bizData;
 	   	for (a=0;a<prepareBizData.nodes.length;a++){
 	 		prepareBizData.nodes[a].node.distance = $filter('distance')($rootScope.storage.lat,$rootScope.storage.long,prepareBizData.nodes[a].node.geocode_lat,prepareBizData.nodes[a].node.geocode_long,"N");
 	 	}   
-	    sortBusinessesByDistance(prepareBizData);
+	    sortBusinessesByDistance(prepareBizData,funNane);
 	}
 	/**
 	 * Sort bussiness according to user location.
 	 */
-	function sortBusinessesByDistance(sortBizData) {
+	function sortBusinessesByDistance(sortBizData,funNane) {
 		var sortedBizData = sortBizData;
 	   	for (a=0;a<sortedBizData.nodes.length;a++){
 	   		for (b=a+1;b<sortedBizData.nodes.length;b++){
@@ -282,7 +283,12 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
 	   			}
 	   		}
 	   	}
-	   	businesses = sortedBizData;
+	   	if(funNane == 'getBusinesses'){
+	   		businesses = sortedBizData;
+	   	}else{
+	   		searchedBiz = sortedBizData;
+	   	}
+	   	
 	}	
 	/**
 	 * add business to backend.
@@ -325,6 +331,22 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
 		    defer.reject(error);
 		});
 	    return defer.promise;
+	}
+	/**
+	 * Search businesse from backend.
+	 */
+	function searchBusinesses(bizName){
+		var defer = $q.defer();
+			DataService.fetchSearchedBusinesses(bizName).success(function (data) {
+		         //searchedBiz = data;
+		         saveBizDistance(data,'searchBusinesses');
+		         console.log(searchedBiz);
+		         defer.resolve(searchedBiz);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+
+        return defer.promise;
 	}
 });
 
