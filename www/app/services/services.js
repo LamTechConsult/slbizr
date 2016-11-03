@@ -26,6 +26,7 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
 		  getBusinessesReview:getBusinessesReview,
 		  getBusinessesReviewById:getBusinessesReviewById,
 		  sortBusinessesByDistance:sortBusinessesByDistance,
+		  searchedBusinessDetails:searchedBusinessDetails,
 		  postReviews:postReviews,
 		  getCategory:getCategory,
 		  getKeywords:getKeywords,
@@ -42,6 +43,7 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
     var category = null;
     var keywords = null;
     var searchedBiz = null;
+    var searchedBizDetails = null;
     return businessesService;
 
 //////////////////////////////////////////////////////////
@@ -208,17 +210,21 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
 	function getBusinessesReview(bid) {
 			
 		var defer = $q.defer();
-		NodeResource.comments({nid: bid}).success(function (data) {
-			reviews = data;	 
-		    //console.log(data.length);
-		    if (reviews.length != 0) {
-            	prepareReviews(data);
-            	console.log(reviews);
-          	}
-		    defer.resolve(reviews);
-	    }).catch(function (error) {
-		    defer.reject(error);
-		});
+		if($rootScope.lastFetchedBizRev != bid){
+			NodeResource.comments({nid: bid}).success(function (data) {
+				reviews = data;	 
+			    //console.log(data.length);
+			    if (reviews.length != 0) {
+	            	prepareReviews(data);
+	            	console.log(reviews);
+	          	}
+			    defer.resolve(reviews);
+		    }).catch(function (error) {
+			    defer.reject(error);
+			});
+		}else{
+			 defer.resolve(reviews);
+		}
 	    return defer.promise;
 	}
 
@@ -285,8 +291,12 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
 	   	}
 	   	if(funNane == 'getBusinesses'){
 	   		businesses = sortedBizData;
-	   	}else{
+	   	}
+	   	if(funNane == 'searchBusinesses'){
 	   		searchedBiz = sortedBizData;
+	   	}
+	   	else{
+	   		searchedBizDetails = sortedBizData;
 	   	}
 	   	
 	}	
@@ -319,6 +329,28 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
 	    return defer.promise;
 	}	
 	/**
+	 * get searched business details to backend.
+	 */
+	function searchedBusinessDetails(bid) {
+			
+		var defer = $q.defer();
+		if($rootScope.lastSearchedBiz != bid){
+			DataService.fetchSearchedBusinessDetails(bid).success(function (data) {
+				//searchedBizDetails = data;
+				
+				$rootScope.lastSearchedBiz = bid;
+				saveBizDistance(data,'searchedBusinessDetails');     
+				defer.resolve(searchedBizDetails);
+		    }).catch(function (error) {
+			    defer.reject(error);
+			});
+		}else{
+			defer.resolve(searchedBizDetails);
+		}
+		
+	    return defer.promise;
+	}	
+	/**
 	 * update business to backend.
 	 */
 	function editBiz(updateData) {
@@ -337,15 +369,18 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
 	 */
 	function searchBusinesses(bizName){
 		var defer = $q.defer();
+		if($rootScope.lastSearchName != bizName){
 			DataService.fetchSearchedBusinesses(bizName).success(function (data) {
-		         //searchedBiz = data;
-		         saveBizDistance(data,'searchBusinesses');
-		         console.log(searchedBiz);
-		         defer.resolve(searchedBiz);
+		        //searchedBiz = data;
+		        $rootScope.lastSearchName = bizName;
+		        saveBizDistance(data,'searchBusinesses');
+		        defer.resolve(searchedBiz);
 		    }).catch(function (error) {
 		        defer.reject(error);
 		    });
-
+		}else{
+			defer.resolve(searchedBiz);
+		}
         return defer.promise;
 	}
 });

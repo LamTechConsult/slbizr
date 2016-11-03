@@ -75,6 +75,7 @@ OBizR.controller('searchCtrl', function($scope,$state,$ionicHistory,$rootScope) 
   $scope.initializeSearchData = function () {
     if($rootScope.searchData == undefined){
         $rootScope.searchData = {};
+        $rootScope.lastSearchName = '';
     }
   }
   $scope.doSearch = function () {
@@ -90,14 +91,15 @@ OBizR.controller('srchResCtrl', function($scope,$state,$stateParams,$ionicHistor
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
-
-    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
     if($stateParams.srchId == 'search'){
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       businessesService.searchBusinesses($rootScope.searchData.name)
         .then(function (biz) {
           $rootScope.searchedBusinesses = biz.nodes;
           console.log($rootScope.searchedBusinesses);
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+    }else{
+      $rootScope.searchedBusinesses = [];
     }
     
   });

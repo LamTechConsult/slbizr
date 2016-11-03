@@ -12,9 +12,9 @@
 		  <span class="rating-numbers">{{businessesDetails.ratings | rating}}/5</span><div class="star-rating"><span style="width:{{businessesDetails.ratings}}"></span></div> {{businessesDetails.reviewcount}} Reviews
         </div>
         <div class="biz-category"><span>{{businessesDetails.keywords}}</span>, <span>{{businessesDetails.category}}</span></div>
-        <div class="biz-hours">Hours Today{{getTimeFormat(businessesDetails.hours)}}</div>
+        <div class="biz-hours">Hours Today{{businessesDetails.hours | getTimeFormat}}</div>
         <span class="mi">{{businessesDetails.distance}} mi</span>
-        <span class="{{getStatus(businessesDetails.hours)}}">{{getStatus(businessesDetails.hours)}}</span>
+        <span class="{{businessesDetails.hours | getStatus}}">{{businessesDetails.hours | getStatus}}</span>
       </ion-item>
     </ion-list>
 
@@ -82,7 +82,8 @@
           <i class="icon ion-document-text"></i>
           <div class="slr-item-text item-text-wrap">
             <h4>Description</h4>
-            <p>{{businessesDetails.field_ltc_biz_description.und[0].value}}</p>
+            <!-- <p>{{businessesDetails.field_ltc_biz_description.und[0].value}}</p> -->
+            <p>{{businessesDetails.description}}</p>
           </div>
         </div>
         <div class="item item-icon-left">

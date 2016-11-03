@@ -240,44 +240,46 @@ OBizR.controller('writeReviewCtrl', function($scope,$state,CameraService,$ionicH
 OBizR.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
   });
   $scope.$on("$ionicView.enter", function(event, data){
     $rootScope.businessesReview = [];
+    $rootScope.businessesDetails = null;
+    
     if($stateParams.bid){
-      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-      businessesService.getBusinesses().then(function (biz) {
-        for (a=0;a<biz.nodes.length;a++){
-          if(biz.nodes[a].node.nid === $stateParams.bid){
-      
-            $rootScope.businessesDetails = biz.nodes[a].node;
-			      var latm  = $rootScope.businessesDetails.geocode_lat
-      	    var longm = $rootScope.businessesDetails.geocode_long
-            //console.log("lat:"+lat+"Log:"+long);
-            $localStorage.latm = latm;
-            $localStorage.longm = longm;
-			      businessesService.getBusinessesReview($stateParams.bid).then(function(review) {
-              $rootScope.businessesReview = review;
-            });
-            console.log($rootScope.businessesDetails);
-            break;
-          }
-        }
-      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+      businessesService.searchedBusinessDetails($stateParams.bid).then(function (biz) {
+        $rootScope.businessesDetails = biz.nodes[0].node;
+        var latm  = $rootScope.businessesDetails.geocode_lat
+        var longm = $rootScope.businessesDetails.geocode_long
+        //console.log("lat:"+lat+"Log:"+long);
+        $localStorage.latm = latm;
+        $localStorage.longm = longm;
+        businessesService.getBusinessesReview($stateParams.bid).then(function(review) {
+          $rootScope.businessesReview = review;
+        });
+        console.log($rootScope.businessesDetails);
+      }).finally(function () { $rootScope.$broadcast('loading:hide');});
+      // businessesService.getBusinesses().then(function (biz) {
+      //   // for (a=0;a<biz.nodes.length;a++){
+      //   //   if(biz.nodes[a].node.nid === $stateParams.bid){
+      //   //     flag = false;
+      //   //     $rootScope.businessesDetails = biz.nodes[a].node;
+			   //   //  var latm  = $rootScope.businessesDetails.geocode_lat
+      // 	 //    var longm = $rootScope.businessesDetails.geocode_long
+      //   //     //console.log("lat:"+lat+"Log:"+long);
+      //   //     $localStorage.latm = latm;
+      //   //     $localStorage.longm = longm;
+			   //   //  businessesService.getBusinessesReview($stateParams.bid).then(function(review) {
+      //   //       $rootScope.businessesReview = review;
+      //   //     });
+      //   //     console.log($rootScope.businessesDetails);
+      //   //     break;
+      //   //   }
+      //   // }
+      // });
     } 
   });
-  $scope.getTimeFormat = function (argument) {
-    if(!argument)
-      return;
-    var val = argument.split('-');
-    return val[1]+'-'+val[2];
-  }
-  $scope.getStatus = function (argument) {
-    if(!argument)
-      return;
-    var val = argument.split('-');
-    //var status = val[0].split(' ');
-    return val[0];
-  }
+
   $scope.showMoreDetails = false;
   $scope.showMoreBizDetail = function () {
     return $scope.showMoreDetails = !$scope.showMoreDetails;

@@ -10,17 +10,20 @@
 
   <ion-content>
     <ion-list class="biz-list">
-      <ion-item class="item-thumbnail-left item-icon-right" ng-repeat="bs in searchedBusinesses | limitTo:30" ng-click="businessDetails(bs.node.nid)">
+      <!-- <ion-item class="item-thumbnail-left item-icon-right" ng-repeat="bs in searchedBusinesses | limitTo:30" ng-click="businessDetails(bs.node.nid)"> -->
+      <div ng-if="searchedBusinesses.length==0">No result found.</div>
+      <ion-item class="item-thumbnail-left item-icon-right" ng-repeat="bs in searchedBusinesses"  ng-click="businessDetails(bs.node.nid)">
         <img ng-if="bs.node.image.src" ng-src="{{bs.node.image.src}}" alt="{{bs.node.image.alt}}">
         <img ng-if="!bs.node.image.src" src="assets/img/fullsize_biz.png">
 	    <h2>{{bs.node.title}}</h2>
 	    <div class="biz-ratings {{bs.node.ratings | ratingClass}}">
-		  <span class="rating-numbers">{{bs.node.ratings | rating}}/5</span><div class="star-rating"><span style="width:{{bs.node.ratings}}"></span></div> {{bs.node.reviewcount}} Reviews
+		  <span class="rating-numbers">{{bs.node.ratings | rating}}/5</span><div class="star-rating">
+      <span style="width:{{bs.node.ratings}}"></span></div> {{bs.node.reviewcount}} Reviews
         </div>
         <div class="biz-category">{{bs.node.category}}</div>
-        <div class="biz-hours">Hours Today{{getTimeFormat(bs.node.hours)}}</div>
+        <div class="biz-hours">Hours Today{{bs.node.hours | getTimeFormat}}</div>
         <span class="mi">{{bs.node.distance}} mi</span>
-        <span class="{{getStatus(bs.node.hours)}}">{{getStatus(bs.node.hours)}}</span>
+        <span class="{{bs.node.hours | getStatus}}">{{bs.node.hours | getStatus}}</span>
         <i class="icon ion-ios-arrow-right icon-small"></i>
       </ion-item>
     </ion-list>

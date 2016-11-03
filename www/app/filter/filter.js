@@ -95,3 +95,31 @@ OBizR.filter('distance', function() {
     return dist;
   }
 });
+
+// Setup the time format
+OBizR.filter('getTimeFormat', function() {
+
+  // Create the return function
+  return function(hours) {
+    if(angular.isUndefined(hours) || hours == ''){
+      return ' : 00:00';
+    }
+    var val = hours.split('-');
+    return val[1]+'-'+val[2];
+  }
+});
+
+// Setup the time format
+OBizR.filter('getStatus', function() {
+
+  // Create the return function
+  return function(hours) {
+    if(angular.isUndefined(hours) || hours == ''){
+      return '';
+    }
+    var val = hours.split('-');
+    //var status = val[0].split(' ');
+    return val[0];
+  }
+});
+
