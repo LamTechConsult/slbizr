@@ -123,3 +123,47 @@ OBizR.filter('getStatus', function() {
   }
 });
 
+// Setup the getSelectedKeyword filter
+OBizR.filter('getSelectedKeyword', function() {
+
+  // Create the return function
+  return function(niddle,keyword) {
+    if(angular.isUndefined(keyword) || keyword == ''){
+      return '';
+    }
+    var keyName = false;
+    angular.forEach(keyword, function(value, key) {
+      if(value.keyword.id == niddle){
+        keyName = value.keyword.keyword
+        console.log(value.keyword.keyword);
+      }
+      
+    });
+    if(keyName)
+    return keyName;
+    return keyName;
+  }
+});
+// Setup the getSelectedCategory filter
+OBizR.filter('getSelectedCategory', function() {
+
+  // Create the return function
+  return function(niddle,category) {
+
+    if(angular.isUndefined(category) || category == ''){
+      return '';
+    }
+
+    var catName = false;
+    angular.forEach(category, function(value, key) {
+      if(value.node.categoryid == niddle){
+        catName = value.node.name
+        console.log(value.node.name);
+      }
+      
+    });
+    if(catName)
+    return catName;
+    return catName;
+  }
+});

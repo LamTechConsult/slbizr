@@ -60,6 +60,21 @@ OBizR.factory('DataService', function($http,DrupalApiConstant) {
     url = basePath + "slbiz/filter/keywords.json";
     return $http.get(url,config);
   }
+  //fetch Provience from backend
+  dataService.fetchProvience = function() {
+    url = basePath + "slbiz/province.json";
+    return $http.get(url,config);
+  }
+  //fetch District from backend
+  dataService.fetchDistricts = function(pid) {
+    url = basePath + "slbiz/"+pid+"/district.json";
+    return $http.get(url,config);
+  }
+  //fetch Chiefdoms from backend
+  dataService.fetchChiefdoms = function(did) {
+    url = basePath + "slbiz/chiefdom.json?&district="+did;
+    return $http.get(url,config);
+  }
   //query search business
   dataService.fetchSearchedBusinesses = function(bizName) { 
     url = basePath + "slbiz/search.json?name="+bizName;
@@ -70,13 +85,6 @@ OBizR.factory('DataService', function($http,DrupalApiConstant) {
     url = basePath + "slbiz/"+bid+"/business.json";
     return $http.get(url,config);
   }
-  //fetchBusinessesReview
-  // dataService.fetchBusinessesReview = function(bid) {
-  //    //NodeResourceConstant.resourcePath + '/' + bid + '/' + NodeResourceConstant.actions.comments;
-  //   url = basePath + "slbiz/"+bid+"/app-business-home.json";
-  //   return $http.get(url,config);
-  // }
-
 
   return dataService;
 });

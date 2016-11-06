@@ -16,37 +16,26 @@ OBizR.service('CameraService', function($q,$cordovaCamera) {
       }
    }
 });
-
 /**
  * BiZ Services :
  */
-OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {
-    var businessesService = {
-		  getBusinesses: getBusinesses,
-		  getBusinessesReview:getBusinessesReview,
-		  getBusinessesReviewById:getBusinessesReviewById,
-		  sortBusinessesByDistance:sortBusinessesByDistance,
-		  searchedBusinessDetails:searchedBusinessDetails,
-		  postReviews:postReviews,
-		  getCategory:getCategory,
-		  getKeywords:getKeywords,
-		  businessDetails:businessDetails,
-		  searchBusinesses:searchBusinesses,
-		  addBiz:addBiz,
-		  editBiz:editBiz,
-		  getReviewerProfile:getReviewerProfile,
-		  //setReviewUser:setReviewUser
-		}
-    var lastFetched = null;
-    var businesses = null;
-    var reviews = null;
-    var category = null;
+OBizR.service('taxonomyService', function($q,$filter,$rootScope,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {
+	var taxonomyService = {
+		getCategory:getCategory,
+		getKeywords:getKeywords,
+		getProvience:getProvience,
+		getDistrict:getDistrict,
+		getChiefdoms:getChiefdoms,
+	}
+	var category = null;
     var keywords = null;
-    var searchedBiz = null;
-    var searchedBizDetails = null;
-    return businessesService;
+    var provience = null;
+    var district = null;
+    var chiefdoms = null;
 
-//////////////////////////////////////////////////////////
+	return taxonomyService;
+///////////////////////////////////////////////////////////////
+	
 	/**
 	 * Get active Category from backend.
 	 */
@@ -102,6 +91,86 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
 		});
     	return keywords;
 	}
+	/**
+	 * Get active Chiefdoms from backend.
+	 */
+	function getProvience() {
+			
+		var defer = $q.defer();
+		if (provience == null || (Date.now() - lastFetched) > 60 * 10000) {
+			DataService.fetchProvience().success(function (data) {	
+				provience = data.locations;	
+				console.log(data);
+			    defer.resolve(provience);
+			    lastFetched = Date.now();
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(provience);
+		}
+	    return defer.promise;
+	}
+	/**
+	 * Get active Chiefdoms from backend.
+	 */
+	function getDistrict(pid) {
+			
+		var defer = $q.defer();
+		DataService.fetchDistricts(pid).success(function (data) {	
+			district = data.districts;
+			console.log(data);	
+		    defer.resolve(district);
+	    }).catch(function (error) {
+	        defer.reject(error);
+	    });
+	    return defer.promise;
+	}
+	/**
+	 * Get active Chiefdoms from backend.
+	 */
+	function getChiefdoms(did) {
+			
+		var defer = $q.defer();
+		DataService.fetchChiefdoms(did).success(function (data) {	
+			chiefdoms = data.locations;	
+			console.log(data);
+		    defer.resolve(chiefdoms);
+	    }).catch(function (error) {
+	        defer.reject(error);
+	    });
+	    return defer.promise;
+	}
+});
+/**
+ * BiZ Services :
+ */
+OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {
+    var businessesService = {
+		  getBusinesses: getBusinesses,
+		  getBusinessesReview:getBusinessesReview,
+		  getBusinessesReviewById:getBusinessesReviewById,
+		  sortBusinessesByDistance:sortBusinessesByDistance,
+		  searchedBusinessDetails:searchedBusinessDetails,
+		  postReviews:postReviews,
+		  
+		  businessDetails:businessDetails,
+		  searchBusinesses:searchBusinesses,
+		  addBiz:addBiz,
+		  editBiz:editBiz,
+		  getReviewerProfile:getReviewerProfile,
+		  //setReviewUser:setReviewUser
+		}
+    var lastFetched = null;
+    var businesses = null;
+    var reviews = null;
+   
+    var searchedBiz = null;
+    var searchedBizDetails = null;
+    return businessesService;
+
+//////////////////////////////////////////////////////////
+
 	/**
 	 * Get getReviewerProfile from backend.
 	 */

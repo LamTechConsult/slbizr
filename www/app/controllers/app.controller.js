@@ -1,34 +1,8 @@
 
 OBizR.controller('mainCtrl', function($scope,$localStorage,$cordovaGeolocation,$rootScope,$state) {
-  $rootScope.ProvienceItem = [
-      {label:'-select-', value:'null'},
-      {label:'Eastern', value:'Eastern'},
-      {label:'Northern', value:'Northern'},
-      {label:'Southern', value:'Southern'},
-      {label:'Western', value:'Western'},
-    ];
-  $rootScope.DistrictItem = [
-      {label:'-select-', value:'null'},
-      {label:'Kailahun', value:'Kailahun'},
-      {label:'Kenema', value:'Kenema'},
-      {label:'Kono', value:'Kono'},
-    ];
-  $rootScope.ChiefdomItem = [
-      {label:'-select-', value:'null'},
-      {label:'Dea', value:'Dea'},
-      {label:'Jawei', value:'Jawei'},
-      {label:'Kissi Kama', value:'Kissi Kama'},
-      {label:'Kisi Teng', value:'Kisi Teng'},
-      {label:'Kissi Tongi', value:'Kissi Tongi'},
-      {label:'Luawa', value:'Luawa'},
-      {label:'Malema', value:'Malema'},
-      {label:'Mandu', value:'Mandu'},
-      {label:'Peje Bongre', value:'Peje Bongre'},
-      {label:'Peje West', value:'Peje West'},
-      {label:'Penguia', value:'Penguia'},
-      {label:'Upper Bambara', value:'Upper Bambara'},
-      {label:'Yawei', value:'Yawei'},
-    ];
+  $rootScope.ProvienceItem = [];
+  $rootScope.DistrictItem = [];
+  $rootScope.ChiefdomItem = [];
   $rootScope.days = [
       {label:'Mon', value:'Mon'},
       {label:'Tue', value:'Tue'},

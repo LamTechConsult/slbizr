@@ -54,16 +54,16 @@
     <div class="list" ng-switch-when="Chiefdom">
       <label class="item item-input item-select">
         <div class="input-label">Provience</div>
-        <select ng-model="Provience" ng-options="item.label for item in ProvienceItem"></select>
+        <select ng-model="Provience" ng-options="item.location.name for item in ProvienceItem" ng-change="getDistrictItem(Provience)"></select>
       </label>
 
       <label class="item item-input item-select">
         <div class="input-label">District</div>
-        <select ng-model="District" ng-options="item.label for item in DistrictItem"></select>
+        <select ng-model="District" ng-change="getChiefdomItem(District)" ng-options="item.district.name for item in DistrictItem"></select>
       </label>
       <label class="item item-input item-select">
         <div class="input-label">Chiefdom</div>
-        <select ng-model="Chiefdom" ng-options="item.label for item in ChiefdomItem"></select>
+        <select ng-model="Chiefdom" ng-options="item.location.name for item in ChiefdomItem"></select>
       </label>  
     </div>
 
@@ -174,7 +174,7 @@
 
     <div class="list" ng-switch-when="Description">
       <label class="item item-input">
-        <textarea placeholder="Say something nice about your business this is your opportunity to tell it all" ng-model="newBizData.field_ltc_biz_description.und[0].value"></textarea>
+        <textarea rows="10" placeholder="Say something nice about your business this is your opportunity to tell it all" ng-model="newBizData.field_ltc_biz_description.und[0].value"></textarea>
       </label>
     </div>
 
