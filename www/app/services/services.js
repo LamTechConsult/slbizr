@@ -17,6 +17,280 @@ OBizR.service('CameraService', function($q,$cordovaCamera) {
    }
 });
 /**
+ * pageService
+ */
+OBizR.service('pageService', function($q,$filter,$rootScope,StaticPageService) {
+	var pageService = {
+		getAboutPage:getAboutPage,
+		getAboutBizSubsPage:getAboutBizSubsPage,
+		getAboutPressKitPage:getAboutPressKitPage,
+		getAboutProfesSrvPage:getAboutProfesSrvPage,
+
+		getSupportPage:getSupportPage,
+		getTermUsePage:getTermUsePage,
+
+		getGSReviverPage:getGSReviverPage,
+		getGSBizPage:getGSBizPage,
+		getGSBuildPage:getGSBuildPage,
+		getGSLearnPage:getGSLearnPage,
+		getGSPubSevPage:getGSPubSevPage,
+
+		getPrivacyPolicyPage:getPrivacyPolicyPage,
+	}
+	var aboutpage = null;
+	var aboutbizsubspage = null;
+	var aboutpresskitpage = null;
+	var aboutprofessrvpage = null;
+
+	var termusepage = null;
+	var supportpage = null;
+	var privacypolicypage = null;
+
+	var gsreviverpage = null;
+	var gsbizpage = null;
+	var gsbuildpage = null;
+	var gslearnpage = null;
+	var gspubsevpage = null;
+
+	return pageService;
+///////////////////////////////////////////////////////////////
+	
+	/**
+	 * Get about page content from backend.
+	 */
+	function getAboutPage() {
+			
+		var defer = $q.defer();
+		if (aboutpage == null) {
+			StaticPageService.fetchAboutPage().success(function (data) {	
+				aboutpage = data.nodes;	
+
+			    defer.resolve(aboutpage);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(aboutpage);
+		}
+	    return defer.promise;
+	}
+		/**
+	 * Get about page content from backend.
+	 */
+	function getAboutBizSubsPage() {
+			
+		var defer = $q.defer();
+		if (aboutbizsubspage == null) {
+			StaticPageService.fetchAboutBizSubsPage().success(function (data) {	
+				aboutbizsubspage = data.nodes;	
+
+			    defer.resolve(aboutbizsubspage);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(aboutbizsubspage);
+		}
+	    return defer.promise;
+	}
+		/**
+	 * Get about page content from backend.
+	 */
+	function getAboutPressKitPage() {
+			
+		var defer = $q.defer();
+		if (aboutpresskitpage == null) {
+			StaticPageService.fetchAboutPressKitPage().success(function (data) {	
+				aboutpresskitpage = data.nodes;	
+
+			    defer.resolve(aboutpresskitpage);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(aboutpresskitpage);
+		}
+	    return defer.promise;
+	}
+		/**
+	 * Get about page content from backend.
+	 */
+	function getAboutProfesSrvPage() {
+			
+		var defer = $q.defer();
+		if (aboutprofessrvpage == null) {
+			StaticPageService.fetchAboutProfesSrvPage().success(function (data) {	
+				aboutprofessrvpage = data.nodes;	
+
+			    defer.resolve(aboutprofessrvpage);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(aboutprofessrvpage);
+		}
+	    return defer.promise;
+	}
+	//////////////////////////////////////////////////////////
+	
+	/**
+	 * Get privacy policy page content from backend.
+	 */
+	function getPrivacyPolicyPage() {
+			
+		var defer = $q.defer();
+		if (privacypolicypage == null) {
+			StaticPageService.fetchPrivacyPolicyPage().success(function (data) {	
+				privacypolicypage = data.nodes;	
+
+			    defer.resolve(privacypolicypage);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(privacypolicypage);
+		}
+	    return defer.promise;
+	}
+	/**
+	 * Get term of use page content from backend.
+	 */
+	function getTermUsePage() {
+			
+		var defer = $q.defer();
+		if (termusepage == null) {
+			StaticPageService.fetchTermUsePage().success(function (data) {	
+				termusepage = data.nodes;	
+
+			    defer.resolve(termusepage);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(termusepage);
+		}
+	    return defer.promise;
+	}
+	//////////////////////////////////////////////////////////////
+
+	/**
+	 * Get getting started page content from backend.
+	 */
+	function getGSReviverPage() {
+			
+		var defer = $q.defer();
+		if (gsreviverpage == null) {
+			StaticPageService.fetchGSReviverPage().success(function (data) {	
+				gsreviverpage = data.nodes;	
+
+			    defer.resolve(gsreviverpage);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(gsreviverpage);
+		}
+	    return defer.promise;
+	}
+	/**
+	 * Get getting started page content from backend.
+	 */
+	function getGSBizPage() {
+			
+		var defer = $q.defer();
+		if (gsbizpage == null) {
+			StaticPageService.fetchGSBizPage().success(function (data) {	
+				gsbizpage = data.nodes;	
+
+			    defer.resolve(gsbizpage);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(gsbizpage);
+		}
+	    return defer.promise;
+	}
+	/**
+	 * Get getting started page content from backend.
+	 */
+	function getGSBuildPage() {
+			
+		var defer = $q.defer();
+		if (gsbuildpage == null) {
+			StaticPageService.fetchGSBuildPage().success(function (data) {	
+				gsbuildpage = data.nodes;	
+
+			    defer.resolve(gsbuildpage);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(gsbuildpage);
+		}
+	    return defer.promise;
+	}
+	/**
+	 * Get getting started page content from backend.
+	 */
+	function getGSLearnPage() {
+			
+		var defer = $q.defer();
+		if (gslearnpage == null) {
+			StaticPageService.fetchGSLearnPage().success(function (data) {	
+				gslearnpage = data.nodes;	
+
+			    defer.resolve(gslearnpage);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(gslearnpage);
+		}
+	    return defer.promise;
+	}
+	/**
+	 * Get getting started page content from backend.
+	 */
+	function getGSPubSevPage() {
+			
+		var defer = $q.defer();
+		if (gspubsevpage == null) {
+			StaticPageService.fetchGSLearnPage().success(function (data) {	
+				gspubsevpage = data.nodes;	
+
+			    defer.resolve(gspubsevpage);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(gspubsevpage);
+		}
+	    return defer.promise;
+	}
+	//////////////////////////////////////////////////////////////
+	
+	/**
+	 * Get Support/faq page content from backend.
+	 */
+	function getSupportPage() {
+			
+		var defer = $q.defer();
+		if (supportpage == null) {
+			StaticPageService.fetchSupportPage().success(function (data) {	
+				supportpage = data.nodes;	
+				
+			    defer.resolve(supportpage);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}else{
+			defer.resolve(supportpage);
+		}
+	    return defer.promise;
+	}
+});
+/**
  * BiZ Services :
  */
 OBizR.service('taxonomyService', function($q,$filter,$rootScope,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {

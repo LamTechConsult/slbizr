@@ -4,15 +4,22 @@
   </ion-nav-bar>
 
   <ion-content>
-    <div class="list" ng-repeat="friend in friends">
-      <div class="card">
-        <div class="item item-divider">
-          Subject of the message{{friend.name}}
-        </div>
-        <div class="item item-text-wrap">
-          Name of the person who sent the message.{{friend.name}}
-        </div>
-      </div>
+    <div class="list">
+    <!-- Getting Started Reviewers -->
+    <h4>{{gsreviverpage.title}}</h4>
+      <div class="item item-body" ng-bind-html="trustAsHtml(gsreviverpage.description)"></div>
+    <!--Getting Started Business -->
+      <h4>{{gsbizpage.title}}</h4>
+      <div class="item item-body" ng-bind-html="trustAsHtml(gsbizpage.description)"></div>
+    <!--Getting Started Developer Build -->
+      <h4>{{gsbuildpage.title}}</h4>
+      <div class="item item-body" ng-bind-html="trustAsHtml(gsbuildpage.description)"></div>
+    <!--Getting Started Developer learn -->
+      <h4>{{gslearnpage.title}}</h4>
+      <div class="item item-body" ng-bind-html="trustAsHtml(gslearnpage.description)"></div>
+    <!--Getting Started Public Services -->
+      <h4>{{gspubsevpage.title}}</h4>
+      <div class="item item-body" ng-bind-html="trustAsHtml(gspubsevpage.description)"></div>
     </div>
   </ion-content>
 </ion-view>

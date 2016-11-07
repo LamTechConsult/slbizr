@@ -1,3 +1,6 @@
+/**
+ * AuthService :
+ */
 OBizR.factory('AuthService', function($http, DrupalApiConstant,UserResourceConstant,AuthenticationHttpInterceptor) {
   var authService = {};
   //var today = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -10,7 +13,81 @@ OBizR.factory('AuthService', function($http, DrupalApiConstant,UserResourceConst
 
   return authService;
 });
-
+/**
+ * StaticPageService :
+ */
+OBizR.factory('StaticPageService', function($http,DrupalApiConstant) {
+  var staticPageService = {};
+  var basePath = DrupalApiConstant.drupal_instance +DrupalApiConstant.api_endpoint;
+  var config = {};
+ 
+  //fetch About page
+  staticPageService.fetchAboutPage = function() {
+    url = basePath + "slbiz/about.json";
+    return $http.get(url,config);
+  };
+  //fetch About page
+  staticPageService.fetchAboutBizSubsPage = function() {
+    url = basePath + "slbiz/services/biz-subscription.json";
+    return $http.get(url,config);
+  };
+  //fetch About page
+  staticPageService.fetchAboutPressKitPage = function() {
+    url = basePath + "slbiz/press-kit.json";
+    return $http.get(url,config);
+  };
+  //fetch About page
+  staticPageService.fetchAboutProfesSrvPage = function() {
+    url = basePath + "slbiz/services/professional-services.json";
+    return $http.get(url,config);
+  };
+  
+  //fetch Privacy policy page
+  staticPageService.fetchPrivacyPolicyPage = function() {
+    url = basePath + "slbiz/legal/privacy-policy.json";
+    return $http.get(url,config);
+  };
+  //fetch Term of service page
+  staticPageService.fetchTermUsePage = function() {
+    url = basePath + "slbiz/legal/terms-of-use.json";
+    return $http.get(url,config);
+  };
+  ///////////////////////////////////////////////////////////
+  //fetch getting started page
+  staticPageService.fetchGSReviverPage = function() {
+    url = basePath + "slbiz/getting-started/reviewer.json";
+    return $http.get(url,config);
+  };
+  //fetch getting started page
+  staticPageService.fetchGSBizPage = function() {
+    url = basePath + "slbiz/getting-started/business.json";
+    return $http.get(url,config);
+  };
+  //fetch getting started page
+  staticPageService.fetchGSBuildPage = function() {
+    url = basePath + "slbiz/getting-started/developer/build.json";
+    return $http.get(url,config);
+  };
+  //fetch getting started page
+  staticPageService.fetchGSLearnPage = function() {
+    url = basePath + "slbiz/getting-started/developer/learn.json";
+    return $http.get(url,config);
+  };
+  //fetch getting started page
+  staticPageService.fetchGSPubSevPage = function() {
+    url = basePath + "slbiz/getting-started/public-service.json";
+    return $http.get(url,config);
+  };
+  ///////////////////////////////////////////////////////////
+  
+  //fetch getting started page
+  staticPageService.fetchSupportPage = function() {
+    url = basePath + "slbiz/help/faqs.json";
+    return $http.get(url,config);
+  };
+  
+  return staticPageService;
+});
 /**
  * DataService :
  */

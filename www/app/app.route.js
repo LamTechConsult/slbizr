@@ -308,6 +308,15 @@ OBizR.config(function($stateProvider, $localStorageProvider, AuthenticationServi
         }
       }
   })
+  .state('app.set-location',{
+      url:'/set-location',
+      views: {
+        'menu-set-location': {
+          templateUrl: 'app/templates/menu/set-location.html',
+          controller: 'menuCtrl'
+        }
+      }
+  })
 
   .state('app.myReviews',{
       url:'/myReviews',

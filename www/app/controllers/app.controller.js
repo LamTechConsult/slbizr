@@ -73,24 +73,24 @@ OBizR.controller('mainCtrl', function($scope,$localStorage,$cordovaGeolocation,$
       {label:'11:30 PM', value:'11:30 PM'},
       {label:'Closed', value:'closed'},
     ];
-  console.log('mainCtrl');
+  
   $rootScope.storage = $localStorage;
-  $rootScope.serverErrors = [];
-  if(!$rootScope.storage){
-    var posOptions = {timeout: 10000, enableHighAccuracy: false};
-    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-      var lat  = position.coords.latitude
-      var long = position.coords.longitude
-      console.log("lat:"+lat+"Log:"+long);
-        $localStorage.lat = lat;
-        $localStorage.long = long;
-      }, function(err) {
-        $rootScope.serverErrors.push('Unable to get loacation try manually.');
-        console.log(err);
-    });
-  }else{
-    $rootScope.serverErrors.push('Unable to get loacation try manually.');
-  }
+  // $rootScope.serverErrors = [];
+  // if(!$rootScope.storage){
+  //   var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  //   $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+  //     var lat  = position.coords.latitude
+  //     var long = position.coords.longitude
+  //     console.log("lat:"+lat+"Log:"+long);
+  //       $localStorage.lat = lat;
+  //       $localStorage.long = long;
+  //     }, function(err) {
+  //       $rootScope.serverErrors.push('Unable to get loacation try manually.');
+  //       console.log(err);
+  //   });
+  // }else{
+  //   $rootScope.serverErrors.push('Unable to get loacation try manually.');
+  // }
 });
 
 OBizR.controller('reviewDetailsCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,businessesService) {
@@ -597,12 +597,6 @@ OBizR.controller('SplashCtrl',function($rootScope,$scope,$state,$window,$ionicSl
   $scope.nextSlide = function () {
     $ionicSlideBoxDelegate.next();
   }
-});
-
-OBizR.controller('menuCtrl',function($rootScope,$scope,$state,$window,$ionicSlideBoxDelegate){
-  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
-    viewData.enableBack = true;
-  });
 });
 
 OBizR.controller('DashCtrl', function($scope,$state,$ionicHistory,$rootScope,$localStorage,ProfileService) {

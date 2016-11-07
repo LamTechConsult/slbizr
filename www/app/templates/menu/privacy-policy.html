@@ -4,14 +4,11 @@
   </ion-nav-bar>
 
   <ion-content>
-    <div class="list" ng-repeat="friend in friends">
-      <div class="card">
-        <div class="item item-divider">
-          Subject of the message{{friend.name}}
-        </div>
-        <div class="item item-text-wrap">
-          Name of the person who sent the message.{{friend.name}}
-        </div>
+    <div class="list">
+        <h4>{{privacypolicypage.title}}</h4>
+
+      <div class="item item-body" ng-bind-html="trustAsHtml(privacypolicypage.description)">
+        <!-- {{privacypolicypage.description}} -->
       </div>
     </div>
   </ion-content>

@@ -1,18 +1,23 @@
-<ion-view view-title="About OBizR Sierra Leone">
+<ion-view view-title="{{aboupage.title}}">
   <ion-nav-bar class="bar-positive">
     <ion-nav-back-button side="left">Back </ion-nav-back-button>
   </ion-nav-bar>
 
   <ion-content>
-    <div class="list" ng-repeat="friend in friends">
-      <div class="card">
-        <div class="item item-divider">
-          Subject of the message{{friend.name}}
-        </div>
-        <div class="item item-text-wrap">
-          Name of the person who sent the message.{{friend.name}}
-        </div>
-      </div>
+    <div class="list">
+    <!-- About page -->
+      <h4>{{aboupage.title}}</h4>
+      <div class="item item-body" ng-bind-html="trustAsHtml(aboupage.description)"></div>
+    <!-- About Press Kit page -->
+      <h4>{{aboutpresskitpage.title}}</h4>
+      <div class="item item-body" ng-bind-html="trustAsHtml(aboutpresskitpage.description)"></div>
+    <!-- About Professional Services page -->
+      <h4>{{aboutprofessrvpage.title}}</h4>
+      <div class="item item-body" ng-bind-html="trustAsHtml(aboutprofessrvpage.description)"></div>
+    <!-- About Business Subscription page -->
+      <h4>{{aboutbizsubspage.title}}</h4>
+      <div class="item item-body" ng-bind-html="trustAsHtml(aboutbizsubspage.description)"></div>
+
     </div>
   </ion-content>
 </ion-view>
