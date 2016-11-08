@@ -317,7 +317,15 @@ OBizR.config(function($stateProvider, $localStorageProvider, AuthenticationServi
         }
       }
   })
-
+  .state('app.mapView',{
+      url:'/map-view',
+      views: {
+        'menu-mapView': {
+          templateUrl: 'app/templates/others/map-view.html',
+          controller: 'otherCtrl'
+        }
+      }
+  })
   .state('app.myReviews',{
       url:'/myReviews',
       views: {

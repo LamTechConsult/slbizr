@@ -585,6 +585,9 @@ OBizR.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeoloc
   $scope.getFilterView = function () {
     $state.go('app.filter');
   }
+  $scope.getMapView = function () {
+    $state.go('app.mapView');
+  }
 });
 
 OBizR.controller('SplashCtrl',function($rootScope,$scope,$state,$window,$ionicSlideBoxDelegate){
