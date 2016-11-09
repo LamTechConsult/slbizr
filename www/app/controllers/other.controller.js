@@ -139,7 +139,7 @@ OBizR.controller('otherCtrl', function($scope,$state,$filter,$ionicHistory,$cord
           zoom: 5,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        $scope.map = new google.maps.Map(document.getElementById("map-view"), mapOptions);
 
         // Additional Markers
         $scope.markers = [];
@@ -149,7 +149,8 @@ OBizR.controller('otherCtrl', function($scope,$state,$filter,$ionicHistory,$cord
             position: new google.maps.LatLng(biz.geocode_lat, biz.geocode_long),
             map: $scope.map,
             animation: google.maps.Animation.DROP,
-            title: biz.title
+            title: biz.title,
+            icon: 'assets/img/map-marker.png'
           });
 
           //Creating marker content
