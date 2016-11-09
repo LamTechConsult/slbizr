@@ -4,6 +4,7 @@ OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
+    $rootScope.serverErrors = [];
   	$rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       pageService.getAboutPage()
         .then(function (aboupage) {
