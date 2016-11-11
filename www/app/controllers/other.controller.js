@@ -178,3 +178,26 @@ OBizR.controller('otherCtrl', function($scope,$state,$filter,$ionicHistory,$cord
     });
   }
 });
+OBizR.controller('claimBizCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService,taxonomyService) {
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    $rootScope.serverErrors = [];
+  });
+  $scope.$on("$ionicView.beforeLeave", function(event, data){
+    $rootScope.serverErrors = [];
+  });
+
+  $scope.bizClaim = {};
+  $scope.doClaimBiz = function () {
+    $rootScope.serverErrors = [];
+    if($scope.bizClaim.email == undefined || $scope.bizClaim.email == ''){
+      $rootScope.serverErrors.push('All fields are mandatory!!.');
+      return;
+    }else{
+      //TODO:request api to send mail or write code to mail.
+      $rootScope.serverErrors.push('Under progress.');
+    }
+  }
+});

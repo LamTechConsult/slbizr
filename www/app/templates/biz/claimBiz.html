@@ -1,0 +1,63 @@
+<ion-view view-title="Claim Business">
+   <ion-nav-bar class="bar-positive">
+     <ion-nav-back-button side="left">Back </ion-nav-back-button>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon button-clear" ng-click="doClaimBiz()">Done</button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+<ion-content>
+    <div class="card" ng-if="serverErrors.length">
+      <div class="item item-text-wrap error" ng-repeat="serverError in serverErrors">
+        {{serverError}}
+      </div>
+    </div>
+
+    <div class="card" ng-if="sucessMsg">
+      <div class="item item-text-wrap sucess">{{sucessMsg}}</div>
+    </div>
+
+    <div class="list">
+      <div class="item item-divider">Legal Disclaimer</div>
+      <li class="item item-toggle">
+         Are you the legal owner?
+         <label class="toggle toggle-calm">
+           <input type="checkbox" ng-model="bizClaim.legalOnwer">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+      <label class="item item-text-wrap">
+        By claiming a business, you sign up to be registered as business owner and person responsible to manage this business listing on Sierra Leone Business Reviews.
+      </label>
+
+      <div class="item item-divider">Business Details</div>
+       <label class="item item-input">
+        <input type="text" placeholder="Business Name" ng-model="bizClaim.bizname">
+      </label>
+
+       <div class="item item-divider">Your Information</div>
+       <label class="item item-input">
+        <input type="text" placeholder="Nick Name" ng-model="bizClaim.nickname">
+      </label>
+
+      <label class="item item-input">
+        <input type="text" placeholder="Phone" ng-model="bizClaim.phone">
+      </label>
+
+      <label class="item item-input">
+        <input type="text" placeholder="Email" ng-model="bizClaim.email">
+      </label>
+
+      <label class="item item-input">
+        <input type="text" placeholder="User Name" ng-model="bizClaim.email">
+      </label>
+
+      <label class="item item-input">
+        <textarea rows="6" placeholder="Instruction for our team" ng-model="bizClaim.instructions"></textarea>
+      </label>
+       
+    </div>
+  </ion-content>
+</ion-view>

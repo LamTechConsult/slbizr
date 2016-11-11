@@ -223,11 +223,16 @@ OBizR.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$sta
     if($stateParams.bid){
       businessesService.searchedBusinessDetails($stateParams.bid).then(function (biz) {
         $rootScope.businessesDetails = biz.nodes[0].node;
-        var latm  = parseFloat($rootScope.businessesDetails.geocode_lat);
-        var longm = parseFloat($rootScope.businessesDetails.geocode_long);
-        var title = $rootScope.businessesDetails.title;
-        var bizDetail = {lat:latm,long:longm,title:title}
-
+        var bizDetail = {};
+        if($rootScope.businessesDetails.geocode_lat){
+          bizDetail.lat = parseFloat($rootScope.businessesDetails.geocode_lat);
+          bizDetail.long = parseFloat($rootScope.businessesDetails.geocode_long);
+        }else{
+          bizDetail.lat = 8.465257;
+          bizDetail.long = -13.232233;
+        }
+        bizDetail.title = $rootScope.businessesDetails.title;
+        
         businessesService.getBusinessesReview($stateParams.bid).then(function(review) {
           $rootScope.businessesReview = review;
           $scope.getBusinessesMap(bizDetail);
@@ -288,6 +293,9 @@ OBizR.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$sta
   $scope.showDirectionMapClick = function () {
     $state.go('app.businessDirectionsMapOptions',{bid:$stateParams.bid});
   }
+  $scope.claimBusinessClick = function () {
+    $state.go('app.claimBiz',{bid:$stateParams.bid});
+  }
 });
 
 OBizR.controller('bizCtrlMap', function($scope,$state,$filter,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
@@ -299,8 +307,14 @@ OBizR.controller('bizCtrlMap', function($scope,$state,$filter,$ionicHistory,$roo
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       businessesService.searchedBusinessDetails($stateParams.bid).then(function (biz) {
         $rootScope.businessesDetailsMap = biz.nodes[0].node;
-        $rootScope.businessesDetailsMap.lat  = parseFloat($rootScope.businessesDetailsMap.geocode_lat);
-        $rootScope.businessesDetailsMap.long = parseFloat($rootScope.businessesDetailsMap.geocode_long);
+        if($rootScope.businessesDetailsMap.geocode_lat){
+          $rootScope.businessesDetailsMap.lat  = parseFloat($rootScope.businessesDetailsMap.geocode_lat);
+          $rootScope.businessesDetailsMap.long = parseFloat($rootScope.businessesDetailsMap.geocode_long);
+        }else{
+          $rootScope.businessesDetailsMap.lat  = 8.465257;
+          $rootScope.businessesDetailsMap.long = -13.232233;
+        }
+        
 
         $scope.getBusinessesMap($rootScope.businessesDetailsMap);
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
@@ -361,8 +375,13 @@ OBizR.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$ionicHis
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       businessesService.searchedBusinessDetails($stateParams.bid).then(function (biz) {
         $rootScope.businessesDetailsMap = biz.nodes[0].node;
-        $scope.bizLat = $rootScope.businessesDetailsMap.geocode_lat;
-        $scope.bizLong = $rootScope.businessesDetailsMap.geocode_long;
+        if($rootScope.businessesDetailsMap.geocode_lat){
+          $scope.bizLat = $rootScope.businessesDetailsMap.geocode_lat;
+          $scope.bizLong = $rootScope.businessesDetailsMap.geocode_long;
+        }else{
+          $scope.bizLat = 8.465257;
+          $scope.bizLong = -13.232233;
+        }
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
     } 
   });

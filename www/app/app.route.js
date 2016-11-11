@@ -185,6 +185,18 @@ OBizR.config(function($stateProvider, $localStorageProvider, AuthenticationServi
       'access': AuthenticationServiceConstant.accessLevels.user
     }
   })
+  .state('app.claimBiz', {
+    url: '/claimBiz/:bid',
+    views: {
+      'menu-claimBiz': {
+        templateUrl: 'app/templates/biz/claimBiz.html',
+        controller: 'claimBizCtrl'
+      }
+    },
+    data: {
+      'access': AuthenticationServiceConstant.accessLevels.user
+    }
+  })
 
   .state('login', {
     url: '/login',
