@@ -26,7 +26,8 @@
     </div>
 
     <div class="map-address">
-      <div class="map" id="map" center="[{{businessesDetails.geocode_lat}}, {{businessesDetails.geocode_long}}]"></div>
+    <div class="map" id="map" data-tap-disabled="true"></div>
+     <!--  <div class="map" id="map" center="[{{businessesDetails.geocode_lat}}, {{businessesDetails.geocode_long}}]"></div> -->
       <button class="button button-full button-stable shadow-none m-none icon-right ion-ios-arrow-right address" ng-click="businessDetailsMapClick()">
         <span>{{businessesDetails.street}},</span>
          <span ng-if="businessesDetails.city"> {{businessesDetails.city}}</span>

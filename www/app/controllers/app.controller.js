@@ -227,11 +227,10 @@ OBizR.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$sta
         var longm = parseFloat($rootScope.businessesDetails.geocode_long);
         var title = $rootScope.businessesDetails.title;
         var bizDetail = {lat:latm,long:longm,title:title}
-        
-        $scope.getBusinessesMap(bizDetail);
 
         businessesService.getBusinessesReview($stateParams.bid).then(function(review) {
           $rootScope.businessesReview = review;
+          $scope.getBusinessesMap(bizDetail);
         });
         console.log($rootScope.businessesDetails);
       }).finally(function () { $rootScope.$broadcast('loading:hide');});
@@ -241,8 +240,6 @@ OBizR.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$sta
   ///////////////////// Show map on business detail page/////////////////////
   $scope.getBusinessesMap = function (bizDetail) {
     console.log(bizDetail)
-    var options = {timeout: 10000, enableHighAccuracy: true};
-      $cordovaGeolocation.getCurrentPosition(options).then(function(position){
       var bizLatLng = new google.maps.LatLng(bizDetail.lat, bizDetail.long);
       var mapOptions = {
         zoom: 15,
@@ -259,15 +256,10 @@ OBizR.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$sta
         icon: 'assets/img/map-marker.png'
       });
 
-      var infoWindow = new google.maps.InfoWindow();
       google.maps.event.addListener(marker, 'click', function(){
-            infoWindow.setContent(marker.content);
-            infoWindow.open($scope.map, marker);
+        $state.go('app.businessDetailsMap',{bid:$stateParams.bid});
       });
-    }, function(error){
-        console.log("Could not get location");
-    });
-  }
+  };
 
   $scope.showMoreDetails = false;
   $scope.showMoreBizDetail = function () {
@@ -298,37 +290,58 @@ OBizR.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$sta
   }
 });
 
-OBizR.controller('bizCtrlMap', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+OBizR.controller('bizCtrlMap', function($scope,$state,$filter,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
     if($stateParams.bid){
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-	  businessesService.getBusinesses()
-        .then(function (biz) {
+      businessesService.searchedBusinessDetails($stateParams.bid).then(function (biz) {
+        $rootScope.businessesDetailsMap = biz.nodes[0].node;
+        $rootScope.businessesDetailsMap.lat  = parseFloat($rootScope.businessesDetailsMap.geocode_lat);
+        $rootScope.businessesDetailsMap.long = parseFloat($rootScope.businessesDetailsMap.geocode_long);
 
-          for (a=0;a<biz.nodes.length;a++){
-            if(biz.nodes[a].node.nid === $stateParams.bid){
-              $rootScope.businessesDetailsMap = biz.nodes[a].node;
-			   var latm  = $rootScope.businessesDetailsMap.geocode_lat
-      		   var longm = $rootScope.businessesDetailsMap.geocode_long
-			   var city = $rootScope.businessesDetailsMap.city
-			   var title = $rootScope.businessesDetailsMap.title
-               //console.log("lat:"+lat+"Log:"+long);
-               $localStorage.latm = latm;
-               $localStorage.longm = longm;
-			   $localStorage.city = city;
-			   $localStorage.title = title;
-			   
-			   console.log($rootScope.businessesDetailsMap);
-			   break;
-            }
-          }
+        $scope.getBusinessesMap($rootScope.businessesDetailsMap);
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
     } 
   });
   
+  ///////////////////// Show map on business detail page/////////////////////
+  $scope.getBusinessesMap = function (bizDetail) {
+    console.log(bizDetail)
+      var bizLatLng = new google.maps.LatLng(bizDetail.lat, bizDetail.long);
+      var mapOptions = {
+        zoom: 15,
+        center: bizLatLng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
+      $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+      var infoWindow = new google.maps.InfoWindow();
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(bizDetail.lat, bizDetail.long),
+        map: $scope.map,
+        animation: google.maps.Animation.DROP,
+        title: bizDetail.title,
+        icon: 'assets/img/map-marker.png'
+      });
+
+      //Creating marker content
+      var createMarkerContent = '<em>' + marker.title + '</em>';
+      createMarkerContent += '<div class="biz-ratings '+$filter('ratingClass')(bizDetail.ratings)+'">';
+      createMarkerContent += '<div class="star-rating"><span style="width:'+bizDetail.ratings+'"></span></div>';
+      createMarkerContent += bizDetail.reviewcount+' Reviews</div>';
+      createMarkerContent += '<p>'+bizDetail.street+','+bizDetail.city+'</p>';
+      createMarkerContent += '<p>'+bizDetail.distance+' mi'+'</p>';
+
+      marker.content = createMarkerContent;
+      google.maps.event.addListener(marker, 'click', function(){
+        infoWindow.setContent(marker.content);
+        infoWindow.open($scope.map, marker);
+      });
+  };
+
   $scope.reviewerProfile = function(uid){
     $state.go('app.reviewerProfile',{uid:uid});
   }
@@ -336,44 +349,7 @@ OBizR.controller('bizCtrlMap', function($scope,$state,$ionicHistory,$rootScope,$
   $scope.showDirectionMapClick = function () {
     $state.go('app.businessDirectionsMapOptions',{bid:$stateParams.bid});
   }
-  /////////////////// Show map on business detail page//////////////////////////
-  $scope.$on('mapInitialized', function (event, map) {
-    window.setTimeout(function() {
-        map.setCenter(new google.maps.LatLng($localStorage.latm, $localStorage.longm));
-    	}, 100)
-	});
-  
-   var mapOptions = {
-        zoom: 15,
-        center: new google.maps.LatLng($localStorage.latm, $localStorage.longm),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
 
-  //Data
-  var latlong = [{
-      lat : $localStorage.latm,
-      long : $localStorage.longm,
-    	title: $localStorage.title
-    }];
-	
-  $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-  $scope.markers = [];
-  var infoWindow = new google.maps.InfoWindow();
-  var createMarker = function (info){
-      var marker = new google.maps.Marker({
-        map: $scope.map,
-        position: new google.maps.LatLng(info.lat, info.long),
-  			title: info.title
-      });
-      marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';      
-      google.maps.event.addListener(marker, 'click', function(){
-      infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
-      infoWindow.open($scope.map, marker);
-    });
-  $scope.markers.push(marker);      
-  }  
-  createMarker(latlong[0]);   
 });
 
 OBizR.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
@@ -383,26 +359,10 @@ OBizR.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$ionicHis
   $scope.$on("$ionicView.enter", function(event, data){
     if($stateParams.bid){
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-	  businessesService.getBusinesses()
-        .then(function (biz) {
-
-          for (a=0;a<biz.nodes.length;a++){
-            if(biz.nodes[a].node.nid === $stateParams.bid){
-              $rootScope.businessesDetailsMap = biz.nodes[a].node;
-			   var latm  = $rootScope.businessesDetailsMap.geocode_lat
-      		   var longm = $rootScope.businessesDetailsMap.geocode_long
-			   var city = $rootScope.businessesDetailsMap.city
-			   var title = $rootScope.businessesDetailsMap.title
-               //console.log("lat:"+lat+"Log:"+long);
-               $localStorage.latm = latm;
-               $localStorage.longm = longm;
-			   $localStorage.city = city;
-			   $localStorage.title = title;
-			   
-			   console.log($rootScope.businessesDetailsMap);
-			   break;
-            }
-          }
+      businessesService.searchedBusinessDetails($stateParams.bid).then(function (biz) {
+        $rootScope.businessesDetailsMap = biz.nodes[0].node;
+        $scope.bizLat = $rootScope.businessesDetailsMap.geocode_lat;
+        $scope.bizLong = $rootScope.businessesDetailsMap.geocode_long;
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
     } 
   });
@@ -414,34 +374,27 @@ OBizR.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$ionicHis
     $state.go('app.businessDirectionsMapEndPoint',{bid:$stateParams.bid});
   }
   var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  $cordovaGeolocation
-    .getCurrentPosition(posOptions)
-    .then(function (position) {
-      var lat  = position.coords.latitude //here you get latitude
-      var long = position.coords.longitude //here you get the longitude
-	  $localStorage.lat=lat;
-	  $localStorage.long=long;
-          }
-      // error
-    );
+  var myLocation = {};
+  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+    myLocation.lat  = position.coords.latitude //here you get latitude
+    myLocation.long = position.coords.longitude //here you get the longitude
+  });
 	
 	$scope.directionMap = function (choice) {
 	 
-	if(choice=="google"){
-           var link = ""+"http://maps.google.com/maps?saddr="+$localStorage.latm+","+$localStorage.longm+" &daddr="+$localStorage.lat+","+$localStorage.long;
-            window.location = link;
-	 }
-	 if(choice=="apple"){
-           
-		var link= ""+"http://maps.apple.com/?ll="+$localStorage.latm+","+$localStorage.longm+"&dirflg=d&t=h";
-            window.location = link;
-	 }
-	 if(choice=="waze"){
-           var link = ""+"waze://?ll="+$localStorage.latm+","+$localStorage.longm+"&navigate=yes";
-            window.location = link;
-	 }
-	 
-        } 
+  	if(choice=="google"){
+      var link = ""+"http://maps.google.com/maps?saddr="+myLocation.lat+","+myLocation.long+" &daddr="+$scope.bizLat+","+$scope.bizLong;
+      window.location = link;
+  	 }
+  	 if(choice=="apple"){
+      var link= ""+"http://maps.apple.com/?ll="+$scope.bizLat+","+$scope.bizLong+"&dirflg=d&t=h";
+      window.location = link;
+  	 }
+  	 if(choice=="waze"){
+      var link = ""+"waze://?ll="+$scope.bizLat+","+$scope.bizLong+"&navigate=yes";
+      window.location = link;
+  	 }
+  } 
     
 });
 

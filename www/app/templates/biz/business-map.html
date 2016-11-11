@@ -1,7 +1,11 @@
 <ion-view view-title="Map">
    <ion-nav-bar class="bar-header bar-positive">
     <ion-nav-back-button side="left">Back </ion-nav-back-button>
-    <ion-nav-title><img src="assets/img/splash_logo_small.png"/></ion-nav-title>
+   <ion-nav-buttons side="right">
+      <a class="button button-icon button-clear" ng-href="tel:{{businessesDetailsMap.phone}}">
+        Call<i class="icon ion-ios-telephone"></i>
+      </a>
+    </ion-nav-buttons>
   </ion-nav-bar>
 
   <ion-content class="ion-biz-map-content">
