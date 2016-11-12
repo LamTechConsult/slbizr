@@ -13,6 +13,28 @@ OBizR.factory('AuthService', function($http, DrupalApiConstant,UserResourceConst
 
   return authService;
 });
+
+/**
+ * StaticPageService :
+ */
+OBizR.factory('customPostService', function($http,$filter,DrupalApiConstant) {
+  var created = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+  var updated = created;
+  var customPostService = {};
+  var basePath = DrupalApiConstant.drupal_instance +DrupalApiConstant.api_endpoint;
+  var header = {"Content-Type": "application/json"};
+  
+  //fetch About page
+  customPostService.postClaimBusiness = function(bizData) {
+    bizData.created = created;
+    bizData.created = updated;
+    url = basePath + "entity_obizr_backend";
+    return $http.post(url,bizData,header);
+  };
+  return customPostService;
+});
+
+
 /**
  * StaticPageService :
  */

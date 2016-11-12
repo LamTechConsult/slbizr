@@ -178,26 +178,47 @@ OBizR.controller('otherCtrl', function($scope,$state,$filter,$ionicHistory,$cord
     });
   }
 });
-OBizR.controller('claimBizCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService,taxonomyService) {
+OBizR.controller('claimBizCtrl', function($scope,$state,$stateParams,$ionicHistory,$cordovaGeolocation,$rootScope,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
+
+  $scope.bizClaim = {};
   $scope.$on("$ionicView.enter", function(event, data){
     $rootScope.serverErrors = [];
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+    businessesService.searchedBusinessDetails($stateParams.bid).then(function (biz) {
+       $scope.bizClaim.business_name  = biz.nodes[0].node.title;
+       $scope.bizClaim.field_claimed_biz_node_id = biz.nodes[0].node.nid;
+       $scope.bizClaim.uid = $rootScope.currentUser.uid;
+       $scope.bizClaim.type = 'obizr_backend';
+       $scope.bizClaim.bundle = 'claim_business';
+    }) .finally(function () { $rootScope.$broadcast('loading:hide');});
   });
   $scope.$on("$ionicView.beforeLeave", function(event, data){
     $rootScope.serverErrors = [];
   });
 
-  $scope.bizClaim = {};
   $scope.doClaimBiz = function () {
     $rootScope.serverErrors = [];
-    if($scope.bizClaim.email == undefined || $scope.bizClaim.email == ''){
-      $rootScope.serverErrors.push('All fields are mandatory!!.');
+    if($scope.bizClaim.field_are_you_the_legal_owner == undefined){
+      $rootScope.serverErrors.push('Legal owner field is required.');
       return;
-    }else{
+    }
+    if($scope.bizClaim.field_claim_instruc_for_our_team == undefined){
+      $rootScope.serverErrors.push('Instruction is required.');
+      return;
+    }
+    else{
       //TODO:request api to send mail or write code to mail.
-      $rootScope.serverErrors.push('Under progress.');
+      console.log($scope.bizClaim);
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+      businessesService.claimBiz($scope.bizClaim).then(function (biz) {
+        console.log(biz)
+        $scope.sucessMsg = "Thank you, we have recieved your business claim request and will contacet you shortly."
+      },function(error){
+        $rootScope.serverErrors.push('Something went wrong.');
+      }).finally(function () { $rootScope.$broadcast('loading:hide');});
     }
   }
 });

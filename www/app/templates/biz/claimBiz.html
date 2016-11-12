@@ -22,7 +22,7 @@
       <li class="item item-toggle">
          Are you the legal owner?
          <label class="toggle toggle-calm">
-           <input type="checkbox" ng-model="bizClaim.legalOnwer">
+           <input type="checkbox" ng-model="bizClaim.field_are_you_the_legal_owner">
            <div class="track">
              <div class="handle"></div>
            </div>
@@ -34,28 +34,28 @@
 
       <div class="item item-divider">Business Details</div>
        <label class="item item-input">
-        <input type="text" placeholder="Business Name" ng-model="bizClaim.bizname">
+        <input type="text" disabled="true" placeholder="Business Name" ng-model="bizClaim.business_name">
       </label>
 
        <div class="item item-divider">Your Information</div>
        <label class="item item-input">
-        <input type="text" placeholder="Nick Name" ng-model="bizClaim.nickname">
+        <input type="text" disabled="true" placeholder="Nick Name" ng-model="currentUser.field_user_nick_name.und[0].value">
       </label>
 
       <label class="item item-input">
-        <input type="text" placeholder="Phone" ng-model="bizClaim.phone">
+        <input type="text" disabled="true" placeholder="Phone" ng-model="currentUser.field_mobile_user_telephone.und[0].value">
       </label>
 
       <label class="item item-input">
-        <input type="text" placeholder="Email" ng-model="bizClaim.email">
+        <input type="text" disabled="true" placeholder="Email" ng-model="currentUser.mail">
       </label>
 
       <label class="item item-input">
-        <input type="text" placeholder="User Name" ng-model="bizClaim.email">
+        <input type="text" disabled="true" placeholder="User Name" ng-model="currentUser.name">
       </label>
 
       <label class="item item-input">
-        <textarea rows="6" placeholder="Instruction for our team" ng-model="bizClaim.instructions"></textarea>
+        <textarea rows="6" placeholder="Instruction for our team" ng-model="bizClaim.field_claim_instruc_for_our_team.und[0].value"></textarea>
       </label>
        
     </div>

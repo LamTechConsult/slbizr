@@ -419,7 +419,7 @@ OBizR.service('taxonomyService', function($q,$filter,$rootScope,$http,DrupalHelp
 /**
  * BiZ Services :
  */
-OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {
+OBizR.service('businessesService', function($q,$filter,customPostService,$rootScope,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {
     var businessesService = {
 		  getBusinesses: getBusinesses,
 		  getBusinessesReview:getBusinessesReview,
@@ -427,6 +427,7 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
 		  sortBusinessesByDistance:sortBusinessesByDistance,
 		  searchedBusinessDetails:searchedBusinessDetails,
 		  postReviews:postReviews,
+		  claimBiz:claimBiz,
 		  
 		  businessDetails:businessDetails,
 		  searchBusinesses:searchBusinesses,
@@ -444,7 +445,16 @@ OBizR.service('businessesService', function($q,$filter,$rootScope,$http,DrupalHe
     return businessesService;
 
 //////////////////////////////////////////////////////////
-
+	function claimBiz(bizData) {
+		var defer = $q.defer();
+		customPostService.postClaimBusiness(bizData).success(function (data) {
+			console.log(data);
+		    defer.resolve(data);
+	    }).catch(function (error) {
+		    defer.reject(error);
+		});
+	    return defer.promise;
+	}
 	/**
 	 * Get getReviewerProfile from backend.
 	 */
