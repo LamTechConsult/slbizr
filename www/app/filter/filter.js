@@ -168,3 +168,21 @@ OBizR.filter('getSelectedCategory', function() {
     return catName;
   }
 });
+// Setup custom business filter
+OBizR.filter('customBizFilter', function() {
+
+  // Create the return function
+  return function(biz,filterCriteria) {
+
+    if(biz.length == 0){
+      return '';
+    }
+
+    var filterRes = [];
+    angular.forEach(biz, function(value, key) {
+      console.log(value.node)
+      //this.push(value.node);
+    }, filterRes);
+    return filterRes;
+  }
+});

@@ -31,6 +31,9 @@ OBizR.controller('filterCtrl', function($scope,$state,$ionicHistory,$cordovaGeol
       $rootScope.filter = {};
       //$rootScope.filter.openNow = true;
       $rootScope.filter.claimed = true;
+      // $rootScope.filter.distance = "ASC";
+      // $rootScope.filter.reviews = "ASC";
+      // $rootScope.filter.ratings = "ASC";
     }
   }
   /////////////////////Autocomplete fuctionality///////////////////////////////
@@ -60,8 +63,13 @@ OBizR.controller('filterCtrl', function($scope,$state,$ionicHistory,$cordovaGeol
   
   $scope.$root.$broadcast($scope.autocompleteInput.ID);
   /////////////////////////////////////////////////////////////////////////////
+  var history = $ionicHistory.backView();//get from state name
   $scope.dofilterSerarch = function () {
-    $state.go('app.searchResults',{srchId:'filter'});
+    if(history.stateName == 'app.nearBy'){
+      $state.go('app.searchResults',{srchId:'filterFromNearby'});
+    }else{
+      $state.go('app.searchResults',{srchId:'filterFromSearchRes'});
+    }
   }
 });
 
@@ -86,11 +94,12 @@ OBizR.controller('searchCtrl', function($scope,$state,$ionicHistory,$rootScope) 
   }
 });
 
-OBizR.controller('srchResCtrl', function($scope,$state,$stateParams,$ionicHistory,$rootScope,businessesService) {
+OBizR.controller('srchResCtrl', function($scope,$state,$filter,$stateParams,$ionicHistory,$rootScope,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
+    $rootScope.searchedBusinesses = [];
     if($stateParams.srchId == 'search'){
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       businessesService.searchBusinesses($rootScope.searchData.name)
@@ -98,11 +107,31 @@ OBizR.controller('srchResCtrl', function($scope,$state,$stateParams,$ionicHistor
           $rootScope.searchedBusinesses = biz.nodes;
           console.log($rootScope.searchedBusinesses);
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
-    }else{
-      $rootScope.searchedBusinesses = [];
     }
-    
+    if($stateParams.srchId == 'filterFromNearby'){
+      $rootScope.searchedBusinesses = $rootScope.displayBusinesses;
+      if($rootScope.filter.distance!= undefined || $rootScope.filter.reviews!= undefined || $rootScope.filter.ratings!= undefined){
+        $scope.doSortBiz();
+      }
+
+    }
+    if($stateParams.srchId == 'filterFromSearchRes'){
+      
+      if($rootScope.filter.distance!= undefined || $rootScope.filter.reviews!= undefined || $rootScope.filter.ratings!= undefined){
+        $scope.doSortBiz();
+      }
+
+    }
   });
+  $scope.doSortBiz = function () {
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+      businessesService.filterBusinesses()
+      .then(function (biz) {
+          $rootScope.searchedBusinesses = biz.nodes;
+          console.log($rootScope.searchedBusinesses)
+          $rootScope.filter = undefined;
+      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+  }
   $scope.businessDetails = function (bid) {
     $state.go('app.businessDetails',{bid:bid});
   }

@@ -184,6 +184,11 @@ OBizR.factory('DataService', function($http,DrupalApiConstant) {
     url = basePath + "slbiz/"+bid+"/business.json";
     return $http.get(url,config);
   }
+  //query search business
+  dataService.fetchFilteredBusinesses = function(filterData) { 
+    url = basePath + "slbiz/app-business-home.json?category=&chiefdom=&keyword=&city=&sort_by=field_ltc_biz_rating_rating&sort_order=ASC";
+    return $http.get(url,config);
+  }
 
   return dataService;
 });

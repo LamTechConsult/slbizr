@@ -69,9 +69,38 @@
         <input type="text" placeholder="Best Match">
       </label>
     </div>
+    <!-- Sort Section-->
     <div class="list" ng-switch-when="Distance">
-      <label class="item item-input" ng-model="filter.distance">
-        <input type="text" placeholder="Distance">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Distance
+        </div>
+        <select ng-model="filter.distance">
+          <option value="ASC">Ascending order</option>
+          <option value="DESC">Descending order</option>
+        </select>
+      </label>
+    </div>
+    <div class="list" ng-switch-when="Reviews">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Reviews
+        </div>
+        <select ng-model="filter.reviews">
+          <option value="ASC">Ascending order</option>
+          <option value="DESC">Descending order</option>
+        </select>
+      </label>
+    </div>
+    <div class="list" ng-switch-when="Ratings">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Ratings
+        </div>
+        <select ng-model="filter.ratings">
+          <option value="ASC">Ascending order</option>
+          <option value="DESC">Descending order</option>
+        </select>
       </label>
     </div>
 

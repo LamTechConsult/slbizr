@@ -426,11 +426,13 @@ OBizR.service('businessesService', function($q,$filter,customPostService,$rootSc
 		  getBusinessesReviewById:getBusinessesReviewById,
 		  sortBusinessesByDistance:sortBusinessesByDistance,
 		  searchedBusinessDetails:searchedBusinessDetails,
+		  sortBusinessesByDistanceFilter:sortBusinessesByDistanceFilter,
 		  postReviews:postReviews,
 		  claimBiz:claimBiz,
 		  
 		  businessDetails:businessDetails,
 		  searchBusinesses:searchBusinesses,
+		  filterBusinesses:filterBusinesses,
 		  addBiz:addBiz,
 		  editBiz:editBiz,
 		  getReviewerProfile:getReviewerProfile,
@@ -441,6 +443,7 @@ OBizR.service('businessesService', function($q,$filter,customPostService,$rootSc
     var reviews = null;
    
     var searchedBiz = null;
+    var filteredBiz = null;
     var searchedBizDetails = null;
     return businessesService;
 
@@ -735,6 +738,47 @@ OBizR.service('businessesService', function($q,$filter,customPostService,$rootSc
 			defer.resolve(searchedBiz);
 		}
         return defer.promise;
+	}
+	/**
+	 * Filter businesse from backend.
+	 */
+	function filterBusinesses(filterData){
+		var defer = $q.defer();
+
+			DataService.fetchFilteredBusinesses(filterData).success(function (data) {
+		        //filteredBiz = data;
+		        saveBizDistanceFilter(data,filterData);
+		        defer.resolve(filteredBiz);
+		    }).catch(function (error) {
+		        defer.reject(error);
+		    });
+        return defer.promise;
+	}
+	/**
+	 * Add distance field to the populated business data.
+	 */
+	function saveBizDistanceFilter(bizData,filterData) {
+	    var prepareBizData = bizData;
+	   	for (a=0;a<prepareBizData.nodes.length;a++){
+	 		prepareBizData.nodes[a].node.distance = $filter('distance')($rootScope.storage.lat,$rootScope.storage.long,prepareBizData.nodes[a].node.geocode_lat,prepareBizData.nodes[a].node.geocode_long,"N");
+	 		prepareBizData.nodes[a].node.status = $filter('getStatus')(prepareBizData.nodes[a].node.hours);
+	 	}   
+	 	//sortBusinessesByDistanceFilter(prepareBizData,filterData);
+	 	filteredBiz = prepareBizData;
+	}
+
+	/**
+	 * Filter bussiness according to givern fileter criteria.
+	 */
+	function sortBusinessesByDistanceFilter(sortBizData,filterData) {
+		var sortedBizData = sortBizData;
+		var sortedBizData1 = {nodes:[]};
+	   	for (a=0;a<sortedBizData.nodes.length;a++){
+	   		if($filter('getStatus')(sortedBizData.nodes[a].node.hours) == 'closed'){
+	   			sortedBizData1.nodes.push(sortedBizData.nodes[a]);
+	   		}
+	   	}
+	   	filteredBiz = sortedBizData1;
 	}
 });
 
