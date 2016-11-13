@@ -4,10 +4,38 @@
   </ion-nav-bar>
 
  <ion-content>
+ 	<div class="card" ng-if="serverErrors.length">
+      <div class="item item-text-wrap error" ng-repeat="serverError in serverErrors">
+        {{serverError}}
+      </div>
+    </div>
+
  	<button class="button button-block button-calm" ng-click="captureCurrentLocation()"><i class="ion-ios-location"></i> Capture current location</button>
 
- 	<button class="button button-block button-calm" ng-click="enterNewLocation()"><i class="ion-android-locate"></i> Enter new/assumed location</button> 
+ 	<button class="button button-block button-calm" ng-click="enterNewLocation()">
+ 	<i class="ion-android-locate"></i> Enter new/assumed location</button> 
 
- 	<p>Current Location is set to : Latitude : {{storage.lat}} - Longitude : {{storage.long}}</p>
+ 	<!--Assumed location fields value -->
+  
+ 	<!-- <label class="item item-input">
+        <input type="text" disabled="true" ng-model="newLocation.country">
+    </label> -->
+
+    <label class="item item-input">
+        <input type="text" placeholder="Street" ng-model="newLocation.street">
+    </label>
+    <label class="item item-input">
+        <input type="text" placeholder="City" ng-model="newLocation.city">
+    </label>
+
+    <!--Address display section -->
+    <div class="list">
+      <div class="item item-divider">Current Address</div>
+      <label class="item item-text-wrap">{{storage.address}}</label>
+
+      <div class="item item-divider">Current address coordinates</div>
+      <label class="item item-text-wrap">Latitude : {{storage.lat}}</label>
+      <label class="item item-text-wrap">Longitude : {{storage.long}}</label>
+    </div>
  </ion-content>
 </ion-view>

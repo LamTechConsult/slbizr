@@ -72,15 +72,67 @@ OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state
       $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
         var lat  = position.coords.latitude
         var long = position.coords.longitude
-        console.log("lat:"+lat+"Log:"+long);
-          $localStorage.lat = lat;
-          $localStorage.long = long;
-          $rootScope.storage = $localStorage;
+
+          var geocoder = new google.maps.Geocoder();
+          var latlng = new google.maps.LatLng(lat, long);
+          var request = {
+            latLng: latlng
+          };
+          geocoder.geocode(request, function(data, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (data[0] != null) {
+                $scope.$apply(function() {
+                  $localStorage.lat = data[0].geometry.location.lat();
+                  $localStorage.long = data[0].geometry.location.lng();
+                  $localStorage.address = data[0].formatted_address;
+                  $rootScope.storage = $localStorage;
+                });
+              } else {
+                alert("No address available");
+              }
+            }
+          });
         }, function(err) {
           $rootScope.serverErrors.push('Unable to get loacation try after sometime.');
     }).finally(function () { $rootScope.$broadcast('loading:hide');});
   }
+  $scope.newLocation = {};
+  $scope.newLocation.country = 'Sierra Leone';
+
   $scope.enterNewLocation = function() {
-    // body...
+    $rootScope.serverErrors = [];
+    if($scope.newLocation.city == undefined || $scope.newLocation.city == ''){
+      $rootScope.serverErrors.push('City is required.');
+      return;
+    }
+    if($scope.newLocation.street == undefined || $scope.newLocation.street == ''){
+      $rootScope.serverErrors.push('Street is required.');
+      return;
+    }else{
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+      var commaSeparateVal = $scope.newLocation.street+","+$scope.newLocation.city+","+$scope.newLocation.country;
+          var request = {
+            address: commaSeparateVal
+          };
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode(request, function(data, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          $rootScope.$broadcast('loading:hide');
+          if (data[0] != null) {
+            $scope.$apply(function() {
+              $localStorage.lat = data[0].geometry.location.lat();
+              $localStorage.long = data[0].geometry.location.lng();
+              $localStorage.address = data[0].formatted_address;
+              $rootScope.storage = $localStorage;
+            });
+
+          } else {
+            $rootScope.$broadcast('loading:hide');
+            $rootScope.serverErrors.push('Unable to set loacation try after sometime.');
+          }
+        }
+      });
+
+    }
   }
 });
