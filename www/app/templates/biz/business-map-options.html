@@ -6,10 +6,16 @@
   <ion-content>
     <div class="list">
       <div class="item item-icon-right" href="#" ng-click="directionStartPoint()">
-        <i class="icon ion-ios-arrow-forward icon-small"></i> Start Point
+        <i class="icon ion-ios-arrow-forward icon-small"></i>
+        <span class="item-note" ng-if="startpoint.myLocation">My current Location</span>
+        <span class="item-note" ng-if="startpoint.customLocation">{{startpoint.customLocation.address}}</span>
+        Start Point
       </div>
       <div class="item item-icon-right" href="#" ng-click="directionEndPoint()">
-        <i class="icon ion-ios-arrow-forward icon-small"></i> End Point
+        <i class="icon ion-ios-arrow-forward icon-small"></i>
+          <span class="item-note" ng-if="businessesDetails.street">{{businessesDetails.street}}, {{businessesDetails.city}}</span>
+          <span class="item-note" ng-if="endpoint.customLocation.address">{{endpoint.customLocation.address}}</span>
+        End Point
       </div>
     </div>
     <div class="get-direction-map">

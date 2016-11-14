@@ -2,6 +2,7 @@ OBizR.controller('filterCtrl', function($scope,$state,$ionicHistory,$cordovaGeol
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
+
   $scope.$on("$ionicView.enter", function(event, data){
   	$rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       taxonomyService.getCategory()
@@ -13,6 +14,7 @@ OBizR.controller('filterCtrl', function($scope,$state,$ionicHistory,$cordovaGeol
           $rootScope.keywords = keywords;
       }) .finally(function () { $rootScope.$broadcast('loading:hide');}); 
     $scope.initializeFilterData();
+    console.log($ionicHistory.backView());//get from state name
   });
   
   $scope.setFilterValFor = function (caseStr) {
@@ -63,9 +65,9 @@ OBizR.controller('filterCtrl', function($scope,$state,$ionicHistory,$cordovaGeol
   
   $scope.$root.$broadcast($scope.autocompleteInput.ID);
   /////////////////////////////////////////////////////////////////////////////
-  var history = $ionicHistory.backView();//get from state name
+  
   $scope.dofilterSerarch = function () {
-    if(history.stateName == 'app.nearBy'){
+    if($ionicHistory.backView().stateName == 'app.nearBy'){
       $state.go('app.searchResults',{srchId:'filterFromNearby'});
     }else{
       $state.go('app.searchResults',{srchId:'filterFromSearchRes'});
@@ -109,25 +111,37 @@ OBizR.controller('srchResCtrl', function($scope,$state,$filter,$stateParams,$ion
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
     }
     if($stateParams.srchId == 'filterFromNearby'){
-      $rootScope.searchedBusinesses = $rootScope.displayBusinesses;
+
       if($rootScope.filter.distance!= undefined || $rootScope.filter.reviews!= undefined || $rootScope.filter.ratings!= undefined){
         $scope.doSortBiz();
+      }else{
+        $scope.doFiler('nonDefault');
       }
-
     }
     if($stateParams.srchId == 'filterFromSearchRes'){
       
       if($rootScope.filter.distance!= undefined || $rootScope.filter.reviews!= undefined || $rootScope.filter.ratings!= undefined){
         $scope.doSortBiz();
+      }else{
+        $scope.doFiler('default');
       }
-
     }
   });
+  $scope.doFiler = function (type) {
+    if(type == 'nonDefault'){
+      $rootScope.searchedBusinesses = $rootScope.displayBusinesses;
+      console.log('nonDefault');
+    }else{
+      console.log('Default');
+    }
+
+  }
   $scope.doSortBiz = function () {
     $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       businessesService.filterBusinesses()
       .then(function (biz) {
           $rootScope.searchedBusinesses = biz.nodes;
+          $scope.doFiler('default');
           console.log($rootScope.searchedBusinesses)
           $rootScope.filter = undefined;
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
