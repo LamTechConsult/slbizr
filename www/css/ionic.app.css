@@ -10086,6 +10086,12 @@ img {
       letter-spacing: 0.1em;
       left: 0; }
 
+.red .star-rating span::before {
+  color: #ff3c28; }
+
+.yellow .star-rating span::before {
+  color: #ffea00; }
+
 /*--- ionic ratings ---*/
 .ionic_ratings .icon {
   font-size: 25px; }
@@ -10277,3 +10283,8 @@ ul.rating.yellow li i.ion-ios-star {
     margin-bottom: 15px;
     padding: 0 0 0 16px;
     border-radius: 4px !important; }
+
+/*---- add/edit bussiness --*/
+.edit-business .item-note, .add-bussiness .item-note {
+  white-space: normal;
+  padding-left: 140px; }
