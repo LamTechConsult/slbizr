@@ -18,12 +18,12 @@ Instructions
 ------------
 - clone the repository using 'git clone [reponame]'
 - cd [reponame]
-- npm insatll (to install node module dependency).
+- npm install (to install node module dependency).
 - bower update (to install bower dependency).
 
 Add platform
 ------------
-- ionic paltform add [android/ios]
+- ionic platform add [android/ios]
 
 Generate resources
 ------------------
@@ -36,7 +36,7 @@ Browser run
 
 Build app
 ---------
-- ionic bild [android/ios]
+- ionic build [android/ios]
 
 Run the app
 -----------
