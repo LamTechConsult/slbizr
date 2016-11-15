@@ -223,14 +223,16 @@ OBizR.controller('bizCtrl', function($scope,$state,$ionicHistory,$rootScope,$sta
     if($stateParams.bid){
       businessesService.searchedBusinessDetails($stateParams.bid).then(function (biz) {
         $rootScope.businessesDetails = biz.nodes[0].node;
-        var bizDetail = {};
         if($rootScope.businessesDetails.geocode_lat){
-          bizDetail.lat = parseFloat($rootScope.businessesDetails.geocode_lat);
-          bizDetail.long = parseFloat($rootScope.businessesDetails.geocode_long);
+          $rootScope.businessesDetails.lat  = parseFloat($rootScope.businessesDetails.geocode_lat);
+          $rootScope.businessesDetails.long = parseFloat($rootScope.businessesDetails.geocode_long);
         }else{
-          bizDetail.lat = 8.465257;
-          bizDetail.long = -13.232233;
+          $rootScope.businessesDetails.lat  = 8.465257;
+          $rootScope.businessesDetails.long = -13.232233;
         }
+        var bizDetail = {};
+        bizDetail.lat = $rootScope.businessesDetails.lat;
+        bizDetail.long = $rootScope.businessesDetails.long;
         bizDetail.title = $rootScope.businessesDetails.title;
         
         businessesService.getBusinessesReview($stateParams.bid).then(function(review) {
@@ -303,22 +305,7 @@ OBizR.controller('bizCtrlMap', function($scope,$state,$filter,$ionicHistory,$roo
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
-    if($stateParams.bid){
-      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-      businessesService.searchedBusinessDetails($stateParams.bid).then(function (biz) {
-        $rootScope.businessesDetailsMap = biz.nodes[0].node;
-        if($rootScope.businessesDetailsMap.geocode_lat){
-          $rootScope.businessesDetailsMap.lat  = parseFloat($rootScope.businessesDetailsMap.geocode_lat);
-          $rootScope.businessesDetailsMap.long = parseFloat($rootScope.businessesDetailsMap.geocode_long);
-        }else{
-          $rootScope.businessesDetailsMap.lat  = 8.465257;
-          $rootScope.businessesDetailsMap.long = -13.232233;
-        }
-        
-
-        $scope.getBusinessesMap($rootScope.businessesDetailsMap);
-      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
-    } 
+    $scope.getBusinessesMap($rootScope.businessesDetails);
   });
   
   ///////////////////// Show map on business detail page/////////////////////
@@ -371,46 +358,54 @@ OBizR.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$ionicHis
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
-    if($stateParams.bid){
-      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-      businessesService.searchedBusinessDetails($stateParams.bid).then(function (biz) {
-        $rootScope.businessesDetailsMap = biz.nodes[0].node;
-        if($rootScope.businessesDetailsMap.geocode_lat){
-          $scope.bizLat = $rootScope.businessesDetailsMap.geocode_lat;
-          $scope.bizLong = $rootScope.businessesDetailsMap.geocode_long;
-        }else{
-          $scope.bizLat = 8.465257;
-          $scope.bizLong = -13.232233;
-        }
-      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
-    } 
+    $scope.initializeData(); 
   });
-  
+  $scope.initializeData = function () {
+    if($rootScope.choice == undefined){
+      $rootScope.choice = 'google';
+      $rootScope.startpoint = {};
+      $rootScope.startpoint.myLocation = {};
+      $rootScope.startpoint.myLocation.lat  = $localStorage.lat;
+      $rootScope.startpoint.myLocation.long =$localStorage.lat;
+      //$rootScope.startpoint.customLocation = {};
+      $rootScope.endpoint = {};
+      $rootScope.endpoint.bizLocation = {};
+      $rootScope.endpoint.bizLocation.lat = $rootScope.businessesDetails.lat;
+      $rootScope.endpoint.bizLocation.long = $rootScope.businessesDetails.long;
+      //$rootScope.endpoint.customLocation = {};
+    }
+  }
   $scope.directionStartPoint = function () {
     $state.go('app.businessDirectionsMapStartPoint',{bid:$stateParams.bid});
   }
   $scope.directionEndPoint = function () {
     $state.go('app.businessDirectionsMapEndPoint',{bid:$stateParams.bid});
   }
-  var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  var myLocation = {};
-  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-    myLocation.lat  = position.coords.latitude //here you get latitude
-    myLocation.long = position.coords.longitude //here you get the longitude
-  });
-	
+
 	$scope.directionMap = function (choice) {
+    var mayLoc = '';
+    var bizLoc = '';
+    if($rootScope.startpoint.myLocation){
+      mayLoc = $rootScope.startpoint.myLocation;
+    }else{
+       mayLoc = $rootScope.startpoint.customLocation;
+    }
+    if($rootScope.endpoint.bizLocation){
+      bizLoc = $rootScope.endpoint.bizLocation;
+    }else{
+      bizLoc = $rootScope.endpoint.customLocation;
+    }
 	 
   	if(choice=="google"){
-      var link = ""+"http://maps.google.com/maps?saddr="+myLocation.lat+","+myLocation.long+" &daddr="+$scope.bizLat+","+$scope.bizLong;
+      var link = ""+"http://maps.google.com/maps?saddr="+mayLoc.lat+","+mayLoc.long+" &daddr="+bizLoc.lat+","+bizLoc.long;
       window.location = link;
   	 }
   	 if(choice=="apple"){
-      var link= ""+"http://maps.apple.com/?ll="+$scope.bizLat+","+$scope.bizLong+"&dirflg=d&t=h";
+      var link= ""+"http://maps.apple.com/?ll="+bizLoc.lat+","+bizLoc.long+"&dirflg=d&t=h";
       window.location = link;
   	 }
   	 if(choice=="waze"){
-      var link = ""+"waze://?ll="+$scope.bizLat+","+$scope.bizLong+"&navigate=yes";
+      var link = ""+"waze://?ll="+bizLoc.lat+","+bizLoc.long+"&navigate=yes";
       window.location = link;
   	 }
   } 
@@ -422,21 +417,12 @@ OBizR.controller('bizCtrlMapDirectionsStartPoint', function($scope,$state,$ionic
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
-    if($stateParams.bid){
-      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-	  businessesService.getBusinesses()
-        .then(function (biz) {
-
-          for (a=0;a<biz.nodes.length;a++){
-            if(biz.nodes[a].node.nid === $stateParams.bid){
-              $rootScope.businessesDetailsMap = biz.nodes[a].node;
-			   console.log($rootScope.businessesDetailsMap);
-			   break;
-            }
-          }
-      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
-    } 
   });
+  $scope.getMyCurrentLocation = function () {
+    $rootScope.startpoint.myLocation.lat  = $localStorage.lat;
+    $rootScope.startpoint.myLocation.long =$localStorage.lat;
+    delete $rootScope.startpoint.customLocation;
+  }
   $scope.directionStartPointLocation = function () {
     $state.go('app.businessDirectionsMapStartPointLocation',{bid:$stateParams.bid});
   }
@@ -447,21 +433,41 @@ OBizR.controller('bizCtrlMapDirectionsStartPointLocation', function($scope,$stat
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
-    if($stateParams.bid){
-      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-	  businessesService.getBusinesses()
-        .then(function (biz) {
-
-          for (a=0;a<biz.nodes.length;a++){
-            if(biz.nodes[a].node.nid === $stateParams.bid){
-              $rootScope.businessesDetailsMap = biz.nodes[a].node;
-			   console.log($rootScope.businessesDetailsMap);
-			   break;
-            }
-          }
-      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
-    } 
+    $rootScope.startpoint.customLocation = {};
+    $rootScope.startpoint.customLocation.country = 'Sierra Leone';
   });
+
+  $scope.setStartPointLocation = function () {
+    if($rootScope.startpoint.customLocation.street == undefined || $rootScope.startpoint.customLocation.street == ''){
+      return;
+    }
+    if($rootScope.startpoint.customLocation.city == undefined || $rootScope.startpoint.customLocation.city == ''){
+      return;
+    }
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+    var commaSeparateVal = $rootScope.startpoint.customLocation.street+","+$rootScope.startpoint.customLocation.city+","+$rootScope.startpoint.customLocation.country;
+      var request = {
+        address: commaSeparateVal
+      };
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode(request, function(data, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        $rootScope.$broadcast('loading:hide');
+        if (data[0] != null) {
+          $scope.$apply(function() {
+           $rootScope.startpoint.customLocation.lat = data[0].geometry.location.lat();
+            $rootScope.startpoint.customLocation.long = data[0].geometry.location.lng();
+            $rootScope.startpoint.customLocation.address = data[0].formatted_address;
+            delete $rootScope.startpoint.myLocation;
+            $state.go('app.businessDirectionsMapOptions',{bid:$stateParams.bid});
+          });
+        } else {
+          $rootScope.$broadcast('loading:hide');
+          $rootScope.serverErrors.push('Unable to set loacation try after sometime.');
+        }
+      }
+    });
+  }
 });
 
 OBizR.controller('bizCtrlMapDirectionsEndPointLocation', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
@@ -469,21 +475,41 @@ OBizR.controller('bizCtrlMapDirectionsEndPointLocation', function($scope,$state,
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
-    if($stateParams.bid){
-      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-	  businessesService.getBusinesses()
-        .then(function (biz) {
-
-          for (a=0;a<biz.nodes.length;a++){
-            if(biz.nodes[a].node.nid === $stateParams.bid){
-              $rootScope.businessesDetailsMap = biz.nodes[a].node;
-			   console.log($rootScope.businessesDetailsMap);
-			   break;
-            }
-          }
-      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
-    } 
+    $rootScope.endpoint.customLocation = {};
+    $rootScope.endpoint.customLocation.country = 'Sierra Leone';
   });
+  
+  $scope.setEndPointLocation = function () {
+    if($rootScope.endpoint.customLocation.street == undefined || $rootScope.endpoint.customLocation.street == ''){
+      return;
+    }
+    if($rootScope.endpoint.customLocation.city == undefined || $rootScope.endpoint.customLocation.city == ''){
+      return;
+    }
+    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+    var commaSeparateVal = $rootScope.endpoint.customLocation.street+","+$rootScope.endpoint.customLocation.city+","+$rootScope.endpoint.customLocation.country;
+      var request = {
+        address: commaSeparateVal
+      };
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode(request, function(data, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        $rootScope.$broadcast('loading:hide');
+        if (data[0] != null) {
+          $scope.$apply(function() {
+           $rootScope.endpoint.customLocation.lat = data[0].geometry.location.lat();
+            $rootScope.endpoint.customLocation.long = data[0].geometry.location.lng();
+            $rootScope.endpoint.customLocation.address = data[0].formatted_address;
+            delete $rootScope.endpoint.bizLocation;
+            $state.go('app.businessDirectionsMapOptions',{bid:$stateParams.bid});
+          });
+        } else {
+          $rootScope.$broadcast('loading:hide');
+          $rootScope.serverErrors.push('Unable to set loacation try after sometime.');
+        }
+      }
+    });
+  }
 });
 
 OBizR.controller('bizCtrlMapDirectionsEndPoint', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
@@ -491,25 +517,17 @@ OBizR.controller('bizCtrlMapDirectionsEndPoint', function($scope,$state,$ionicHi
     viewData.enableBack = true;
   });
   $scope.$on("$ionicView.enter", function(event, data){
-    if($stateParams.bid){
-      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-	  businessesService.getBusinesses()
-        .then(function (biz) {
-
-          for (a=0;a<biz.nodes.length;a++){
-            if(biz.nodes[a].node.nid === $stateParams.bid){
-              $rootScope.businessesDetailsMap = biz.nodes[a].node;
-			   console.log($rootScope.businessesDetailsMap);
-			   break;
-            }
-          }
-      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
-    } 
   });
+  $scope.setBizEndPointLocation = function () {
+    $rootScope.endpoint.bizLocation.lat = $rootScope.businessesDetails.lat;
+    $rootScope.endpoint.bizLocation.long = $rootScope.businessesDetails.long;
+    delete $rootScope.endpoint.customLocation;
+  }
   $scope.directionEndPointLocation = function () {
     $state.go('app.businessDirectionsMapEndPointLocation',{bid:$stateParams.bid});
   }
 });
+
 OBizR.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeolocation,$rootScope,$localStorage,ProfileService,businessesService) {
   
   $scope.$on("$ionicView.enter", function(event, data){

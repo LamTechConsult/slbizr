@@ -18,7 +18,8 @@ OBizR.factory('AuthService', function($http, DrupalApiConstant,UserResourceConst
  * StaticPageService :
  */
 OBizR.factory('customPostService', function($http,$filter,DrupalApiConstant) {
-  var created = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+  var unix = Math.round(+new Date()/1000);
+  var created = unix;//$filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
   var updated = created;
   var customPostService = {};
   var basePath = DrupalApiConstant.drupal_instance +DrupalApiConstant.api_endpoint;

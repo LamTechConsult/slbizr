@@ -9,8 +9,9 @@
       <div class="item item-icon-left item-icon-right" ng-click="directionEndPointLocation()">
         <i class="icon ion-compass"></i> <i class="icon ion-ios-arrow-forward icon-small"></i> An Address
       </div>
-      <div class="item item-icon-right text-right grey" href="#/app/">
-        <i class="icon ion-ios-arrow-forward icon-small"></i> My Current Location
+      <div class="item item-icon-right text-right grey" ng-click="setBizEndPointLocation()">
+        <i class="icon ion-ios-arrow-forward icon-small"></i>
+        <span class="item-note" ng-if="businessesDetails.street">{{businessesDetails.street}}, {{businessesDetails.city}}</span>
       </div>
     </div>
   </ion-content>
