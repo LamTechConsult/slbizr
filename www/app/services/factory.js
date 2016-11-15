@@ -35,6 +35,25 @@ OBizR.factory('customPostService', function($http,$filter,DrupalApiConstant) {
   return customPostService;
 });
 
+/**
+ * Clickatail SMS service :
+ */
+OBizR.factory('smsService', function($http) {
+
+  var smsService = {};
+  var basePath = 'http://api.clickatell.com/';
+  var header = {"Content-Type": "application/json"};
+  
+  //Send SMS to user Mobile number
+  smsService.validateUserOTP = function(userData) {
+    console.log(userData);
+    url = basePath + "http/sendmsg?user="+userData.user+"&password="+userData.password+"&api_id=3634254&to="+userData.phonenumber+"&text="+userData.msg;
+    //url = "http://api.clickatell.com/http/sendmsg?user=USERNAME&password=PASSWORD&api_id=3634254&to=23277608990&text=Testing slbiz"  ;  
+    return $http.get(url,header);
+  };
+  return smsService;
+});
+
 
 /**
  * StaticPageService :

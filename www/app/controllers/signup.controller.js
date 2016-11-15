@@ -1,4 +1,4 @@
-OBizR.controller('SignupCtrl',function ($scope,$state,$ionicPopup,$rootScope,UserResource, AuthenticationService, $localStorage) {
+OBizR.controller('SignupCtrl',function ($scope,$state,smsService,$ionicPopup,$rootScope,UserResource, AuthenticationService, $localStorage) {
   // jshint validthis: true
   //data for $scope.registerForm
   $scope.serverErrors = [];
@@ -16,6 +16,11 @@ OBizR.controller('SignupCtrl',function ($scope,$state,$ionicPopup,$rootScope,Use
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Connecting...</p>"}});
       console.log($scope.user);
       $rootScope.phonenumber = $scope.user.field_mobile_user_telephone.und[0].value;
+      $rootScope.otpData = {};
+      $rootScope.otpData.user = $scope.user.name;
+      $rootScope.otpData.password = $scope.user.pass;
+      $rootScope.otpData.msg = 'Thank You for Signing Up OBizR';
+      $rootScope.otpData.phonenumber = $scope.user.field_mobile_user_telephone.und[0].value;
 
       UserResource.register($scope.user).then(function (data) {
           console.log(data);
@@ -74,6 +79,11 @@ OBizR.controller('SignupCtrl',function ($scope,$state,$ionicPopup,$rootScope,Use
     }
   }
  $scope.showPoup = function () {
+  smsService.validateUserOTP($rootScope.otpData).success(function (data) {  
+    console.log(data)
+  }).error(function (error) {
+   console.log(error)
+  })
    var alertPopup = $ionicPopup.alert({
         title:'<b>Thank You for Signing Up</b>',
         template: "A text message with your PIN has been sent to {{phonenumber}}.<br>Please check your SMS Message and click below to verify your phone number",

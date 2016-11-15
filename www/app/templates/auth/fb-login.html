@@ -8,7 +8,7 @@
     <div class="row responsive-sm">
       <div class="col">
         <p>Log into Facebook account to connect to SLBizR</p>
-        <div class="card" ng-show="serverErrors">
+        <div class="card" ng-if="serverErrors.length">
           <div class="item item-text-wrap" ng-repeat="serverError in serverErrors">
             {{serverError}}
           </div>
