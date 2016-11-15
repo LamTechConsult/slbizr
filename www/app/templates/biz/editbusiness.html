@@ -35,7 +35,7 @@
         <i class="icon ion-ios-arrow-right icon-small"></i>
         <span class="item-note" ng-if="editBizSelectedItemKeyw == '' || editBizSelectedItemKeyw == undefined">Insert value</span>
         <span class="item-note" ng-if="editBizSelectedItemKeyw">{{editBizSelectedItemKeyw}}</span> 
-        Keywords
+        Keywords*
       </a>
       <a class="item item-icon-right" ng-click="setBizValFor('Address')">
         <i class="icon ion-ios-arrow-right icon-small"></i>
@@ -63,32 +63,33 @@
         <i class="icon ion-ios-arrow-right icon-small"></i>
         <span class="item-note" ng-if="editBizData.field_ltc_biz_telephone.und[0].value == '' || editBizData.field_ltc_biz_telephone.und[0].value == undefined">Insert value</span>
         <span class="item-note" ng-if="editBizData.field_ltc_biz_telephone.und[0].value">{{editBizData.field_ltc_biz_telephone.und[0].value}}</span> 
-        Phone
+        Phone*
       </a>
       <a class="item item-icon-right" ng-click="setBizValFor('Hours')">
         <i class="icon ion-ios-arrow-right icon-small"></i>
         <span class="item-note">Insert value</span>
-        Hours
+        Hours*
       </a>
-      <a class="item item-icon-right" ng-click="setBizValFor('Description')">
-        <i class="icon ion-ios-arrow-right icon-small"></i>
-        <span class="item-note" ng-if="editBizData.field_ltc_biz_description.und[0].value == '' || editBizData.field_ltc_biz_description.und[0].value == undefined">Insert value</span>
-        <span class="item-note" ng-if="editBizData.field_ltc_biz_description.und[0].value">{{editBizData.field_ltc_biz_description.und[0].value}}</span> 
-        Description*
-      </a>
+  
 
       <div class="item item-divider">Optional Information</div>
       <a class="item item-icon-right" ng-click="setBizValFor('Bebsite')">
         <i class="icon ion-ios-arrow-right icon-small"></i>
         <span class="item-note" ng-if="editBizData.field_ltc_biz_website.und[0].url == '' || editBizData.field_ltc_biz_website.und[0].url == undefined">Insert value</span>
         <span class="item-note" ng-if="editBizData.field_ltc_biz_website.und[0].url">{{editBizData.field_ltc_biz_website.und[0].url}}</span> 
-        Bebsite
+        Website
       </a>
-      <a class="item item-icon-right" ng-click="setBizValFor('Logo')">
+        <a class="item item-icon-right" ng-click="setBizValFor('Description')">
+        <i class="icon ion-ios-arrow-right icon-small"></i>
+        <span class="item-note" ng-if="editBizData.field_ltc_biz_description.und[0].value == '' || editBizData.field_ltc_biz_description.und[0].value == undefined">Insert value</span>
+        <span class="item-note" ng-if="editBizData.field_ltc_biz_description.und[0].value">{{editBizData.field_ltc_biz_description.und[0].value}}</span> 
+        Description
+      </a>
+      <!--<a class="item item-icon-right" ng-click="setBizValFor('Logo')">
         <i class="icon ion-ios-arrow-right icon-small"></i>
         <span class="item-note">Insert value</span>
         Logo
-      </a>
+      </a>-->
     </div>
   </ion-content>
 </ion-view>
