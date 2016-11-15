@@ -4,12 +4,11 @@
   </ion-nav-bar>
 
  <ion-content>
-    <div class="list" ng-repeat="page in supportpage">
-        <h4>{{$index + 1}}. {{page.node.question}}</h4>
-
-      <div class="item item-body" ng-bind-html="trustAsHtml(page.node.answer)">
-        <!-- {{aboupage.description}} -->
-      </div>
+    <div class="list">
+	  <div class="card" ng-repeat="page in supportpage">
+        <div class="item item-divider">{{$index + 1}}. {{page.node.question}}</div>
+        <div class="item item-body" ng-bind-html="trustAsHtml(page.node.answer)"><!-- {{aboupage.description}} --></div>
+	  </div>
     </div>
   </ion-content>
 </ion-view>

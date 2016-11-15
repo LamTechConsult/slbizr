@@ -6,18 +6,25 @@
   <ion-content>
     <div class="list">
     <!-- About page -->
-      <h4>{{aboupage.title}}</h4>
-      <div class="item item-body" ng-bind-html="trustAsHtml(aboupage.description)"></div>
+      <div class="card">
+        <div class="item item-divider">{{aboupage.title}}</div>
+        <div class="item item-body" ng-bind-html="trustAsHtml(aboupage.description)"></div>
+      </div>
     <!-- About Press Kit page -->
-      <h4>{{aboutpresskitpage.title}}</h4>
-      <div class="item item-body" ng-bind-html="trustAsHtml(aboutpresskitpage.description)"></div>
+      <div class="card">
+        <div class="item item-divider">{{aboutpresskitpage.title}}</div>
+        <div class="item item-body" ng-bind-html="trustAsHtml(aboutpresskitpage.description)"></div>
+      </div>
     <!-- About Professional Services page -->
-      <h4>{{aboutprofessrvpage.title}}</h4>
-      <div class="item item-body" ng-bind-html="trustAsHtml(aboutprofessrvpage.description)"></div>
+      <div class="card">
+	    <div class="item item-divider">{{aboutprofessrvpage.title}}</div>
+        <div class="item item-body" ng-bind-html="trustAsHtml(aboutprofessrvpage.description)"></div>
+      </div>
     <!-- About Business Subscription page -->
-      <h4>{{aboutbizsubspage.title}}</h4>
-      <div class="item item-body" ng-bind-html="trustAsHtml(aboutbizsubspage.description)"></div>
-
+      <div class="card">
+        <div class="item item-divider">{{aboutbizsubspage.title}}</div>
+        <div class="item item-body" ng-bind-html="trustAsHtml(aboutbizsubspage.description)"></div>
+      </div>
     </div>
   </ion-content>
 </ion-view>

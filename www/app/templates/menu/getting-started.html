@@ -6,20 +6,30 @@
   <ion-content>
     <div class="list">
     <!-- Getting Started Reviewers -->
-    <h4>{{gsreviverpage.title}}</h4>
-      <div class="item item-body" ng-bind-html="trustAsHtml(gsreviverpage.description)"></div>
+      <div class="card">
+	    <div class="item item-divider">{{gsreviverpage.title}}</div>
+        <div class="item item-body" ng-bind-html="trustAsHtml(gsreviverpage.description)"></div>
+      </div>
     <!--Getting Started Business -->
-      <h4>{{gsbizpage.title}}</h4>
-      <div class="item item-body" ng-bind-html="trustAsHtml(gsbizpage.description)"></div>
+      <div class="card">
+	    <div class="item item-divider">{{gsbizpage.title}}</div>
+        <div class="item item-body" ng-bind-html="trustAsHtml(gsbizpage.description)"></div>
+      </div>
     <!--Getting Started Developer Build -->
-      <h4>{{gsbuildpage.title}}</h4>
-      <div class="item item-body" ng-bind-html="trustAsHtml(gsbuildpage.description)"></div>
+      <div class="card">
+	    <div class="item item-divider">{{gsbuildpage.title}}</div>
+        <div class="item item-body" ng-bind-html="trustAsHtml(gsbuildpage.description)"></div>
+      </div>
     <!--Getting Started Developer learn -->
-      <h4>{{gslearnpage.title}}</h4>
-      <div class="item item-body" ng-bind-html="trustAsHtml(gslearnpage.description)"></div>
+      <div class="card">
+	    <div class="item item-divider">{{gslearnpage.title}}</div>
+        <div class="item item-body" ng-bind-html="trustAsHtml(gslearnpage.description)"></div>
+      </div>
     <!--Getting Started Public Services -->
-      <h4>{{gspubsevpage.title}}</h4>
-      <div class="item item-body" ng-bind-html="trustAsHtml(gspubsevpage.description)"></div>
+      <div class="card">
+	    <div class="item item-divider">{{gspubsevpage.title}}</div>
+        <div class="item item-body" ng-bind-html="trustAsHtml(gspubsevpage.description)"></div>
+      </div>
     </div>
   </ion-content>
 </ion-view>
