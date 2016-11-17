@@ -12,8 +12,8 @@
     <div class="row biz-map-details">
       <div class="col col-75">
 	    <h4>{{businessesDetails.title}}</h4>
-	    <p><span>{{businessesDetails.street}}</span>
-        <span ng-if="businessesDetails.city">, {{businessesDetails.city}}</span>
+	    <p><span>{{businessesDetails.street}},</span>
+        <span ng-if="businessesDetails.city"> {{businessesDetails.city}}</span>
         <span ng-if="businessesDetails.country">, {{businessesDetails.country}}</span></p>
       </div>
       <div class="col text-right">
@@ -23,6 +23,6 @@
 
     <div class="biz-map-page">
 	  <div class="map" id="map"></div>
-	</div>    
+	</div>
   </ion-content>
 </ion-view>

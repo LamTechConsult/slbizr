@@ -5,53 +5,60 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side="right">
-      <button class="button button-icon button-clear" ng-click="doSaveBizFieldValue()">Done</button>
+      <button class="button button-icon button-clear" ng-click="doSaveBizFieldValue()">Continue</button>
     </ion-nav-buttons>
   </ion-nav-bar>
 
 <ion-content class="grey-bg">
   <div ng-switch on="currentFieldName">
- 
+
     <div class="list" ng-switch-when="Name">
       <label class="item item-input">
-        <input type="text" placeholder="LAMTECH Consulting" ng-model="newBizData.title">
+        <input type="text" placeholder="Example: LAMTECH Consulting Enterprises" ng-model="newBizData.title">
       </label>
     </div>
 
     <div class="list" ng-switch-when="Category">
 	  <label class="item">
-	    <div class="padding-b2x">Provide only one Category that best describe the core focus of your business</div>
+	    <div class="padding-b2x">Enter one category that best describe the core focus of your business</div>
         <ionic-autocomplete autocomplete-input="autocompleteInput"></ionic-autocomplete>
 	  </label>
     </div>
 
     <div class="list" ng-switch-when="Keywords">
 	  <label class="item">
-       <div class="padding-b2x">Provide up to three keywords that best describe the core focus of your business</div>
+       <div class="padding-b2x">Provide up to three keywords that best describe your business activities</div>
        <ionic-autocomplete autocomplete-input="autocompleteInput"></ionic-autocomplete>
 	  </label>
     </div>
 
     <div class="list" ng-switch-when="Address">
-      <div class="padding"><button class="button button-full button-calm">Fill with Current Location</button></div>
+      <div class="padding"><button class="button button-full button-calm">Use my current location</button></div>
       <label class="item item-input">
-        <input type="text" placeholder="84 Kissy Road" ng-model="newBizData.field_ltc_biz_address.und[0].thoroughfare">
+        <input type="text" placeholder="Example: 84 Kissy Road" ng-model="newBizData.field_ltc_biz_address.und[0].thoroughfare">
       </label>
       <label class="item item-input">
-        <input type="text" placeholder="3rd Floor" ng-model="newBizData.field_ltc_biz_address.und[0].premise">
+        <input type="text" placeholder="Example: 3rd Floor" ng-model="newBizData.field_ltc_biz_address.und[0].premise">
       </label>
       <label class="item item-input">
-        <input type="text" placeholder="Freetown" ng-model="newBizData.field_ltc_biz_address.und[0].locality">
+        <input type="text" placeholder="Example: Freetown" ng-model="newBizData.field_ltc_biz_address.und[0].locality">
       </label>
     </div>
 
     <div class="list" ng-switch-when="Geocode">
       <label class="item item-input">
-        <input type="text" placeholder="LAMTECH Consulting">
+        <input type="text" placeholder="Map your business Location">
       </label>
+      <div class="padding">
+      <button class="button button-block button-calm" ng-click="captureCurrentLocation()"><i class="ion-ios-location"></i> Use my current location</button>
+      <button class="button button-block button-calm" ng-click="enterNewLocation()"><i class="ion-android-locate"></i>Use my new address</button>
+      </div>
     </div>
 
     <div class="list" ng-switch-when="Chiefdom">
+      <label class="item">
+        <div class="padding-b2x">Select your province followed by district and chiefdom. This is important for ranking</div>
+      </label>
       <label class="item item-input item-select">
         <div class="input-label">Provience</div>
         <select ng-model="Provience" ng-options="item.location.name for item in ProvienceItem" ng-change="getDistrictItem(Provience)"></select>
@@ -64,22 +71,22 @@
       <label class="item item-input item-select">
         <div class="input-label">Chiefdom</div>
         <select ng-model="Chiefdom" ng-options="item.location.name for item in ChiefdomItem"></select>
-      </label>  
+      </label>
     </div>
 
     <div class="list" ng-switch-when="Email">
       <label class="item item-input">
-        <input type="text" placeholder="name@company.com" ng-model="newBizData.field_ltc_biz_email.und[0].email">
+        <input type="text" placeholder="Example: yourname@yourcompany.com" ng-model="newBizData.field_ltc_biz_email.und[0].email">
       </label>
     </div>
 
     <div class="list" ng-switch-when="Phone">
       <label class="item item-input">
-        <input type="text" placeholder="+232-76-617-550" ng-model="newBizData.field_ltc_biz_telephone.und[0].value">
+        <input type="text" placeholder="Example: +232 76 617550" ng-model="newBizData.field_ltc_biz_telephone.und[0].value">
       </label>
-    </div> 
+    </div>
 
-    <div ng-switch-when="Hours">  
+    <div ng-switch-when="Hours">
       <div class="list">
         <div class="row">
           <div class="col">
@@ -149,17 +156,6 @@
         </div>
         <div class="row">
           <div class="col">
-            <select ng-model="Hours.days.sat" ng-options="item.label for item in days"></select>
-          </div>
-          <div class="col">
-            <select ng-model="Hours.opening.sat" ng-options="item.label for item in hours"></select>
-          </div>
-          <div class="col">
-            <select ng-model="Hours.closing.sat" ng-options="item.label for item in hours"></select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
             <select ng-model="Hours.days.sun" ng-options="item.label for item in days"></select>
           </div>
           <div class="col">
@@ -174,13 +170,13 @@
 
     <div class="list" ng-switch-when="Description">
       <label class="item item-input">
-        <textarea rows="10" placeholder="Say something nice about your business this is your opportunity to tell it all" ng-model="newBizData.field_ltc_biz_description.und[0].value"></textarea>
+        <textarea rows="10" placeholder="Example: We are a group of Creative Thinkers, ICT Strategists, Technical Architects, Software Developers, Web Designers, User Experience Professionals, Open Data Experts, Open Source Lovers, Gen Xers, and Millennials. We help businesses and brands, governments, and NGOs improve their existing intranets, platforms, social media platforms, websites and create innovative digital solutions, engaging tools, and customer experiences by providing a full range of ICT products, services and solutions." ng-model="newBizData.field_ltc_biz_description.und[0].value"></textarea>
       </label>
     </div>
 
-    <div class="list" ng-switch-when="Bebsite">
+    <div class="list" ng-switch-when="Website">
       <label class="item item-input">
-        <input type="text" placeholder="http://www.lamtech.sl" ng-model="newBizData.field_ltc_biz_website.und[0].url">
+        <input type="text" placeholder="Example: http://www.yourcompanyname.sl" ng-model="newBizData.field_ltc_biz_website.und[0].url">
       </label>
     </div>
 

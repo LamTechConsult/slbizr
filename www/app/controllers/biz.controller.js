@@ -30,7 +30,7 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
     taxonomyService.getCategory()
         .then(function (category) {
           $rootScope.category = category;
-    });       
+    });
     taxonomyService.getProvience()
         .then(function (provience) {
           $rootScope.ProvienceItem = provience;
@@ -39,7 +39,7 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
     taxonomyService.getKeywords()
         .then(function (keywords) {
           $rootScope.keywords = keywords;
-    }) .finally(function () { $rootScope.$broadcast('loading:hide');}); 
+    }) .finally(function () { $rootScope.$broadcast('loading:hide');});
   }
   $scope.getDistrictItem = function (item) {
     if(item==null)
@@ -49,7 +49,7 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
         .then(function (district) {
           $rootScope.DistrictItem = district;
           console.log(district);
-    }).finally(function () { $rootScope.$broadcast('loading:hide');}); 
+    }).finally(function () { $rootScope.$broadcast('loading:hide');});
   }
   $scope.getChiefdomItem = function (item) {
     if(item==null)
@@ -59,7 +59,7 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
       .then(function (chiefdoms) {
         $rootScope.ChiefdomItem = chiefdoms;
         console.log(chiefdoms);
-    }).finally(function () { $rootScope.$broadcast('loading:hide');}); 
+    }).finally(function () { $rootScope.$broadcast('loading:hide');});
   }
   $rootScope.Hours = {};
   $rootScope.Hours.days = {};
@@ -97,7 +97,7 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
     $rootScope.currentFieldName = caseStr;
     $state.go('app.addBizsetBizFieldValue');
   }
-  
+
   /////////////////////Autocomplete fuctionality///////////////////////////////
   $scope.setModel = function (item) {
     $scope.selectedItem = item;
@@ -112,7 +112,7 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
 
   $scope.autocompleteInput = {
     'propNameToDisplay': 'name',
-    'placeholder': 'Education, Professional Services, NGO and Government  ',
+    'placeholder': 'Example: Restaurant & food, Hotel, Tourism & Travel, Professional Services',
     'ID':'StaicData',
     'listClass': ['border-energized'], //optional cutsom classes for matched items
     'labelContainerClass': ['bottom-border'] //optional
@@ -124,7 +124,7 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
   }else{
     $scope.autocompleteInput.searchlist = $rootScope.keywords;
   }
-  
+
   $scope.$root.$broadcast($scope.autocompleteInput.ID);
   /////////////////////////////////////////////////////////////////////////////
     $scope.useCamera = function(){
@@ -186,18 +186,18 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
       return;
     }
     if($rootScope.newBizData.field_ltc_biz_address == undefined ){
-      $scope.serverErrors.push('Business Address locality is required');
+      $scope.serverErrors.push('Business address city is required');
     }
     if($rootScope.Chiefdom.location.id == undefined){
-      $scope.serverErrors.push('Business Chiefdom is required');
+      $scope.serverErrors.push('Business chiefdom is required');
       return;
     }
     if($rootScope.newBizData.field_ltc_biz_email == undefined){
       $scope.serverErrors.push('Business email is required');
       return;
-    }    
+    }
     if($rootScope.newBizData.field_ltc_biz_description == undefined){
-      $scope.serverErrors.push('Business Description is required');
+      $scope.serverErrors.push('Business description is required');
       return;
     }
     // if($rootScope.newBizData.field_ltc_biz_business_hours == undefined){
@@ -216,26 +216,26 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
     //$rootScope.newBizData.field_ltc_biz_email = {"und":[{"email":"chandan@gmail.com"}]};
     //$rootScope.newBizData.field_ltc_biz_telephone = {"und":[{"value":"123123123123"}]};
     $rootScope.newBizData.field_ltc_biz_business_hours = {"und":[
-            {"day": "1", "starthours": "", "endhours": "", "daydelta": "0"}, 
-            {"day": "2", "starthours": "", "endhours": "", "daydelta": "0"}, 
-            {"day": "3", "starthours": "", "endhours": "", "daydelta": "0"}, 
-            {"day": "4", "starthours": "", "endhours": "", "daydelta": "0"}, 
-            {"day": "5", "starthours": "", "endhours": "", "daydelta": "0"}, 
-            {"day": "6", "starthours": "", "endhours": "", "daydelta": "0"}, 
+            {"day": "1", "starthours": "", "endhours": "", "daydelta": "0"},
+            {"day": "2", "starthours": "", "endhours": "", "daydelta": "0"},
+            {"day": "3", "starthours": "", "endhours": "", "daydelta": "0"},
+            {"day": "4", "starthours": "", "endhours": "", "daydelta": "0"},
+            {"day": "5", "starthours": "", "endhours": "", "daydelta": "0"},
+            {"day": "6", "starthours": "", "endhours": "", "daydelta": "0"},
             {"day": "0", "starthours": "", "endhours": "", "daydelta": "0"},
 
-            {"day": "1", "starthours": "", "endhours": "", "daydelta": "1"}, 
-            {"day": "2", "starthours": "", "endhours": "", "daydelta": "1"}, 
-            {"day": "3", "starthours": "", "endhours": "", "daydelta": "1"}, 
-            {"day": "4", "starthours": "", "endhours": "", "daydelta": "1"}, 
-            {"day": "5", "starthours": "", "endhours": "", "daydelta": "1"}, 
-            {"day": "6", "starthours": "", "endhours": "", "daydelta": "1"}, 
+            {"day": "1", "starthours": "", "endhours": "", "daydelta": "1"},
+            {"day": "2", "starthours": "", "endhours": "", "daydelta": "1"},
+            {"day": "3", "starthours": "", "endhours": "", "daydelta": "1"},
+            {"day": "4", "starthours": "", "endhours": "", "daydelta": "1"},
+            {"day": "5", "starthours": "", "endhours": "", "daydelta": "1"},
+            {"day": "6", "starthours": "", "endhours": "", "daydelta": "1"},
             {"day": "0", "starthours": "", "endhours": "", "daydelta": "1"}]},
     //$rootScope.newBizData.field_ltc_biz_description = {"und":[{"value":"Say something nice about your business. This is your opportunity to tell it all."}]};
     //$rootScope.newBizData.field_ltc_biz_website = {"und":[{"url":"www.google.com"}]};
     //$rootScope.newBizData.field_image = {base64: false};
     console.log($rootScope.newBizData);
-        
+
     $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
     businessesService.addBiz($rootScope.newBizData).then(function (data) {
       console.log(data);
@@ -250,7 +250,7 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
       else {
         $scope.serverErrors.push(errorResult.statusText);
       }
-    }).finally(function () { 
+    }).finally(function () {
       $rootScope.$broadcast('loading:hide');
     });
   }
@@ -268,16 +268,16 @@ OBizR.controller('editBizCtrl', function($scope,$http,$filter,$state,CameraServi
     .then(function (category) {
       $rootScope.category = category;
   });
-    
+
   taxonomyService.getKeywords()
     .then(function (keywords) {
       $rootScope.keywords = keywords;
   }).finally(function () { $rootScope.$broadcast('loading:hide');});
-  
+
   $scope.$on("$ionicView.enter", function(event, data){
     $scope.serverErrors = [];
     $scope.initializeBizData();
-      
+
   });
 
   $scope.doCancel = function () {
@@ -309,7 +309,7 @@ OBizR.controller('editBizCtrl', function($scope,$http,$filter,$state,CameraServi
     }
   }
   $scope.setDefaultFieldValue = function () {
-    
+
     if($rootScope.bizDetails.title){
       $rootScope.editBizData.title = $rootScope.bizDetails.title;
     }
@@ -385,7 +385,7 @@ OBizR.controller('editBizCtrl', function($scope,$http,$filter,$state,CameraServi
     $state.go('app.editBizsetBizFieldValue');
   }
   /////////////////////Autocomplete fuctionality///////////////////////////////
-  
+
   $scope.setModel = function (item) {
     $scope.selectedItem = item;
     if($rootScope.currentFieldName == 'Category'){
@@ -399,7 +399,7 @@ OBizR.controller('editBizCtrl', function($scope,$http,$filter,$state,CameraServi
 
   $scope.autocompleteInput = {
     'propNameToDisplay': 'name',
-    'placeholder': 'Education, Professional Services, NGO and Government  ',
+    'placeholder': 'Example: Restaurant & food, Hotel, Tourism & Travel, Professional Services',
     'ID':'StaicData',
     'listClass': ['border-energized'], //optional cutsom classes for matched items
     'labelContainerClass': ['bottom-border'] //optional
@@ -410,7 +410,7 @@ OBizR.controller('editBizCtrl', function($scope,$http,$filter,$state,CameraServi
   }else{
     $scope.autocompleteInput.searchlist = $rootScope.keywords;
   }
-  
+
   $scope.$root.$broadcast($scope.autocompleteInput.ID);
 
   /////////////////////////////////////////////////////////////////////////////
@@ -478,7 +478,7 @@ OBizR.controller('editBizCtrl', function($scope,$http,$filter,$state,CameraServi
     if($rootScope.editBizData.field_ltc_biz_email == undefined){
       $scope.serverErrors.push('Business email is required');
       return;
-    }    
+    }
     // if($rootScope.newBizData.field_ltc_biz_address.und[0].locality == undefined){
     //   $scope.serverErrors.push('Business Address locality is required');
     // }
@@ -491,25 +491,25 @@ OBizR.controller('editBizCtrl', function($scope,$http,$filter,$state,CameraServi
     //   return;
     // }
     $rootScope.editBizData.field_ltc_biz_business_hours = {"und":[
-      {"day": "1", "starthours": "", "endhours": "", "daydelta": "0"}, 
-      {"day": "2", "starthours": "", "endhours": "", "daydelta": "0"}, 
-      {"day": "3", "starthours": "", "endhours": "", "daydelta": "0"}, 
-      {"day": "4", "starthours": "", "endhours": "", "daydelta": "0"}, 
-      {"day": "5", "starthours": "", "endhours": "", "daydelta": "0"}, 
-      {"day": "6", "starthours": "", "endhours": "", "daydelta": "0"}, 
+      {"day": "1", "starthours": "", "endhours": "", "daydelta": "0"},
+      {"day": "2", "starthours": "", "endhours": "", "daydelta": "0"},
+      {"day": "3", "starthours": "", "endhours": "", "daydelta": "0"},
+      {"day": "4", "starthours": "", "endhours": "", "daydelta": "0"},
+      {"day": "5", "starthours": "", "endhours": "", "daydelta": "0"},
+      {"day": "6", "starthours": "", "endhours": "", "daydelta": "0"},
       {"day": "0", "starthours": "", "endhours": "", "daydelta": "0"},
 
-      {"day": "1", "starthours": "", "endhours": "", "daydelta": "1"}, 
-      {"day": "2", "starthours": "", "endhours": "", "daydelta": "1"}, 
-      {"day": "3", "starthours": "", "endhours": "", "daydelta": "1"}, 
-      {"day": "4", "starthours": "", "endhours": "", "daydelta": "1"}, 
-      {"day": "5", "starthours": "", "endhours": "", "daydelta": "1"}, 
-      {"day": "6", "starthours": "", "endhours": "", "daydelta": "1"}, 
+      {"day": "1", "starthours": "", "endhours": "", "daydelta": "1"},
+      {"day": "2", "starthours": "", "endhours": "", "daydelta": "1"},
+      {"day": "3", "starthours": "", "endhours": "", "daydelta": "1"},
+      {"day": "4", "starthours": "", "endhours": "", "daydelta": "1"},
+      {"day": "5", "starthours": "", "endhours": "", "daydelta": "1"},
+      {"day": "6", "starthours": "", "endhours": "", "daydelta": "1"},
       {"day": "0", "starthours": "", "endhours": "", "daydelta": "1"}]},
 
       //$rootScope.newBizData.field_image = {base64: false};
       console.log($rootScope.editBizData);
-      
+
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       businessesService.editBiz($rootScope.editBizData).then(function (data) {
         console.log(data);
@@ -523,7 +523,7 @@ OBizR.controller('editBizCtrl', function($scope,$http,$filter,$state,CameraServi
           else {
             $scope.serverErrors.push(errorResult.statusText);
           }
-      }).finally(function () { 
+      }).finally(function () {
         $rootScope.$broadcast('loading:hide');
       });
   }
