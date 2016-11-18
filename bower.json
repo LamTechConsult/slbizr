@@ -12,5 +12,9 @@
     "ion-autocomplete": "^0.3.2",
     "ion-datetime-picker": "^0.4.0",
     "angular-sanitize": "^1.5.8"
+  },
+  "resolutions": {
+    "angular-sanitize": "^1.5.8",
+    "angular": ">= 1.0.8"
   }
 }
