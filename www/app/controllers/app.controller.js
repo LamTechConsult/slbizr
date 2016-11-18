@@ -353,7 +353,8 @@ OBizR.controller('bizCtrlMap', function($scope,$state,$filter,$ionicHistory,$roo
 
 });
 
-OBizR.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+OBizR.controller('bizCtrlMapDirectionsOptions', function($scope,$state,
+$cordovaInAppBrowser,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -397,16 +398,20 @@ OBizR.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$ionicHis
     }
 	 
   	if(choice=="google"){
+      //$state.go('app.routeMap');
       var link = ""+"http://maps.google.com/maps?saddr="+mayLoc.lat+","+mayLoc.long+" &daddr="+bizLoc.lat+","+bizLoc.long;
-      window.location = link;
+      // window.location = link;
+      $cordovaInAppBrowser.open(link,'_system');
   	 }
   	 if(choice=="apple"){
       var link= ""+"http://maps.apple.com/?ll="+bizLoc.lat+","+bizLoc.long+"&dirflg=d&t=h";
-      window.location = link;
+      //window.location = link;
+     $cordovaInAppBrowser.open(link);
   	 }
   	 if(choice=="waze"){
       var link = ""+"waze://?ll="+bizLoc.lat+","+bizLoc.long+"&navigate=yes";
-      window.location = link;
+      //window.location = link;
+      $cordovaInAppBrowser.open(link);
   	 }
   } 
     
