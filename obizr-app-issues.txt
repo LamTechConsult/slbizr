@@ -1,0 +1,151 @@
+App Issues
+General
+-App is Opened first time and user is not logged
+--Show the splash screens
+
+-App is Opened second or more times and user is already logged in the past
+--Do not show the splash screens again. Take them to nearby  screen right away and capture their current location automatically
+
+-Loading screen
+--Make loading screen and a transparent overlay. I want user to continue seeing what they were looking at while the app is loading other screen
+
+-Approved Domains or crossover domains
+--Make sure users can crossover from obizr.io to the app and back.
+--When a user visits obizr, show them the app download banner or ask them to open app if already installed
+--When user click on a link like http://obizr.io/privacy-policy, take them to the mobile website using inapp browser with the back button available
+
+-App orientation
+--Lock app orientation to Portrait only. No landscape mode
+
+-Local Storage/Caching
+--Cache nearby view Json, Category, Keyword, Chiefdom dropdown options
+
+-Offline Notification
+--Change the background of header and add text (Offline)
+--User that is already logged In should be able to continue browsing and using app but cannot make any post call
+--If user is online but you are unable to get data from API, show friendly message.
+--Add timeout when searching for data from Api
+--Lets leverage local storage and store as much as we can locally and first choice for system should be to use local data
+--While local data is display, we will fetch updates in the background and refresh the screen without the user noticing anything
+--Search scope should start with local storage data first and if nothing is there, call Api to check
+
+Splash
+-Format text with some colors and add bullet points for key features
+
+Login
+-After a user login for the first time, keep them logged in always
+-If the user logged in before, do not show the splash screens again. Take them to nearby right away
+-Make login button greyed out while username and password fields are empty or null and activate after user enters username and password
+-Add placeholder like Example: tlamin@example.com to form fields
+
+LogOut
+-log the user out after the explicitly click on logout
+
+Sign Up
+-Make Sign Up button greyed out while required fields are empty or null and activate after user enters username and password
+-Add placeholder like Example: tlamin@example.com to form fields
+
+Login and Sign Up with Facebook
+-Use the version currently used on the website
+
+Reset Password
+-Make Enter button greyed out while username and password fields are empty or null and activate after user enters username and password
+-Add placeholder like Example: tlamin@example.com to form fields
+
+Mobile Number verification
+Mobile Notifications
+Email Notifications
+SMS Notifications
+
+My Account
+My Followers
+My Friends
+My Followings
+
+Nearby/Home list View
+-If the user logged in before, do not show the splash screens again. Take them to nearby right away
+-Always check the users current location before you show this screen to ensure distance is working
+-Update this screen everytime the user returns to it from another screen and use whatever location details they have choosed to Users
+-We need to add swipe right on business summary or tap business summary to view business details
+-We need to add swipe left on business summary to show "Write a Review" action
+
+Nearby/Home Map View
+-We need to add tap business summary pupup to show business details
+
+Filter on Nearby/Home and Search Results page
+-Lets remove Claimed and Open Filters - It seems they are not working right now
+-Check all filters
+-Filters should be using AND
+-When you combine Filter and Sort, things should still work
+-Filter options for category, keyword, chiefdom should be cached and stored locally
+
+Set Location
+-Do not let the user browse or use the app if we don't have their location information
+-Continue to ask user for location. This should never be null or empty
+-Check to make sure user is using the right location whenever they are using the Applications
+-I want to be able to store the user's location information in a fire-based database for personalization
+
+Search
+
+Business Details
+-We need to add swipe right on [Write a review] or tap Write a review to open Write a review screen
+-We need to add swipe right on [Claim business] or tap Claim business to open Claim business screen
+-We need to add swipe right on [Edit Business] or tap Edit Business to open Edit Business screen
+
+Review Details
+-The buttons or triggers to view review details and reviewer details are not clear
+-We need to add swipe left on reviewer image or tap reviewer image to view reviewer details
+-We need to add swipe right on review summary or tap review summary to view review details
+-Share review on social media (Facebook, Twitter, Google) is needed
+-Viewing the review photos in gallery format and large format not working
+
+Reviewer Details
+-Add Friend is not working
+-Follow Reviewer is not working
+-Contact Reviewer via SMS or email
+
+Write a review
+-Saving and attaching the review image is not working
+-Allow the user to add multiple photos
+-Allow the user to save review without a photo
+-Approve reviews right away
+-Display success message when a review is saved. Message: Thanks you {nickNameOfUser} for writing a review. The data have been saved are available for others to view.
+-Send mobile notification/SMS Message/Email to the user who wrote the review. Message: Thanks you {nickNameOfUser} for writing a review. The data have been saved are available for others to view.
+-Send mobile notification/SMS Message/Email to the owner of the business. Message: {nickNameOfUserWhoWroteReview} reviewed your business on OBizR. The data have been saved are available for others to view.
+-Send mobile notification/SMS Message/Email to our reviewers
+
+Add Business
+-The business name field should be autocomplete tag style field.
+-We want to be able to validate that the business being added does not already exits in our database.
+-If the business exist already, we should stop and display the full name of the existing business and ask the user to instead claim their existing business
+-Hours is not saving to the backend
+-Chiefdom dropdowns for province, district and chiefdom are hard to use. We need to change
+-Keyword field is mixed with categories. We need to use keywords only.
+-Logo field is not saving or attaching to node properly
+-Geocode field need to be formatted to capture users current longitude and latitude or longitude and latitude from entered address above, or manually entered longitude and latitude is specific format
+-Display success message when a business is added (Thanks you {nickNameOfUser} for adding your business. The data have been saved and queed to be reviewed. We will notify you when its approved)
+-Send mobile notification/SMS Message/Email to the user who added the business with text (Thanks you {nickNameOfUser} for listing your business. The data have been saved and queed to be reviewed. We will notify you when when its approved)
+-Send mobile notification/SMS Message/Email to our Reviewers about the edit
+-I want to be able to submit this data to Google Business Listings using their Applications (Drupal backend)
+-I want to be able to add point on google map whenever a business is added (Drupal backend)
+
+Edit Business
+-Hours is not saving to the backend
+-Chiefdom dropdown for province, district and chiefdom are hard to use. We need to change
+-Keyword field is mixed with categories. We need to use keywords only.
+-Logo field is not saving or attaching to node properly
+-Geocode field need to be formatted to capture users current longitude and latitude or longitude and latitude from entered address above, or manually entered longitude and latitude is specific format
+-Display success message when a business is edited (Thanks you {nickNameOfUser} for the updates. They have been saved and queed to be reviewed. We will notify you when)
+-Send mobile notification/SMS Message/Email to the user who made the edits with text (Thanks you {nickNameOfUser} for the updates. They have been saved and queed to be reviewed. We will notify you when)
+-Send mobile notification/SMS Message/Email to the original author (Business Owner) of the business. Message: {nickNameOfUserwhoEditedNode} updated your business details on OBizR. Please check and confirm they are fine
+-Send mobile notification/SMS Message/Email to our Reviewers about the edit
+
+Claim Business
+-The submissions are not displayed in backend
+-The logged In user details are not always capture
+-Send mobile notification/SMS Message/Email to the user who Claimed the business with text (Thanks you {nickNameOfUserWhoClaimedNode} for claiming your business. Your request is in queed to be reviewed. We will notify you when its approved)
+-Send mobile notification/SMS Message/Email to the original author (Current Business Owner) of the business. Message: {nickNameOfUserwhoAuthoredNode} claimed your business on OBizR. Please check and confirm you authorized him/her to take this Applications
+-Send mobile notification/SMS Message/Email to our Reviewers about the edit . Message {nickNameOfUserWhoClaimedNode} claimed {businessname} on OBizR
+
+Static Pages
+-Format these pages with small fonts
