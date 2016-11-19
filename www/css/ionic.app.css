@@ -3895,7 +3895,7 @@ a.subdued {
   border-width: 0;
   border-style: solid;
   border-top: 1px solid transparent;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #154c85;
   background-color: white;
   /* border-width: 1px will actually create 2 device pixels on retina */
   /* this nifty trick sets an actual 1px border on hi-res displays */
@@ -4362,7 +4362,7 @@ a.subdued {
   justify-content: center;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
-  border-color: #b2b2b2;
+  border-color: #154c85;
   background-color: #f8f8f8;
   background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
   color: #444;
@@ -9519,7 +9519,7 @@ a.button {
   color: #103a66; }
 
 .positive-bg {
-/*background-image: url(../assets/img/bg.png)*/;
+/*background-image: url(../assets/img/bg.png);*/
 background-color: #103a66; }
 
 .positive-border {
@@ -10286,6 +10286,9 @@ ul.rating.yellow li i.ion-ios-star {
     height: 100%; }
 
 /*----- biz-search-form-list ---*/
+.biz-search{
+    background-color:#fefefe;
+}
 .biz-search-form-list {
   background-color: transparent; }
   .biz-search-form-list .item-input {
@@ -10299,7 +10302,6 @@ ul.rating.yellow li i.ion-ios-star {
   padding-left: 140px; }
 
   .obizrbg{
-    padding:16px;
     background-color:#103a66;
   }
 
@@ -10310,14 +10312,10 @@ ul.rating.yellow li i.ion-ios-star {
   .obizrbg .button-bar .button {
     box-shadow: none;
     border-radius: 0 !important;
-    border-color:#154c85;
+    border-color:#103a66;
     margin: 1px;
   }
 
-
-  /*.obizrbg .button .icon {
-    color:#ffae00;
-  }*/
   .biz-map-details .ng-binding{
     color:#444;
   }
