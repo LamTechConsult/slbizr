@@ -3,6 +3,12 @@
     <div class="logo padding2x"><img src="assets/img/splash_logo.png"/></div>
     <div class="row responsive-sm">
       <div class="col">
+      <div class="card" ng-if="serverErrors.length">
+        <div class="item item-text-wrap" ng-repeat="serverError in serverErrors">
+          {{serverError}}
+        </div>
+      </div>
+      
         <div class="map padding2x"><a href><img src="assets/img/map.jpg"/></a></div>
         <div class="padding2x">
           <p>OBizR uses your location to find nearby businesses and give you local recommendations.</p>

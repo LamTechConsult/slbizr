@@ -12,11 +12,11 @@ OBizR.config(function($stateProvider, $localStorageProvider, AuthenticationServi
   $ionicConfigProvider.views.transition('ios');
 
   //set default URL
-  // if (!$localStorageProvider.get('isRegistered')) {
-  //   $urlRouterProvider.otherwise('splash');
-  // }
-  if (!$localStorageProvider.get('isLogedin')) {
+  if (!$localStorageProvider.get('isRegistered')) {
     $urlRouterProvider.otherwise('splash');
+  }
+  if (!$localStorageProvider.get('isLogedin')) {
+    $urlRouterProvider.otherwise('login');
   }
   else {
     $urlRouterProvider.otherwise('app/nearby');
@@ -98,7 +98,7 @@ OBizR.config(function($stateProvider, $localStorageProvider, AuthenticationServi
     }
   })
 
-  .state('app.nearBy', {
+  .state('app.nearby', {
     url: '/nearby',
     views: {
       'tab-nearby': {
@@ -593,7 +593,7 @@ OBizR.run(function ($rootScope, AuthenticationService, $state, $localStorage, Dr
       if (toState.name == 'login' || toState.name == 'signup') {
         if (AuthenticationService.getConnectionState()) {
           event.preventDefault();
-          $state.go('app.nearBy');
+          $state.go('app.nearby');
           return;
         }
       }

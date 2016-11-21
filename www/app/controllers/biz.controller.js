@@ -26,20 +26,20 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
     $rootScope.Provience = $rootScope.ProvienceItem[0];
     $rootScope.District = $rootScope.DistrictItem[0];
     $rootScope.Chiefdom = $rootScope.ChiefdomItem[0];
-    $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-    taxonomyService.getCategory()
-        .then(function (category) {
-          $rootScope.category = category;
-    });
-    taxonomyService.getProvience()
-        .then(function (provience) {
-          $rootScope.ProvienceItem = provience;
-          console.log(provience);
-    });
-    taxonomyService.getKeywords()
-        .then(function (keywords) {
-          $rootScope.keywords = keywords;
-    }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+    // $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+    // taxonomyService.getCategory()
+    //     .then(function (category) {
+    //       $rootScope.category = category;
+    // });
+    // taxonomyService.getProvience()
+    //     .then(function (provience) {
+    //       $rootScope.ProvienceItem = provience;
+    //       console.log(provience);
+    // });
+    // taxonomyService.getKeywords()
+    //     .then(function (keywords) {
+    //       $rootScope.keywords = keywords;
+    // }) .finally(function () { $rootScope.$broadcast('loading:hide');});
   }
   $scope.getDistrictItem = function (item) {
     if(item==null)
@@ -263,16 +263,16 @@ OBizR.controller('editBizCtrl', function($scope,$http,$filter,$state,CameraServi
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
-  $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-  taxonomyService.getCategory()
-    .then(function (category) {
-      $rootScope.category = category;
-  });
+  // $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+  // taxonomyService.getCategory()
+  //   .then(function (category) {
+  //     $rootScope.category = category;
+  // });
 
-  taxonomyService.getKeywords()
-    .then(function (keywords) {
-      $rootScope.keywords = keywords;
-  }).finally(function () { $rootScope.$broadcast('loading:hide');});
+  // taxonomyService.getKeywords()
+  //   .then(function (keywords) {
+  //     $rootScope.keywords = keywords;
+  // }).finally(function () { $rootScope.$broadcast('loading:hide');});
 
   $scope.$on("$ionicView.enter", function(event, data){
     $scope.serverErrors = [];

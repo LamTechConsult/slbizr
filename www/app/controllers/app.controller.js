@@ -1,5 +1,5 @@
 
-OBizR.controller('mainCtrl', function($scope,$localStorage,$cordovaGeolocation,$rootScope,$state) {
+OBizR.controller('mainCtrl', function($scope,$localStorage,$window,$cordovaGeolocation,$rootScope,$state,taxonomyService) {
   $rootScope.ProvienceItem = [];
   $rootScope.DistrictItem = [];
   $rootScope.ChiefdomItem = [];
@@ -73,24 +73,35 @@ OBizR.controller('mainCtrl', function($scope,$localStorage,$cordovaGeolocation,$
       {label:'11:30 PM', value:'11:30 PM'},
       {label:'Closed', value:'closed'},
     ];
-  
-  $rootScope.storage = $localStorage;
-  // $rootScope.serverErrors = [];
-  // if(!$rootScope.storage){
-  //   var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  //   $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-  //     var lat  = position.coords.latitude
-  //     var long = position.coords.longitude
-  //     console.log("lat:"+lat+"Log:"+long);
-  //       $localStorage.lat = lat;
-  //       $localStorage.long = long;
-  //     }, function(err) {
-  //       $rootScope.serverErrors.push('Unable to get loacation try manually.');
-  //       console.log(err);
-  //   });
-  // }else{
-  //   $rootScope.serverErrors.push('Unable to get loacation try manually.');
-  // }
+
+  if($localStorage.category){
+    $rootScope.category = $localStorage.category;
+  }else{
+    taxonomyService.getCategory().then(function (category) {
+      $localStorage.category = category;
+      $rootScope.category = $localStorage.category;
+    });
+  }
+  if($localStorage.keywords){
+    $rootScope.keywords = $localStorage.keywords;
+  }else{
+    taxonomyService.getKeywords().then(function (keywords) {
+      $localStorage.keywords = keywords;
+      $rootScope.keywords = $localStorage.keywords;
+    });
+  }
+  if($localStorage.provience){
+     $rootScope.ProvienceItem = $localStorage.provience;
+  }else{
+    taxonomyService.getProvience().then(function (provience) {
+      $localStorage.provience = provience;
+      $rootScope.ProvienceItem = $localStorage.provience;
+    });
+  }
+  if($localStorage.currentUser){
+    $rootScope.currentUser = $localStorage.currentUser;
+  }
+  $rootScope.currentLocation = $localStorage.currentLocation;
 });
 
 OBizR.controller('reviewDetailsCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,businessesService) {
@@ -366,8 +377,8 @@ $cordovaInAppBrowser,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordov
       $rootScope.choice = 'google';
       $rootScope.startpoint = {};
       $rootScope.startpoint.myLocation = {};
-      $rootScope.startpoint.myLocation.lat  = $localStorage.lat;
-      $rootScope.startpoint.myLocation.long =$localStorage.lat;
+      $rootScope.startpoint.myLocation.lat  = $localStorage.currentLocation.lat;
+      $rootScope.startpoint.myLocation.long =$localStorage.currentLocation.lat;
       //$rootScope.startpoint.customLocation = {};
       $rootScope.endpoint = {};
       $rootScope.endpoint.bizLocation = {};
@@ -424,8 +435,8 @@ OBizR.controller('bizCtrlMapDirectionsStartPoint', function($scope,$state,$ionic
   $scope.$on("$ionicView.enter", function(event, data){
   });
   $scope.getMyCurrentLocation = function () {
-    $rootScope.startpoint.myLocation.lat  = $localStorage.lat;
-    $rootScope.startpoint.myLocation.long =$localStorage.lat;
+    $rootScope.startpoint.myLocation.lat  = $localStorage.currentLocation.lat;
+    $rootScope.startpoint.myLocation.long =$localStorage.currentLocation.lat;
     delete $rootScope.startpoint.customLocation;
   }
   $scope.directionStartPointLocation = function () {
@@ -537,21 +548,43 @@ OBizR.controller('homeCtrl', function($scope,$state,$ionicHistory,$cordovaGeoloc
   
   $scope.$on("$ionicView.enter", function(event, data){
 
+  $ionicHistory.clearHistory(); //hide the back button.
+    if(!$localStorage.biz){
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-      $ionicHistory.clearHistory(); //hide the back button.
-
-      ProfileService.getProfile()
-        .then(function (profile) {
-          $rootScope.currentUser = profile;
-          console.log($rootScope.currentUser);
-      }) .finally(function () {});
-
-      businessesService.getBusinesses()
-        .then(function (biz) {
-          $rootScope.displayBusinesses = biz.nodes;
-          console.log($rootScope.displayBusinesses);
-      }) .finally(function () { $rootScope.$broadcast('loading:hide');});
+      businessesService.getBusinesses(false).then(function (biz) {
+        $localStorage.biz = biz.nodes;
+        $rootScope.displayBusinesses = $localStorage.biz;
+      }).finally(function () { $rootScope.$broadcast('loading:hide'); });
+    }
+    $scope.initializeData();
   });
+  $scope.initializeData = function () {
+    if($scope.more){
+      return;
+    }
+    $scope.more = 20;
+    $scope.moreDataCanBeLoaded = true;
+    if($localStorage.biz){
+      $rootScope.displayBusinesses = $localStorage.biz;
+    }
+  }
+  $scope.loadMore = function () {
+
+    if($scope.more >= $rootScope.displayBusinesses.length){
+      $scope.moreDataCanBeLoaded = false;
+    }else{
+      $scope.more += 20;
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+    }
+  }
+  $scope.doRefresh = function() {
+    businessesService.getBusinesses(true).then(function (biz) {
+       $localStorage.biz = biz.nodes;
+    }).finally(function() {
+       // Stop the ion-refresher from spinning
+       $scope.$broadcast('scroll.refreshComplete');
+     });
+  };
 
   $scope.getTimeFormat = function (argument) {
     var val = argument.split('-');
@@ -649,9 +682,16 @@ OBizR.controller('AccountCtrl', function($scope,AuthenticationService,$localStor
   $scope.doLogout = function () {
     $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
     AuthenticationService.logout().then(function (data) {
-      //$localStorage.$reset({isLogedin:false});
       delete $localStorage.isLogedin;
-      $state.go('splash', {}, {reload: true});
+      delete $localStorage.currentUser;
+      //$localStorage.$reset();
+      $state.go('login', {}, {reload: true});
+      $ionicHistory.clearCache();
+      $ionicHistory.clearHistory();
+    },function (error) {
+      $state.go('login', {}, {reload: true});
+      //$localStorage.$reset();
+      $ionicHistory.clearCache();
       $ionicHistory.clearHistory();
     }).finally(function () {$rootScope.$broadcast('loading:hide');});
   }
@@ -733,22 +773,23 @@ OBizR.controller('ForgetPassCtrl',function($rootScope,$scope,$state,$window,$ion
   }
 });
 
-OBizR.controller('LoginCtrl',function($scope,$rootScope,$cordovaGeolocation,AuthService,$ionicPopup,$state,$ionicLoading,$localStorage,AuthenticationService){
+OBizR.controller('LoginCtrl',function($scope,$rootScope,$window,$cordovaGeolocation,AuthService,$ionicPopup,$state,$ionicLoading,$localStorage,AuthenticationService,locationService){
   //data for vm.loginForm
   $scope.user = {};
   $scope.serverErrors = [];
   $scope.doLogin = function(loginForm) {
     $scope.serverErrors = [];
-    console.log(loginForm);
+
     if (loginForm.$valid) {
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Connecting...</p>"}});
       AuthenticationService.login($scope.user).then(function (data) {
-          console.log(data);
-          $rootScope.currentUser = data.user;
+          $localStorage.currentUser = data.data.user;
+          $rootScope.currentUser = $localStorage.currentUser;
           $localStorage.isLogedin = true;
+          $localStorage.isRegistered = true;
           $rootScope.$broadcast('loading:hide');
           if($localStorage.isLocationAllowed){
-            $state.go('app.nearBy', {}, {reload: true});
+            $state.go('app.nearby');
           }else{
             $state.go('location');
           }
@@ -781,22 +822,24 @@ OBizR.controller('LoginCtrl',function($scope,$rootScope,$cordovaGeolocation,Auth
       });
 
       confirmPopup.then(function(res) {
+        $localStorage.currentLocation = {};
+        $rootScope.$broadcast('loading:show');
         if(res) {
-            var posOptions = {timeout: 10000, enableHighAccuracy: false};
-            $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-                var lat  = position.coords.latitude
-                var long = position.coords.longitude
-                console.log("lat:"+lat+"Log:"+long);
-                $localStorage.lat = lat;
-                $localStorage.long = long;
-              }, function(err) {
-                console.log(err);
-              });
-            $state.go('app.nearBy', {}, {reload: true});
+          locationService.getCurrentPosition().then(function (position) {
+            $localStorage.currentLocation.lat = position.coords.latitude;
+            $localStorage.currentLocation.long = position.coords.longitude;
+            $localStorage.currentLocation.address = position.address;
             $localStorage.isLocationAllowed = true;
-         } else {
-            console.log('Not sure!');
-         }
+            $rootScope.$broadcast('loading:hide');
+            $state.go('app.nearby');
+          }, function(err) {
+            $rootScope.$broadcast('loading:hide');
+            $scope.serverErrors.push('unable to get your location, try after sometime.');
+            $state.go('location');
+          });
+        } else {
+         $rootScope.$broadcast('loading:hide');
+        }
       });
   }
 

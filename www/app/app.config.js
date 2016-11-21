@@ -13,6 +13,7 @@
       //DrupalApiConstant.drupal_instance = 'http://localhost/2016slbrapp/ionic-d7/slbizreviewslinode/docroot/';
       //DrupalApiConstant.drupal_instance = 'http://slbizreviewslinode.local/';
       //DrupalApiConstant.api_endpoint += 'v1/slbiz/';
+      
       DrupalApiConstant.drupal_instance = 'https://obizr.io/';
       //DrupalApiConstant.drupal_instance =  'http://dev.openbiz.slbr.sl/'; //'http://localhost/D7-testing/'; //
       DrupalApiConstant.api_endpoint += 'v1/';

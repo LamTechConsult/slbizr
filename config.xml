@@ -18,8 +18,12 @@
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="StatusBarBackgroundColor" value="#1E6FF5"/>
+  <preference name="orientation" value="portrait"/>
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
+  </feature>
+  <feature name="Geolocation">
+    <param name="ios-package" value="CDVLocation" />
   </feature>
   <feature name="Geolocation">
     <param name="android-package" value="org.apache.cordova.GeoBroker"/>

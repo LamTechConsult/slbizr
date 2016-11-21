@@ -28,6 +28,9 @@ OBizR.run(function($ionicPlatform, $rootScope, $cordovaStatusbar, $ionicHistory,
     if ($state.is('splash')) {
         navigator.app.exitApp();
     }
+    if ($state.is('login')) {
+        navigator.app.exitApp();
+    }
     if($state.is('app.nearby')){
         navigator.app.exitApp();
     }
