@@ -15,7 +15,7 @@ OBizR.config(function($stateProvider, $localStorageProvider, AuthenticationServi
   if (!$localStorageProvider.get('isRegistered')) {
     $urlRouterProvider.otherwise('splash');
   }
-  if (!$localStorageProvider.get('isLogedin')) {
+  else if (!$localStorageProvider.get('isLogedin')) {
     $urlRouterProvider.otherwise('login');
   }
   else {

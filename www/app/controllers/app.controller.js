@@ -101,7 +101,11 @@ OBizR.controller('mainCtrl', function($scope,$localStorage,$window,$cordovaGeolo
   if($localStorage.currentUser){
     $rootScope.currentUser = $localStorage.currentUser;
   }
-  $rootScope.currentLocation = $localStorage.currentLocation;
+   if(!$localStorage.currentLocation){
+    $localStorage.currentLocation = {};
+  }else{
+    $rootScope.currentLocation = $localStorage.currentLocation;
+  }
 });
 
 OBizR.controller('reviewDetailsCtrl', function($scope,$state,$ionicHistory,$rootScope,$stateParams,businessesService) {
