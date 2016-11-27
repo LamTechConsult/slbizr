@@ -1,4 +1,63 @@
 /**
+ * Localstorage Services :
+ */
+OBizR.service('LSService', function($q,$window) {
+
+   return {
+      getItem: function(item) {
+        var q = $q.defer();
+        if(item){
+        	q.resolve(JSON.parse($window.localStorage.getItem(item)));
+        }
+        return q.promise;
+      }
+   }
+});
+/**
+ * Camera Services :
+ */
+OBizR.service('locationService', function($q,$cordovaGeolocation) {
+	var locationService = {
+		getCurrentPosition:getCurrentPosition
+	};
+	var myLocation = null;
+
+    function getCurrentPosition(options) {
+        var q = $q.defer();
+
+        var posOptions = {timeout: 10000, enableHighAccuracy: false};
+        $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+        	myLocation = position;
+
+        	//getCurrentPositionAddress(position);
+           	q.resolve(myLocation);
+        }, function(err) {
+	      	q.reject(err);
+	    });
+        return q.promise;
+    }
+    function getCurrentPositionAddress(position) {
+      	var lat = position.coords.latitude;
+      	var long = position.coords.longitude;
+      	var geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(lat, long);
+        var request = {latLng: latlng};
+
+      	geocoder.geocode(request, function(data, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (data[0] != null) {
+	            position.address = data[0].formatted_address;
+              } else {
+                position.address = null;
+              }
+            }
+        });
+        myLocation = position;
+    }
+   	return locationService;
+});
+
+/**
  * Camera Services :
  */
 OBizR.service('CameraService', function($q,$cordovaCamera) {
@@ -419,7 +478,7 @@ OBizR.service('taxonomyService', function($q,$filter,$rootScope,$http,DrupalHelp
 /**
  * BiZ Services :
  */
-OBizR.service('businessesService', function($q,$filter,customPostService,$rootScope,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {
+OBizR.service('businessesService', function($q,$filter,customPostService,$rootScope,$localStorage,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {
     var businessesService = {
 		  getBusinesses: getBusinesses,
 		  getBusinessesReview:getBusinessesReview,
@@ -428,6 +487,7 @@ OBizR.service('businessesService', function($q,$filter,customPostService,$rootSc
 		  searchedBusinessDetails:searchedBusinessDetails,
 		  sortBusinessesByDistanceFilter:sortBusinessesByDistanceFilter,
 		  postReviews:postReviews,
+		  sortBizDataByCurrentDis:sortBizDataByCurrentDis,
 		  claimBiz:claimBiz,
 		  
 		  businessDetails:businessDetails,
@@ -601,10 +661,10 @@ OBizR.service('businessesService', function($q,$filter,customPostService,$rootSc
 	/**
 	 * Get active business from backend.
 	 */
-	function getBusinesses() {
+	function getBusinesses(forceUpdate) {
 			
 		var defer = $q.defer();
-		if (businesses == null || (Date.now() - lastFetched) > 60 * 10000) {
+		if (businesses == null || forceUpdate) {
 			DataService.fetchBusinesses().success(function (data) {
 		       //businesses = data;
 		       saveBizDistance(data,'getBusinesses');
@@ -619,13 +679,22 @@ OBizR.service('businessesService', function($q,$filter,customPostService,$rootSc
 		}
 	    return defer.promise;
 	}
+	function sortBizDataByCurrentDis(biz) {
+		var defer = $q.defer();
+		if (biz != null) {
+		     saveBizDistance(biz,'getBusinesses');
+		}else{
+			defer.resolve(businesses);
+		}
+	    return defer.promise;
+	}
 	/**
 	 * Add distance field to the populated business data.
 	 */
 	function saveBizDistance(bizData,funNane) {
 	    var prepareBizData = bizData;
 	   	for (a=0;a<prepareBizData.nodes.length;a++){
-	 		prepareBizData.nodes[a].node.distance = $filter('distance')($rootScope.storage.lat,$rootScope.storage.long,prepareBizData.nodes[a].node.geocode_lat,prepareBizData.nodes[a].node.geocode_long,"N");
+	 		prepareBizData.nodes[a].node.distance = $filter('distance')($localStorage.currentLocation.lat,$localStorage.currentLocation.long,prepareBizData.nodes[a].node.geocode_lat,prepareBizData.nodes[a].node.geocode_long,"N");
 	 	}   
 	    sortBusinessesByDistance(prepareBizData,funNane);
 	}
@@ -760,7 +829,7 @@ OBizR.service('businessesService', function($q,$filter,customPostService,$rootSc
 	function saveBizDistanceFilter(bizData,filterData) {
 	    var prepareBizData = bizData;
 	   	for (a=0;a<prepareBizData.nodes.length;a++){
-	 		prepareBizData.nodes[a].node.distance = $filter('distance')($rootScope.storage.lat,$rootScope.storage.long,prepareBizData.nodes[a].node.geocode_lat,prepareBizData.nodes[a].node.geocode_long,"N");
+	 		prepareBizData.nodes[a].node.distance = $filter('distance')($localStorage.currentLocation.lat,$localStorage.currentLocation.long,prepareBizData.nodes[a].node.geocode_lat,prepareBizData.nodes[a].node.geocode_long,"N");
 	 		prepareBizData.nodes[a].node.status = $filter('getStatus')(prepareBizData.nodes[a].node.hours);
 	 	}   
 	 	//sortBusinessesByDistanceFilter(prepareBizData,filterData);

@@ -1,5 +1,5 @@
 
-OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state,pageService,$cordovaGeolocation){
+OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state,pageService,$cordovaGeolocation,businessesService){
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -61,11 +61,14 @@ OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state
           $scope.termusepage = termusepage[0].node;
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});     
   });
+  $scope.$on('$ionicView.beforeLeave', function (event, viewData) {
+    $rootScope.serverErrors = [];
+  });
   $scope.trustAsHtml = function(string) {
     return $sce.trustAsHtml(string);
   };
   $scope.captureCurrentLocation = function () {
-    console.log($rootScope.storage);
+
     $rootScope.serverErrors = [];
     $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       var posOptions = {timeout: 10000, enableHighAccuracy: false};
@@ -82,10 +85,11 @@ OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state
             if (status == google.maps.GeocoderStatus.OK) {
               if (data[0] != null) {
                 $scope.$apply(function() {
-                  $localStorage.lat = data[0].geometry.location.lat();
-                  $localStorage.long = data[0].geometry.location.lng();
-                  $localStorage.address = data[0].formatted_address;
-                  $rootScope.storage = $localStorage;
+                  $localStorage.currentLocation.lat = data[0].geometry.location.lat();
+                  $localStorage.currentLocation.long = data[0].geometry.location.lng();
+                  $localStorage.currentLocation.address = data[0].formatted_address;
+                  $rootScope.currentLocation = $localStorage.currentLocation;
+                  $scope.sortBizBycurrentLoc();
                 });
               } else {
                 alert("No address available");
@@ -120,10 +124,11 @@ OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state
           $rootScope.$broadcast('loading:hide');
           if (data[0] != null) {
             $scope.$apply(function() {
-              $localStorage.lat = data[0].geometry.location.lat();
-              $localStorage.long = data[0].geometry.location.lng();
-              $localStorage.address = data[0].formatted_address;
-              $rootScope.storage = $localStorage;
+              $localStorage.currentLocation.lat = data[0].geometry.location.lat();
+              $localStorage.currentLocation.long = data[0].geometry.location.lng();
+              $localStorage.currentLocation.address = data[0].formatted_address;
+              $rootScope.currentLocation = $localStorage.currentLocation;
+              $scope.sortBizBycurrentLoc();
             });
 
           } else {
@@ -134,5 +139,10 @@ OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state
       });
 
     }
+  }
+  $scope.sortBizBycurrentLoc = function () {
+    businessesService.sortBizDataByCurrentDis({nodes:$rootScope.displayBusinesses}).then(function (newSortedBiz) {
+      $localStorage.biz = newSortedBiz.nodes;
+    });
   }
 });

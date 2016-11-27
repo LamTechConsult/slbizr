@@ -41,15 +41,16 @@ OBizR.factory('customPostService', function($http,$filter,DrupalApiConstant) {
 OBizR.factory('smsService', function($http) {
 
   var smsService = {};
-  var basePath = 'http://api.clickatell.com/';
-  var header = {"Content-Type": "application/json"};
+  var basePath = 'https://platform.clickatell.com/messages';//'http://api.clickatell.com/';
+  var header = {"Content-Type": "application/json","Authorization":"FU1lbaauRrCTL0x4CR9V6A=="};
   
   //Send SMS to user Mobile number
   smsService.validateUserOTP = function(userData) {
     console.log(userData);
-    url = basePath + "http/sendmsg?user="+userData.user+"&password="+userData.password+"&api_id=3634254&to="+userData.phonenumber+"&text="+userData.msg;
+    var body = {"content":userData.msg, "to":userData.phonenumber};
+    url = basePath; //+ "http/sendmsg?user="+userData.user+"&password="+userData.password+"&api_id=3634254&to="+userData.phonenumber+"&text="+userData.msg;
     //url = "http://api.clickatell.com/http/sendmsg?user=USERNAME&password=PASSWORD&api_id=3634254&to=23277608990&text=Testing slbiz"  ;  
-    return $http.get(url,header);
+    return $http.post(url,body,header);
   };
   return smsService;
 });

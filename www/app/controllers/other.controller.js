@@ -4,15 +4,15 @@ OBizR.controller('filterCtrl', function($scope,$state,$ionicHistory,$cordovaGeol
   });
 
   $scope.$on("$ionicView.enter", function(event, data){
-  	$rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-      taxonomyService.getCategory()
-        .then(function (category) {
-          $rootScope.category = category;
-      }) .finally(function () { $rootScope.$broadcast('loading:hide');}); 
-    taxonomyService.getKeywords()
-        .then(function (keywords) {
-          $rootScope.keywords = keywords;
-      }) .finally(function () { $rootScope.$broadcast('loading:hide');}); 
+  	// $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+   //    taxonomyService.getCategory()
+   //      .then(function (category) {
+   //        $rootScope.category = category;
+   //    }) .finally(function () { $rootScope.$broadcast('loading:hide');}); 
+   //  taxonomyService.getKeywords()
+   //      .then(function (keywords) {
+   //        $rootScope.keywords = keywords;
+   //    }) .finally(function () { $rootScope.$broadcast('loading:hide');}); 
     $scope.initializeFilterData();
     console.log($ionicHistory.backView());//get from state name
   });
@@ -67,7 +67,7 @@ OBizR.controller('filterCtrl', function($scope,$state,$ionicHistory,$cordovaGeol
   /////////////////////////////////////////////////////////////////////////////
   
   $scope.dofilterSerarch = function () {
-    if($ionicHistory.backView().stateName == 'app.nearBy'){
+    if($ionicHistory.backView().stateName == 'app.nearby'){
       $state.go('app.searchResults',{srchId:'filterFromNearby'});
     }else{
       $state.go('app.searchResults',{srchId:'filterFromSearchRes'});
@@ -165,7 +165,7 @@ OBizR.controller('otherCtrl', function($scope,$state,$filter,$ionicHistory,$cord
     $scope.initializeMap();
   });
   $scope.listBizView = function () {
-    $state.go('app.nearBy');
+    $state.go('app.nearby');
   }
   $scope.getFilterView = function () {
    $state.go('app.filter');
