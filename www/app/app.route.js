@@ -535,13 +535,16 @@ OBizR.config(function($stateProvider, $localStorageProvider, AuthenticationServi
   //$urlRouterProvider.otherwise('splash');
 });
 
-OBizR.run(function ($rootScope, AuthenticationService, $state, $localStorage, DrupalApiConstant, $urlRouter, $ionicLoading) {
+OBizR.run(function ($rootScope, AuthenticationService, $cordovaNetwork, $cordovaToast, $state, $localStorage, DrupalApiConstant, $urlRouter, $ionicLoading) {
   $rootScope.$on('loading:show', loadingShowCallback);
   $rootScope.$on('loading:hide', loadingHideCallback);
 
     //http://angular-ui.github.io/ui-router/site/#/api/ui.router.router.$urlRouterProvider#methods_deferintercept
     //location change logic => before any view is rendered
     $rootScope.$on('$locationChangeStart', locationChangeStartCallback)
+    
+    $rootScope.$on('$cordovaNetwork:offline', offlineCallback);
+    $rootScope.$on('$cordovaNetwork:online', onlineCallback);
 
     //state change logic
     $rootScope.$on("$stateChangeStart", stateChangeStartCallback);
@@ -587,6 +590,16 @@ OBizR.run(function ($rootScope, AuthenticationService, $state, $localStorage, Dr
       // Configures $urlRouter's listener *after* your custom listener
       $urlRouter.listen();
     };
+    // set offline mode
+    function offlineCallback(event, networkState) {
+      $rootScope.isOffline = true;
+      $cordovaToast.show('Operating app offline mode','long','center');
+    }
+     // set online mode
+    function onlineCallback(event, networkState) {
+      $rootScope.isOffline = false;
+      $cordovaToast.show('Operating in online mode','long','center');
+    }
 
     function stateChangeStartCallback(event, toState, toParams, fromState, fromParams) {
       //redirects for logged in user away from login or register and show its profile instead

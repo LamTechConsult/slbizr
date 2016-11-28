@@ -777,7 +777,7 @@ OBizR.controller('ForgetPassCtrl',function($rootScope,$scope,$state,$window,$ion
   }
 });
 
-OBizR.controller('LoginCtrl',function($scope,$rootScope,$window,$cordovaGeolocation,AuthService,$ionicPopup,$state,$ionicLoading,$localStorage,AuthenticationService,locationService){
+OBizR.controller('LoginCtrl',function($scope,$rootScope,$window,$cordovaGeolocation,DeviceService,AuthService,$ionicPopup,$state,$ionicLoading,$localStorage,AuthenticationService,locationService){
   //data for vm.loginForm
   $scope.user = {};
   $scope.serverErrors = [];
@@ -792,6 +792,29 @@ OBizR.controller('LoginCtrl',function($scope,$rootScope,$window,$cordovaGeolocat
           $localStorage.isLogedin = true;
           $localStorage.isRegistered = true;
           $rootScope.$broadcast('loading:hide');
+          if(!$localStorage.allowedPushNot){
+              // var deviceInfo = {};
+              // deviceInfo.type = angular.lowercase('Android');
+              // deviceInfo.token = 'SESSe9406935ef5cb2ee8ff0cb98f6928491=3EM8Y73swmYlbuNVhJ5OYkQDnRZalh8K9_ZG8tdUJJ8';
+              // AuthService.deleteNotificationToken(deviceInfo.token).success(function (res) {
+              //  // $localStorage.allowedPushNot = true;
+              //  delete $localStorage.allowedPushNot;
+              //   console.log(res);
+              // }).error(function (error) {
+              //   alert(JSON.stringify(error));
+              // });
+
+            DeviceService.getDeviceInfo().then(function (deviceInfo) {
+              AuthService.registerForPushNotification(deviceInfo).success(function (res) {
+                $localStorage.allowedPushNot = true;
+
+              }).error(function (error) {
+                alert(JSON.stringify(error));
+              });
+            },function (error) {
+              console.log(error);
+            });
+          }
           if($localStorage.isLocationAllowed){
             $state.go('app.nearby');
           }else{
@@ -872,7 +895,7 @@ OBizR.controller('LoginCtrl',function($scope,$rootScope,$window,$cordovaGeolocat
   }
   
 });
-OBizR.controller('SocialCtrl',function($rootScope,$cordovaOauth,$scope,$state,$window,$ionicSlideBoxDelegate){
+OBizR.controller('SocialCtrl',function($rootScope,$http, $location, $cordovaOauth,$scope,$state,$window,$ionicSlideBoxDelegate){
   $scope.data = [];
   $scope.facebookLogin = function() {
     $cordovaOauth.facebook("325681044294287", ["email"]).then(function(result) {

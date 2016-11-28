@@ -4,11 +4,19 @@
 OBizR.factory('AuthService', function($http, DrupalApiConstant,UserResourceConstant,AuthenticationHttpInterceptor) {
   var authService = {};
   //var today = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-
+  var header = {"Content-Type": "application/json"};
   authService.requestNewPassword = function(userEmail) {
     var requestNewPasswordPath = DrupalApiConstant.drupal_instance + DrupalApiConstant.api_endpoint + UserResourceConstant.resourcePath + '/' + UserResourceConstant.actions.request_new_password;
-    var header = {"Content-Type": "application/json"};//AuthenticationHttpInterceptor.doRequestCongiguration;
     return $http.post(requestNewPasswordPath,userEmail,header);
+  };
+
+  authService.registerForPushNotification = function(deviceInfo) {
+    var registerDeviceEndPoint = DrupalApiConstant.drupal_instance + DrupalApiConstant.api_endpoint + 'push_notifications';
+    return $http.post(registerDeviceEndPoint,deviceInfo,header);
+  };
+   authService.deleteNotificationToken = function(token) {
+    var registerDeviceEndPoint = DrupalApiConstant.drupal_instance + DrupalApiConstant.api_endpoint + 'push_notifications/'+token;
+    return $http.delete(registerDeviceEndPoint);
   };
 
   return authService;

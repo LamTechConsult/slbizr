@@ -1,4 +1,31 @@
 /**
+ * Device Services :
+ */
+OBizR.service('DeviceService', function($q,$cordovaDevice) {
+
+   return {
+      getDeviceInfo: function() {
+        var q = $q.defer();
+        if (window.cordova) {
+        	 var deviceInfo = {};
+	        //var device = $cordovaDevice.getDevice();
+	        //var cordova = $cordovaDevice.getCordova();
+	        //var model = $cordovaDevice.getModel();
+	        var platform = $cordovaDevice.getPlatform();
+	        deviceInfo.type = angular.lowercase(platform);
+	        deviceInfo.token = $cordovaDevice.getUUID();
+	        //var version = $cordovaDevice.getVersion();
+
+	        q.resolve(deviceInfo);
+        }else{
+        	q.reject("Webview not supptted.");
+        }
+      
+        return q.promise;
+      }
+   }
+});
+/**
  * Localstorage Services :
  */
 OBizR.service('LSService', function($q,$window) {
@@ -14,7 +41,7 @@ OBizR.service('LSService', function($q,$window) {
    }
 });
 /**
- * Camera Services :
+ * location Services :
  */
 OBizR.service('locationService', function($q,$cordovaGeolocation) {
 	var locationService = {
