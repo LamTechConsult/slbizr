@@ -197,6 +197,17 @@ OBizR.config(function($stateProvider, $localStorageProvider, AuthenticationServi
       'access': AuthenticationServiceConstant.accessLevels.user
     }
   })
+ 
+  .state('app.anonymous', {
+    url: '/anonymous',
+    cache:false,
+    views: {
+      'menu-anonymous': {
+        templateUrl: 'app/templates/anonymousPopup.html',
+        controller: 'anonymousCtrl'
+      }
+    }
+  })
 
   .state('login', {
     url: '/login',
@@ -535,7 +546,7 @@ OBizR.config(function($stateProvider, $localStorageProvider, AuthenticationServi
   //$urlRouterProvider.otherwise('splash');
 });
 
-OBizR.run(function ($rootScope, AuthenticationService, $cordovaNetwork, $cordovaToast, $state, $localStorage, DrupalApiConstant, $urlRouter, $ionicLoading) {
+OBizR.run(function ($rootScope, AuthenticationService, $cordovaNetwork, $ionicPopup, $cordovaToast, $state, $localStorage, DrupalApiConstant, $urlRouter, $ionicLoading) {
   $rootScope.$on('loading:show', loadingShowCallback);
   $rootScope.$on('loading:hide', loadingHideCallback);
 
@@ -600,6 +611,23 @@ OBizR.run(function ($rootScope, AuthenticationService, $cordovaNetwork, $cordova
       $rootScope.isOffline = false;
       $cordovaToast.show('Operating in online mode','long','center');
     }
+    //TODO: add more state that need to be sucured.
+    $rootScope.authorizedState = [
+      {path:'app.account'},
+      {path:'app.addbusiness'},
+      {path:'app.writeReview'},
+      {path:'app.editBusiness'},
+      {path:'app.claimBiz'},      
+    ];
+    $rootScope.needAuthorization = function (argument) {
+      var flag = false;
+      for (var i = 0; i < $rootScope.authorizedState.length; i++) {
+        if($rootScope.authorizedState[i].path == argument){
+          flag = true;
+        }
+      }
+      return flag;
+    }
 
     function stateChangeStartCallback(event, toState, toParams, fromState, fromParams) {
       //redirects for logged in user away from login or register and show its profile instead
@@ -609,6 +637,11 @@ OBizR.run(function ($rootScope, AuthenticationService, $cordovaNetwork, $cordova
           $state.go('app.nearby');
           return;
         }
+      }
+      if(!$localStorage.isLogedin && $rootScope.needAuthorization(toState.name)){
+        $state.go('app.anonymous', {}, {reload: true});
+        event.preventDefault();
+        return;
       }
     }
 });

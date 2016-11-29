@@ -121,4 +121,11 @@ OBizR.controller('SignupCtrl',function ($scope,$state,smsService,$ionicPopup,$ro
 
       });
   }
+  $scope.skipAuthorization = function () {
+    if($localStorage.isLocationAllowed){
+      $state.go('app.nearby');
+    }else{
+      $state.go('location');
+    }
+  }
 });

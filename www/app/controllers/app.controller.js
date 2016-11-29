@@ -365,11 +365,9 @@ OBizR.controller('bizCtrlMap', function($scope,$state,$filter,$ionicHistory,$roo
   $scope.showDirectionMapClick = function () {
     $state.go('app.businessDirectionsMapOptions',{bid:$stateParams.bid});
   }
-
 });
 
-OBizR.controller('bizCtrlMapDirectionsOptions', function($scope,$state,
-$cordovaInAppBrowser,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
+OBizR.controller('bizCtrlMapDirectionsOptions', function($scope,$state,$cordovaInAppBrowser,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -429,7 +427,6 @@ $cordovaInAppBrowser,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordov
       $cordovaInAppBrowser.open(link);
   	 }
   } 
-    
 });
 
 OBizR.controller('bizCtrlMapDirectionsStartPoint', function($scope,$state,$ionicHistory,$rootScope,$stateParams,$localStorage,$cordovaGeolocation,ProfileService,businessesService) {
@@ -633,7 +630,6 @@ OBizR.controller('DashCtrl', function($scope,$state,$ionicHistory,$rootScope,$lo
           console.log($rootScope.currentUser);
       }) .finally(function () { $rootScope.$broadcast('loading:hide');});
   });
-
 });
 
 OBizR.controller('AccountCtrl', function($scope,AuthenticationService,$localStorage,$ionicHistory,$stateParams,$state,$rootScope,myAccountService) {
@@ -893,8 +889,15 @@ OBizR.controller('LoginCtrl',function($scope,$rootScope,$window,$cordovaGeolocat
     }
     
   }
-  
+  $scope.skipAuthorization = function () {
+    if($localStorage.isLocationAllowed){
+      $state.go('app.nearby');
+    }else{
+      $state.go('location');
+    }
+  }
 });
+
 OBizR.controller('SocialCtrl',function($rootScope,$http, $location, $cordovaOauth,$scope,$state,$window,$ionicSlideBoxDelegate){
   $scope.data = [];
   $scope.facebookLogin = function() {
@@ -922,5 +925,14 @@ OBizR.controller('SocialCtrl',function($rootScope,$http, $location, $cordovaOaut
       alert(JSON.stringify(error));
     });
   }
+});
+
+OBizR.controller('anonymousCtrl',function($rootScope,$http, $location, $cordovaOauth,$scope,$state,$window,$ionicSlideBoxDelegate){
+  $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
+    viewData.enableBack = true;
+  });
+  $scope.$on("$ionicView.enter", function(event, data){
+    
+  });
 
 });
