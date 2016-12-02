@@ -10136,7 +10136,7 @@ ul.rating.yellow li i.ion-ios-star {
 
 /*--- loading screen ---*/
 .backdrop {
-  background-color: #103a66; }
+  background-color: #f5f5f5; }
 
 .loading-container .loading {
   width: 180px;
@@ -10309,7 +10309,7 @@ ul.rating.yellow li i.ion-ios-star {
   padding-left: 140px; }
 
   .obizrbg{
-    background-color:#103a66;
+    background-color:#0d8aee;
   }
 
 .obizrbg .button-bar{
@@ -10319,7 +10319,7 @@ ul.rating.yellow li i.ion-ios-star {
   .obizrbg .button-bar .button {
     box-shadow: none;
     border-radius: 0 !important;
-    border-color:#103a66;
+    border-color:#0d8aee;
     margin: 1px;
   }
 
