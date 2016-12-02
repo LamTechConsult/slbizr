@@ -6417,7 +6417,7 @@ button.item.item-button-right {
   padding-bottom: 8px;
   min-height: 30px;
   background-color: #2196f3;
-  color: #222;
+  color: #fff ! important;
   font-weight: 500; }
 
 .platform-ios .item-divider-platform,
@@ -6427,7 +6427,7 @@ button.item.item-button-right {
   font-weight: 300;
   font-size: 13px;
   background-color: #2196f3;
-  color: #555; }
+  color: #fff ! important; }
 
 .platform-android .item-divider-platform,
 .item-divider-android {
@@ -7703,7 +7703,7 @@ textarea {
   border-radius: 2px;
   padding: 4px 8px 3px 0;
   border: none;
-  background-color: #fff; }
+  background-color: #eeeeee; }
 
 .item-stacked-label input {
   overflow: hidden;
@@ -7751,7 +7751,7 @@ input[type="tel"],
 input[type="color"] {
   display: block;
   padding-top: 2px;
-  padding-left: 0;
+  padding-left: 5px;
   height: 34px;
   color: #484848;
   vertical-align: middle;

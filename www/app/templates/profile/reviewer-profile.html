@@ -16,8 +16,8 @@
     <div class="item item-avatar avatar-top calm text-center">
       <img ng-if="reviewerProfile.picture" ng-src="{{reviewerProfile.picture.url}}">
       <img ng-if="!reviewerProfile.picture" src="assets/img/user/default-avatar.png">
-      <h2 ng-if="reviewerProfile.field_user_nick_name">{{reviewerProfile.field_user_nick_name.und[0].value}}</h2>
-      <h2 ng-if="!reviewerProfile.field_user_nick_name">{{reviewerProfile.name}}</h2>
+      <h2 class="light" ng-if="reviewerProfile.field_user_nick_name">{{reviewerProfile.field_user_nick_name.und[0].value}}</h2>
+      <h2 class="light" ng-if="!reviewerProfile.field_user_nick_name">{{reviewerProfile.name}}</h2>
     </div>
 
     <div class="button-bar">
