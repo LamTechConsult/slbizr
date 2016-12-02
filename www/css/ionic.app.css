@@ -3354,7 +3354,7 @@ body.grade-c {
   position: relative; }
 
 .scroll-content {
-  background: #eee;
+  background: #f5f5f5;
   color:#484848;
   position: absolute;
   top: 0;
@@ -3999,14 +3999,14 @@ a.subdued {
     .bar.bar-royal.bar-footer {
       background-image: linear-gradient(180deg, #6b46e5, #6b46e5 50%, transparent 50%); }
   .bar.bar-dark {
-    border-color: #111;
+    border-color: #484848;
     background-color: #444444;
-    background-image: linear-gradient(0deg, #111, #111 50%, transparent 50%);
+    background-image: linear-gradient(0deg, #484848, #484848 50%, transparent 50%);
     color: #fff; }
     .bar.bar-dark .title {
       color: #fff; }
     .bar.bar-dark.bar-footer {
-      background-image: linear-gradient(180deg, #111, #111 50%, transparent 50%); }
+      background-image: linear-gradient(180deg, #484848, #484848 50%, transparent 50%); }
   .bar .title {
     display: block;
     position: absolute;
@@ -4268,7 +4268,7 @@ a.subdued {
     background: none; }
 
 .bar-dark .button {
-  border-color: #111;
+  border-color: #484848;
   background-color: #444444;
   color: #fff; }
   .bar-dark .button:hover {
@@ -4483,9 +4483,9 @@ a.subdued {
 
 .tabs-dark > .tabs,
 .tabs.tabs-dark {
-  border-color: #111;
+  border-color: #484848;
   background-color: #444;
-  background-image: linear-gradient(0deg, #111, #111 50%, transparent 50%);
+  background-image: linear-gradient(0deg, #484848, #484848 50%, transparent 50%);
   color: #fff; }
   .tabs-dark > .tabs .tab-item .badge,
   .tabs.tabs-dark .tab-item .badge {
@@ -4883,8 +4883,8 @@ a.subdued {
 .tabs-background-dark .tabs,
 .tabs-background-dark > .tabs {
   background-color: #444;
-  background-image: linear-gradient(0deg, #111, #111 50%, transparent 50%);
-  border-color: #111; }
+  background-image: linear-gradient(0deg, #484848, #484848 50%, transparent 50%);
+  border-color: #484848; }
 
 .tabs-color-light .tab-item {
   color: rgba(255, 255, 255, 0.4);
@@ -5211,7 +5211,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
 .tab-item.active,
 .tab-item.activated {
   opacity: 1;
-  color:#ffae00;}
+  color:#2196f3;}
   .tab-item.tab-item-active.tab-item-light,
   .tab-item.active.tab-item-light,
   .tab-item.activated.tab-item-light {
@@ -5600,7 +5600,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
 
 .popup-head {
   padding: 15px 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #f5f5f5;
   text-align: center; }
 
 .popup-title {
@@ -5710,7 +5710,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
  */
 .item {
   border-color: #fff;
-  background-color: #eee;
+  background-color: #f5f5f5;
   color: #484848 ! important;
   position: relative;
   z-index: 2;
@@ -5794,7 +5794,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
     background-color: #886aea;
     color: #fff; }
   .item.item-dark {
-    border-color: #111;
+    border-color: #484848;
     background-color: #444;
     color: #fff; }
   .item[ng-click]:hover {
@@ -6139,7 +6139,7 @@ a.item-content {
       background-color: #6b46e5; }
 
 .item-complex.item-dark > .item-content {
-  border-color: #111;
+  border-color: #484848;
   background-color: #444;
   color: #fff; }
   .item-complex.item-dark > .item-content.active, .item-complex.item-dark > .item-content:active {
@@ -6416,7 +6416,7 @@ button.item.item-button-right {
   padding-top: 8px;
   padding-bottom: 8px;
   min-height: 30px;
-  background-color: #f5f5f5;
+  background-color: #2196f3;
   color: #222;
   font-weight: 500; }
 
@@ -6426,7 +6426,7 @@ button.item.item-button-right {
   text-transform: uppercase;
   font-weight: 300;
   font-size: 13px;
-  background-color: #efeff4;
+  background-color: #2196f3;
   color: #555; }
 
 .platform-android .item-divider-platform,
@@ -7662,7 +7662,7 @@ textarea {
   border-radius: 4px;
   padding-right: 8px;
   padding-left: 8px;
-  background: #eee; }
+  background: #f5f5f5; }
 
 .item-input-inset .item-input-wrapper input {
   padding-left: 4px;
@@ -7753,7 +7753,7 @@ input[type="color"] {
   padding-top: 2px;
   padding-left: 0;
   height: 34px;
-  color: #111;
+  color: #484848;
   vertical-align: middle;
   font-size: 14px;
   line-height: 16px; }
@@ -8640,10 +8640,10 @@ progress {
     margin-bottom: 10px; }
   .button.button-light {
     border-color: transparent;
-    background-color: #fff;
-    color: #444; }
+    background-color: #f5f5f5;
+    color: #484848; }
     .button.button-light:hover {
-      color: #444;
+      color: #484848;
       text-decoration: none; }
     .button.button-light.active, .button.button-light.activated {
       border-color: #a2a2a2;
@@ -8747,7 +8747,7 @@ progress {
     background-color: #154c85;
     color: #fff; }
     .button.button-assertive:hover {
-      color: #ffae00;
+      color: #2196f3;
       text-decoration: none; }
     .button.button-assertive.active, .button.button-assertive.activated {
       border-color: #a2a2a2;
@@ -9027,7 +9027,7 @@ a.button {
   .button-bar.bar-royal > .button {
     border-color: #6b46e5; }
   .button-bar.bar-dark > .button {
-    border-color: #111; }
+    border-color: #484848; }
 
 .button-bar > .button {
   -webkit-box-flex: 1;
@@ -9582,7 +9582,7 @@ background-color: #103a66; }
   background-color: #444; }
 
 .dark-border {
-  border-color: #111; }
+  border-color: #484848; }
 
 [collection-repeat] {
   /* Position is set by transforms */
@@ -9990,7 +9990,7 @@ img {
   bottom: 10px; }
 
 .bar-header .item-input-wrapper {
-  background-color: #fff; }
+  background-color: #f5f5f5; }
   .bar-header .item-input-wrapper .icon {
     padding-right: 0;
     font-size: 20px; }
@@ -10018,7 +10018,9 @@ img {
 
 /*---- avatar top ---*/
 .item-avatar.avatar-top {
-  padding-left: 0; }
+  padding-left: 0;
+background-color:#2196f3;
+color:#fff;}
   .item-avatar.avatar-top > img:first-child {
     position: relative;
     top: 0;
@@ -10231,7 +10233,7 @@ ul.rating.yellow li i.ion-ios-star {
 
 .biz-list .biz-ratings {
   line-height: 1em;
-  color: #ffae00; }
+  color: #2196f3; }
   .biz-list .biz-ratings .rating-numbers {
     display: inline-block;
     vertical-align: top;

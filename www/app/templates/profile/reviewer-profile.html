@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div class="item item-avatar avatar-top text-center">
+    <div class="item item-avatar avatar-top calm text-center">
       <img ng-if="reviewerProfile.picture" ng-src="{{reviewerProfile.picture.url}}">
       <img ng-if="!reviewerProfile.picture" src="assets/img/user/default-avatar.png">
       <h2 ng-if="reviewerProfile.field_user_nick_name">{{reviewerProfile.field_user_nick_name.und[0].value}}</h2>
@@ -43,7 +43,7 @@
     </div>
 
     <div class="recommended-reviews"  ng-hide="showMoreDetails">
-      <h5 class="dark-bg light padding m-none">Recent Reviews by 
+      <h5 class="dark-bg light padding m-none">Recent Reviews by
       {{reviewerProfile.field_user_nick_name.und[0].value}}</h5>
       <div class="padding text-center" ng-if="!businessesReview.length">
       <ion-spinner icon="spiral"></ion-spinner></div>

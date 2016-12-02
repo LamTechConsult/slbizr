@@ -9,7 +9,13 @@
   </author>
   <content src="index.html"/>
   <access origin="*"/>
-  <allow-navigation href="*://*.obizr.io/*" />
+  <access origin="tel:*" launch-external="yes"/>
+  <access origin="mailto:*" launch-external="yes"/>
+  <access origin="geo:*" launch-external="yes"/>
+  <access origin="sms:*" launch-external="yes"/>
+  <access origin="http://*/*" launch-external="yes"/>
+  <access origin="https://*/*" launch-external="yes"/>
+  <allow-navigation href="*://*.obizr.io/*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
@@ -21,18 +27,12 @@
   <preference name="StatusBarBackgroundColor" value="#1E6FF5"/>
   <preference name="orientation" value="portrait"/>
   <preference name="DisallowOverscroll" value="true"/>
-  <access origin="tel:*" launch-external="yes"/>
-  <access origin="mailto:*" launch-external="yes"/>
-  <access origin="geo:*" launch-external="yes"/>
-  <access origin="sms:*" launch-external="yes"/>
-  <access origin="http://*/*" launch-external="yes"/>
-  <access origin="https://*/*" launch-external="yes"/>
   <allow-intent href="tel:*"/>
-  <allow-intent href="sms:*" />
-  <allow-intent href="http://*/*" />
-  <allow-intent href="https://*/*" />
-  <allow-intent href="mailto:*" />
-  <allow-intent href="geo:*" />
+  <allow-intent href="sms:*"/>
+  <allow-intent href="http://*/*"/>
+  <allow-intent href="https://*/*"/>
+  <allow-intent href="mailto:*"/>
+  <allow-intent href="geo:*"/>
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
@@ -43,7 +43,7 @@
     <param name="android-package" value="org.apache.cordova.GeoBroker"/>
   </feature>
   <platform name="android">
-    <allow-intent href="market:*" />
+    <allow-intent href="market:*"/>
     <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
     <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi"/>
     <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi"/>
@@ -58,8 +58,8 @@
     <splash src="resources/android/splash/drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
   </platform>
   <platform name="ios">
-    <allow-intent href="itms:*" />
-    <allow-intent href="itms-apps:*" />
+    <allow-intent href="itms:*"/>
+    <allow-intent href="itms-apps:*"/>
     <preference name="EnableViewportScale" value="true"/>
     <preference name="MediaPlaybackAllowsAirPlay" value="true"/>
     <preference name="MediaPlaybackRequiresUserAction" value="true"/>
