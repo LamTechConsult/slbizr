@@ -52,16 +52,26 @@ OBizR.service('locationService', function($q,$cordovaGeolocation) {
     function getCurrentPosition(options) {
         var q = $q.defer();
 
-        var posOptions = {timeout: 10000, enableHighAccuracy: false};
-        $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-        	myLocation = position;
+     //    var posOptions = {timeout: 10000, enableHighAccuracy: false};
+     //    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+     //    	//myLocation = position;
 
-        	//getCurrentPositionAddress(position);
-           	q.resolve(myLocation);
-        }, function(err) {
-	      	q.reject(err);
-	    });
-        return q.promise;
+     //    	//getCurrentPositionAddress(position);
+     //       	q.resolve(position);
+     //    }, function(err) {
+	    //   	q.reject(err);
+	    // });
+     //    return q.promise;
+
+    var onSuccess = function(position) {
+        q.resolve(position);
+    };
+    function onError(error) {
+        q.reject(error);
+    }
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    return q.promise;
+    
     }
     function getCurrentPositionAddress(position) {
       	var lat = position.coords.latitude;
