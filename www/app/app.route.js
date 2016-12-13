@@ -546,7 +546,7 @@ OBizR.config(function($stateProvider, $localStorageProvider, AuthenticationServi
   //$urlRouterProvider.otherwise('splash');
 });
 
-OBizR.run(function ($rootScope, AuthenticationService, $cordovaNetwork, $ionicPopup, $cordovaToast, $state, $localStorage, DrupalApiConstant, $urlRouter, $ionicLoading) {
+OBizR.run(function ($rootScope, AuthenticationService, $window, $cordovaNetwork, $ionicPopup, $cordovaToast, $state, $localStorage, DrupalApiConstant, $urlRouter, $ionicLoading) {
   $rootScope.$on('loading:show', loadingShowCallback);
   $rootScope.$on('loading:hide', loadingHideCallback);
 
@@ -572,6 +572,28 @@ OBizR.run(function ($rootScope, AuthenticationService, $cordovaNetwork, $ionicPo
 
     //we need this to have out current auth state before any other thing in router happens
     function locationChangeStartCallback(e) {
+      
+      $rootScope.isOffline = $window.navigator.onLine;
+      $window.addEventListener("online", function () {
+        $rootScope.isOffline = true;
+        $rootScope.$digest();
+      }, true);
+
+      $window.addEventListener("offline", function () {
+          $rootScope.isOffline = false;
+          $rootScope.$digest();
+      }, true);
+
+      if(!$rootScope.isOffline){
+        return;
+      }
+      //prevent for offline.
+      // if(window.Connection) {
+      //   if(navigator.connection.type == Connection.NONE) {
+      //     $rootScope.isOffline = true;
+      //     return;
+      //   }
+      // }
       if (AuthenticationService.getLastConnectTime() > 0) {
         //sync the current URL to the router
         $urlRouter.sync();
@@ -601,10 +623,11 @@ OBizR.run(function ($rootScope, AuthenticationService, $cordovaNetwork, $ionicPo
       // Configures $urlRouter's listener *after* your custom listener
       $urlRouter.listen();
     };
+
     // set offline mode
     function offlineCallback(event, networkState) {
       $rootScope.isOffline = true;
-      $cordovaToast.show('Operating app offline mode','long','center');
+      $cordovaToast.show('Operating app in offline mode','long','center');
     }
      // set online mode
     function onlineCallback(event, networkState) {
@@ -631,13 +654,13 @@ OBizR.run(function ($rootScope, AuthenticationService, $cordovaNetwork, $ionicPo
 
     function stateChangeStartCallback(event, toState, toParams, fromState, fromParams) {
       //redirects for logged in user away from login or register and show its profile instead
-      if (toState.name == 'login' || toState.name == 'signup') {
-        if (AuthenticationService.getConnectionState()) {
-          event.preventDefault();
-          $state.go('app.nearby');
-          return;
-        }
-      }
+      // if (toState.name == 'login' || toState.name == 'signup') {
+      //   if (AuthenticationService.getConnectionState()) {
+      //     event.preventDefault();
+      //     $state.go('app.nearby');
+      //     return;
+      //   }
+      // }
       if(!$localStorage.isLogedin && $rootScope.needAuthorization(toState.name)){
         $state.go('app.anonymous', {}, {reload: true});
         event.preventDefault();

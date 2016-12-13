@@ -835,6 +835,10 @@ OBizR.controller('LoginCtrl',function($scope,$rootScope,$window,$cordovaGeolocat
         $scope.serverErrors.push('Username and Password is required');
     }
   }
+  $scope.ContinueOfflineMode = function () {
+    $localStorage.currentLocation = {};
+    $state.go('app.nearby');
+  }
   $scope.iAgree = function () {
     var confirmPopup = $ionicPopup.confirm({
          template: 'Allow OBizR to access your location while you use the app?',

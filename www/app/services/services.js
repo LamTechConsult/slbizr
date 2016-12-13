@@ -49,30 +49,20 @@ OBizR.service('locationService', function($q,$cordovaGeolocation) {
 	};
 	var myLocation = null;
 
-    function getCurrentPosition(options) {
+    function getCurrentPosition() {
+        
         var q = $q.defer();
+	    var onSuccess = function(position) {
+	    	q.resolve(position);
+	    };
+	    function onError(error) {
+	    	q.reject(error);
+	    }
 
-     //    var posOptions = {timeout: 10000, enableHighAccuracy: false};
-     //    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-     //    	//myLocation = position;
-
-     //    	//getCurrentPositionAddress(position);
-     //       	q.resolve(position);
-     //    }, function(err) {
-	    //   	q.reject(err);
-	    // });
-     //    return q.promise;
-
-    var onSuccess = function(position) {
-        q.resolve(position);
-    };
-    function onError(error) {
-        q.reject(error);
+	    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    	return q.promise;
     }
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-    return q.promise;
-    
-    }
+
     function getCurrentPositionAddress(position) {
       	var lat = position.coords.latitude;
       	var long = position.coords.longitude;
@@ -515,7 +505,7 @@ OBizR.service('taxonomyService', function($q,$filter,$rootScope,$http,DrupalHelp
 /**
  * BiZ Services :
  */
-OBizR.service('businessesService', function($q,$filter,customPostService,$rootScope,$localStorage,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {
+OBizR.service('businessesService', function($q,$filter,customPostService,OfflineDataService,$rootScope,$localStorage,$http,DrupalHelperService,DrupalApiConstant,DataService,UserResource,NodeResource,FileResource,CommentResource) {
     var businessesService = {
 		  getBusinesses: getBusinesses,
 		  getBusinessesReview:getBusinessesReview,
@@ -696,12 +686,22 @@ OBizR.service('businessesService', function($q,$filter,customPostService,$rootSc
 	}
 
 	/**
-	 * Get active business from backend.
+	 * Get active business from offline data.
 	 */
 	function getBusinesses(forceUpdate) {
 			
 		var defer = $q.defer();
-		if (businesses == null || forceUpdate) {
+		if(!$rootScope.isOffline){
+			OfflineDataService.fetchBusinesses().success(function (data) {
+				saveBizDistance(data,'getBusinesses');
+			       
+			    defer.resolve(businesses);
+			}).catch(function (error) {
+		        defer.reject(error);
+		    });
+		}
+		else if (businesses == null || forceUpdate) {
+
 			DataService.fetchBusinesses().success(function (data) {
 		       //businesses = data;
 		       saveBizDistance(data,'getBusinesses');

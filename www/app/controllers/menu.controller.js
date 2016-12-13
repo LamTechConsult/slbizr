@@ -5,7 +5,7 @@ OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state
   });
   $scope.$on("$ionicView.enter", function(event, data){
     $rootScope.serverErrors = [];
-  	$rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+  	//$rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       pageService.getAboutPage()
         .then(function (aboupage) {
           $scope.aboupage = aboupage[0].node;
@@ -59,7 +59,7 @@ OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state
       pageService.getTermUsePage()
         .then(function (termusepage) {
           $scope.termusepage = termusepage[0].node;
-      }) .finally(function () { $rootScope.$broadcast('loading:hide');});     
+      }); //.finally(function () { $rootScope.$broadcast('loading:hide');});     
   });
   $scope.$on('$ionicView.beforeLeave', function (event, viewData) {
     $rootScope.serverErrors = [];
@@ -89,6 +89,7 @@ OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state
                   $localStorage.currentLocation.long = data[0].geometry.location.lng();
                   $localStorage.currentLocation.address = data[0].formatted_address;
                   $rootScope.currentLocation = $localStorage.currentLocation;
+                  $localStorage.isLocationAllowed = true;
                   $scope.sortBizBycurrentLoc();
                 });
               } else {
@@ -128,6 +129,7 @@ OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state
               $localStorage.currentLocation.long = data[0].geometry.location.lng();
               $localStorage.currentLocation.address = data[0].formatted_address;
               $rootScope.currentLocation = $localStorage.currentLocation;
+              $localStorage.isLocationAllowed = true;
               $scope.sortBizBycurrentLoc();
             });
 

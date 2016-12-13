@@ -23,7 +23,7 @@ OBizR.factory('AuthService', function($http, DrupalApiConstant,UserResourceConst
 });
 
 /**
- * StaticPageService :
+ * customPostService :
  */
 OBizR.factory('customPostService', function($http,$filter,DrupalApiConstant) {
   var unix = Math.round(+new Date()/1000);
@@ -63,6 +63,21 @@ OBizR.factory('smsService', function($http) {
   return smsService;
 });
 
+/**
+ * OfflineDataService :
+ */
+OBizR.factory('OfflineDataService', function($http,DrupalApiConstant) {
+  var OfflineDataService = {};
+  var basePath = DrupalApiConstant.drupal_instance +DrupalApiConstant.api_endpoint;
+  var config = {};
+ 
+  //fetch About page
+  OfflineDataService.fetchBusinesses = function() {
+    url = "assets/offline-data/app-business-home.json";
+    return $http.get(url,config);
+  };
+  return OfflineDataService;
+});
 
 /**
  * StaticPageService :
