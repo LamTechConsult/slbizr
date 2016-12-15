@@ -853,9 +853,12 @@ OBizR.controller('LoginCtrl',function($scope,$rootScope,$window,$cordovaGeolocat
         $rootScope.$broadcast('loading:show');
         if(res) {
           locationService.getCurrentPosition().then(function (position) {
-            $localStorage.currentLocation.lat = position.coords.latitude;
-            $localStorage.currentLocation.long = position.coords.longitude;
+
+            $localStorage.currentLocation.lat = position.lat;
+            $localStorage.currentLocation.long = position.long;
             $localStorage.currentLocation.address = position.address;
+            $localStorage.currentLocation.address_components = position.address_components;
+            $rootScope.currentLocation = $localStorage.currentLocation;
             $localStorage.isLocationAllowed = true;
             $rootScope.$broadcast('loading:hide');
             $state.go('app.nearby');

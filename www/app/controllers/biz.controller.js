@@ -1,7 +1,7 @@
 /*
  * Add bisuness controller
  */
-OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraService,$ionicHistory,$ionicLoading,$rootScope,$localStorage,ProfileService,businessesService,taxonomyService) {
+OBizR.controller('addBizCtrl', function($scope,$http,$filter,locationService,$state,CameraService,$ionicHistory,$ionicLoading,$rootScope,$localStorage,ProfileService,businessesService,taxonomyService) {
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -10,7 +10,7 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
       $scope.serverErrors = [];
       $scope.initializeBizData();
   });
-
+  $rootScope.Geocode = '';
   $scope.doCancel = function () {
     $ionicHistory.goBack();
   }
@@ -26,6 +26,10 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
     $rootScope.Provience = $rootScope.ProvienceItem[0];
     $rootScope.District = $rootScope.DistrictItem[0];
     $rootScope.Chiefdom = $rootScope.ChiefdomItem[0];
+    $rootScope.newBizData.field_ltc_biz_address = {"und":[{}]};
+    $rootScope.field_ltc_biz_address_geo = {};
+    $rootScope.bizLocation = {};
+    $rootScope.newBizData.field_ltc_biz_address_geo = {"und":[{"value":"", "geom": {"lat": ""}, "geom": {"lon": ""}}]};
     // $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
     // taxonomyService.getCategory()
     //     .then(function (category) {
@@ -174,6 +178,106 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
      //$cordovaCamera.cleanup().then(); // only for FILE_URI
   }
 
+  $scope.captureCurrentLocation = function (fieldName) {
+    $scope.serverErrors = [];
+    if(!$localStorage.currentLocation.address){
+      $scope.serverErrors.push('Set your location first.');
+      return;
+    }
+    //////////////////////////////////////////////////////////////
+    var currentLocation = {premise:""};//$localStorage.currentLocation.address.split(','); 
+      for (var i = 0; i < $localStorage.currentLocation.address_components.length; i++) {
+        var addr = $localStorage.currentLocation.address_components[i];// check if this entry in address_components has a type of country
+        if (addr.types[0] == 'country')
+          currentLocation.country = addr.long_name;
+        else if (addr.types[0] == 'street_address') // address 1
+          currentLocation.address =  addr.long_name;
+        else if (addr.types[0] == 'premise')
+          currentLocation.premise = addr.long_name;
+        else if (addr.types[0] == 'route')  // address 2
+          currentLocation.thoroughfare = addr.long_name;
+        else if (addr.types[0] == 'postal_code') // Zip
+          currentLocation.zip = addr.short_name;
+        else if (addr.types[0] == ['administrative_area_level_1']) // State
+          currentLocation.state = addr.long_name;
+        else if (addr.types[0] == ['locality'])  // City
+          currentLocation.city = addr.long_name;
+      }
+      if(fieldName == 'Address'){
+        console.log(currentLocation);
+        $rootScope.newBizData.field_ltc_biz_address.und[0].thoroughfare = currentLocation.thoroughfare;
+        $rootScope.newBizData.field_ltc_biz_address.und[0].premise = currentLocation.premise;
+        $rootScope.newBizData.field_ltc_biz_address.und[0].locality = currentLocation.city;
+      }
+      if(fieldName == 'Geocode'){
+        $rootScope.field_ltc_biz_address_geo.thoroughfare = currentLocation.thoroughfare;
+        $rootScope.field_ltc_biz_address_geo.premise = currentLocation.premise;
+        $rootScope.field_ltc_biz_address_geo.locality = currentLocation.city;
+        $rootScope.Geocode = currentLocation.thoroughfare;
+        if(currentLocation.premise){
+          $rootScope.Geocode+= ', '+currentLocation.premise;
+        }
+        $rootScope.Geocode+=', '+currentLocation.city;
+
+        //$rootScope.newBizData.field_ltc_biz_address_geo.und[0].value = "";
+        $rootScope.newBizData.field_ltc_biz_address_geo.und[0].geom.lat = $localStorage.currentLocation.lat;
+        $rootScope.newBizData.field_ltc_biz_address_geo.und[0].geom.lon = $localStorage.currentLocation.long;
+      }
+  }
+
+  $scope.enterNewLocation = function () {
+    $scope.serverErrors = [];
+    if($rootScope.bizLocation.street == undefined){
+      $scope.serverErrors.push('Street is required.');
+      return;
+    }
+    else if($rootScope.bizLocation.city == undefined){
+      $scope.serverErrors.push('City is required.');
+      return;
+    }
+    else{
+      $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
+      var commaSeparateVal = $rootScope.bizLocation.street+','+$rootScope.bizLocation.city+','+'Sierra Leone';
+      locationService.getGeocodeByAddress(commaSeparateVal).then(function (position) {
+
+        var currentLocation = {premise:""};//$localStorage.currentLocation.address.split(','); 
+        for (var i = 0; i < position.address_components.length; i++) {
+          var addr = position.address_components[i];// check if this entry in address_components has a type of country
+          if (addr.types[0] == 'country')
+            currentLocation.country = addr.long_name;
+          else if (addr.types[0] == 'street_address') // address 1
+            currentLocation.address =  addr.long_name;
+          else if (addr.types[0] == 'premise')
+            currentLocation.premise = addr.long_name;
+          else if (addr.types[0] == 'route')  // address 2
+            currentLocation.thoroughfare = addr.long_name;
+          else if (addr.types[0] == 'postal_code') // Zip
+            currentLocation.zip = addr.short_name;
+          else if (addr.types[0] == ['administrative_area_level_1']) // State
+            currentLocation.state = addr.long_name;
+          else if (addr.types[0] == ['locality'])  // City
+            currentLocation.city = addr.long_name;
+        }
+        $rootScope.field_ltc_biz_address_geo.thoroughfare = currentLocation.thoroughfare;
+        $rootScope.field_ltc_biz_address_geo.locality = currentLocation.city;
+        $rootScope.field_ltc_biz_address_geo.premise = currentLocation.premise;
+        $rootScope.Geocode = currentLocation.thoroughfare;
+        if(currentLocation.premise){
+          $rootScope.Geocode+= ' ,'+currentLocation.premise;
+        }
+        $rootScope.Geocode+=', '+currentLocation.city;
+
+        $rootScope.newBizData.field_ltc_biz_address_geo.und[0].value = "";
+        $rootScope.newBizData.field_ltc_biz_address_geo.und[0].geom.lat =  position.lat;
+        $rootScope.newBizData.field_ltc_biz_address_geo.und[0].geom.lon =  position.long;
+        console.log($rootScope.newBizData);
+        $rootScope.$broadcast('loading:hide');
+      },function(err) {
+        $rootScope.$broadcast('loading:hide');
+        $rootScope.serverErrors.push('Unable to set loacation try after sometime.');
+      });
+    }
+  }
   $scope.addBiz = function () {
     $scope.serverErrors = [];
 
@@ -185,7 +289,7 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
       $scope.serverErrors.push('Business category is required');
       return;
     }
-    if($rootScope.newBizData.field_ltc_biz_address == undefined ){
+    if($rootScope.newBizData.field_ltc_biz_address.und[0].thoroughfare == undefined ){
       $scope.serverErrors.push('Business address city is required');
     }
     if($rootScope.Chiefdom.location.id == undefined){
@@ -211,7 +315,7 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,$state,CameraServic
     //$rootScope.newBizData.field_ltc_biz_category = {"und":219};
     //$rootScope.newBizData.field_ltc_business_keywords = {"und":[{"tid":""}]};
     //$rootScope.newBizData.field_ltc_biz_address = {"und":[{"thoroughfare":"thoroughfare", "premise":"premise", "locality":"locality"}]};
-    $rootScope.newBizData.field_ltc_biz_address_geo = {"und":[{"value":"", "geom": {"lat": ""}, "geom": {"lon": ""}}]};
+    //$rootScope.newBizData.field_ltc_biz_address_geo = {"und":[{"value":"", "geom": {"lat": ""}, "geom": {"lon": ""}}]};
     $rootScope.newBizData.field_ltc_biz_admin_location = {"und":[{"tid":$rootScope.Chiefdom.location.id}]};//chiefdom field
     //$rootScope.newBizData.field_ltc_biz_email = {"und":[{"email":"chandan@gmail.com"}]};
     //$rootScope.newBizData.field_ltc_biz_telephone = {"und":[{"value":"123123123123"}]};

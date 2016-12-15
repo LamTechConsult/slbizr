@@ -45,15 +45,20 @@ OBizR.service('LSService', function($q,$window) {
  */
 OBizR.service('locationService', function($q,$cordovaGeolocation) {
 	var locationService = {
-		getCurrentPosition:getCurrentPosition
+		getCurrentPosition:getCurrentPosition,
+		getGeocodeByAddress:getGeocodeByAddress,
+		getGeocodeByLatLong:getGeocodeByLatLong,
 	};
 	var myLocation = null;
+
+///////////////////////////////////////////////////
 
     function getCurrentPosition() {
         
         var q = $q.defer();
 	    var onSuccess = function(position) {
-	    	q.resolve(position);
+	    	myLocation = getGeocodeByLatLong(position.coords);
+	    	q.resolve(myLocation);
 	    };
 	    function onError(error) {
 	    	q.reject(error);
@@ -63,25 +68,58 @@ OBizR.service('locationService', function($q,$cordovaGeolocation) {
     	return q.promise;
     }
 
-    function getCurrentPositionAddress(position) {
-      	var lat = position.coords.latitude;
-      	var long = position.coords.longitude;
-      	var geocoder = new google.maps.Geocoder();
-        var latlng = new google.maps.LatLng(lat, long);
-        var request = {latLng: latlng};
+    function getGeocodeByLatLong(coords) {
 
+    	var q = $q.defer();
+    	var position = {};
+    	var lat = coords.latitude;
+      	var lng = coords.longitude;
+
+      	var geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(lat, lng);
+        var request = {
+        	  latLng: latlng
+          	};
       	geocoder.geocode(request, function(data, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               if (data[0] != null) {
 	            position.address = data[0].formatted_address;
+	            position.address_components = data[0].address_components;
+	            position.lat = data[0].geometry.location.lat();
+	            position.long = data[0].geometry.location.lng();
+	            q.resolve(position);
               } else {
-                position.address = null;
+                q.reject(position);
               }
             }
         });
-        myLocation = position;
+       return q.promise;
     }
-   	return locationService;
+
+    function getGeocodeByAddress(commaSeparateVal) {
+
+      var q = $q.defer();
+      var position = {};
+      var request = {
+            address: commaSeparateVal
+          };
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode(request, function(data, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (data[0] != null) {
+            position.address = data[0].formatted_address;
+            position.address_components = data[0].address_components;
+            position.lat = data[0].geometry.location.lat();
+            position.long = data[0].geometry.location.lng();
+            q.resolve(position);
+          } else {
+            q.reject(position);
+          }
+        }
+      });
+      return q.promise;
+    }
+    return locationService;
 });
 
 /**

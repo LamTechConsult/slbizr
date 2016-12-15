@@ -1,5 +1,5 @@
 
-OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state,pageService,$cordovaGeolocation,businessesService){
+OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,locationService,$localStorage,$state,pageService,$cordovaGeolocation,businessesService){
   $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
@@ -71,35 +71,20 @@ OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state
 
     $rootScope.serverErrors = [];
     $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-      var posOptions = {timeout: 10000, enableHighAccuracy: false};
-      $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-        var lat  = position.coords.latitude
-        var long = position.coords.longitude
+    locationService.getCurrentPosition().then(function (position) {
 
-          var geocoder = new google.maps.Geocoder();
-          var latlng = new google.maps.LatLng(lat, long);
-          var request = {
-            latLng: latlng
-          };
-          geocoder.geocode(request, function(data, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-              if (data[0] != null) {
-                $scope.$apply(function() {
-                  $localStorage.currentLocation.lat = data[0].geometry.location.lat();
-                  $localStorage.currentLocation.long = data[0].geometry.location.lng();
-                  $localStorage.currentLocation.address = data[0].formatted_address;
-                  $rootScope.currentLocation = $localStorage.currentLocation;
-                  $localStorage.isLocationAllowed = true;
-                  $scope.sortBizBycurrentLoc();
-                });
-              } else {
-                alert("No address available");
-              }
-            }
-          });
-        }, function(err) {
-          $rootScope.serverErrors.push('Unable to get loacation try after sometime.');
-    }).finally(function () { $rootScope.$broadcast('loading:hide');});
+      $localStorage.currentLocation.lat = position.lat;
+      $localStorage.currentLocation.long = position.long;
+      $localStorage.currentLocation.address = position.address;
+      $localStorage.currentLocation.address_components = position.address_components;
+      $rootScope.currentLocation = $localStorage.currentLocation;
+      $localStorage.isLocationAllowed = true;
+      $scope.sortBizBycurrentLoc();
+      $rootScope.$broadcast('loading:hide');
+    },function(err) {
+      $rootScope.$broadcast('loading:hide');
+      $rootScope.serverErrors.push('Unable to get loacation try after sometime.');
+    });
   }
   $scope.newLocation = {};
   $scope.newLocation.country = 'Sierra Leone';
@@ -116,30 +101,20 @@ OBizR.controller('menuCtrl',function($rootScope,$sce,$scope,$localStorage,$state
     }else{
       $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
       var commaSeparateVal = $scope.newLocation.street+","+$scope.newLocation.city+","+$scope.newLocation.country;
-          var request = {
-            address: commaSeparateVal
-          };
-      var geocoder = new google.maps.Geocoder();
-      geocoder.geocode(request, function(data, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          $rootScope.$broadcast('loading:hide');
-          if (data[0] != null) {
-            $scope.$apply(function() {
-              $localStorage.currentLocation.lat = data[0].geometry.location.lat();
-              $localStorage.currentLocation.long = data[0].geometry.location.lng();
-              $localStorage.currentLocation.address = data[0].formatted_address;
-              $rootScope.currentLocation = $localStorage.currentLocation;
-              $localStorage.isLocationAllowed = true;
-              $scope.sortBizBycurrentLoc();
-            });
-
-          } else {
-            $rootScope.$broadcast('loading:hide');
-            $rootScope.serverErrors.push('Unable to set loacation try after sometime.');
-          }
-        }
+      locationService.getGeocodeByAddress(commaSeparateVal).then(function (position) {
+        
+        $localStorage.currentLocation.lat = position.lat;
+        $localStorage.currentLocation.long = position.long;
+        $localStorage.currentLocation.address = position.address;
+        $localStorage.currentLocation.address_components = position.address_components;
+        $rootScope.currentLocation = $localStorage.currentLocation;
+        $localStorage.isLocationAllowed = true;
+        $rootScope.$broadcast('loading:hide');
+        $scope.sortBizBycurrentLoc();
+      },function(err) {
+        $rootScope.$broadcast('loading:hide');
+        $rootScope.serverErrors.push('Unable to set loacation try after sometime.');
       });
-
     }
   }
   $scope.sortBizBycurrentLoc = function () {
