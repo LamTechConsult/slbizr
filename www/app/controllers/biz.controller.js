@@ -16,7 +16,6 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,locationService,$st
   }
   $scope.doSaveBizFieldValue = function () {
     $ionicHistory.goBack();
-
   }
   $scope.initializeBizData = function () {
     if($rootScope.newBizData != undefined){
@@ -30,29 +29,15 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,locationService,$st
     $rootScope.field_ltc_biz_address_geo = {};
     $rootScope.bizLocation = {};
     $rootScope.newBizData.field_ltc_biz_address_geo = {"und":[{"value":"", "geom": {"lat": ""}, "geom": {"lon": ""}}]};
-    // $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
-    // taxonomyService.getCategory()
-    //     .then(function (category) {
-    //       $rootScope.category = category;
-    // });
-    // taxonomyService.getProvience()
-    //     .then(function (provience) {
-    //       $rootScope.ProvienceItem = provience;
-    //       console.log(provience);
-    // });
-    // taxonomyService.getKeywords()
-    //     .then(function (keywords) {
-    //       $rootScope.keywords = keywords;
-    // }) .finally(function () { $rootScope.$broadcast('loading:hide');});
   }
   $scope.getDistrictItem = function (item) {
     if(item==null)
       return;
+    $rootScope.Provience = item;
     $rootScope.$broadcast('loading:show', {loading_settings: {template: "<p><ion-spinner></ion-spinner><br/>Loading...</p>"}});
     taxonomyService.getDistrict(item.location.id)
         .then(function (district) {
           $rootScope.DistrictItem = district;
-          console.log(district);
     }).finally(function () { $rootScope.$broadcast('loading:hide');});
   }
   $scope.getChiefdomItem = function (item) {
@@ -62,7 +47,6 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,locationService,$st
     taxonomyService.getChiefdoms(item.district.id)
       .then(function (chiefdoms) {
         $rootScope.ChiefdomItem = chiefdoms;
-        console.log(chiefdoms);
     }).finally(function () { $rootScope.$broadcast('loading:hide');});
   }
   $rootScope.Hours = {};
@@ -93,7 +77,6 @@ OBizR.controller('addBizCtrl', function($scope,$http,$filter,locationService,$st
   $rootScope.Hours.closing.sat = $rootScope.hours[34];
   $rootScope.Hours.closing.sun = $rootScope.hours[34];
 
-  $rootScope.Provience = $rootScope.ProvienceItem[0];
   $rootScope.District = $rootScope.DistrictItem[0];
   $rootScope.Chiefdom = $rootScope.ChiefdomItem[0];
 

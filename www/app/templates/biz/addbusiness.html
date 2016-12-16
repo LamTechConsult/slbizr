@@ -20,7 +20,7 @@
     <div class="list add-business">
       <div class="item item-divider">Country</div>
       <label class="item item-input">
-        <input type="text" placeholder="Sierra Leone" value="Sierra Leone">
+        <input type="text" placeholder="Sierra Leone" value="Sierra Leone" readonly="true">
       </label>
 
       <div class="item item-divider">Required Information</div>
@@ -54,7 +54,7 @@
       <a class="item item-icon-right" ng-click="setBizValFor('Chiefdom')">
         <i class="icon ion-ios-arrow-right icon-small"></i>
         <span class="item-note" ng-if="Chiefdom == '' || Chiefdom == undefined">Insert value</span>
-        <span class="item-note" ng-if="Chiefdom">{{District.district.name}} > {{Chiefdom.location.name}}</span>
+        <span class="item-note" ng-if="Chiefdom">{{Provience.location.name}} > {{District.district.name}} > {{Chiefdom.location.name}}</span>
         Chiefdom*
       </a>
       <a class="item item-icon-right" ng-click="setBizValFor('Geocode')">

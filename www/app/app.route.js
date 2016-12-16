@@ -587,13 +587,7 @@ OBizR.run(function ($rootScope, AuthenticationService, $window, $cordovaNetwork,
       if(!$rootScope.isOffline){
         return;
       }
-      //prevent for offline.
-      // if(window.Connection) {
-      //   if(navigator.connection.type == Connection.NONE) {
-      //     $rootScope.isOffline = true;
-      //     return;
-      //   }
-      // }
+
       if (AuthenticationService.getLastConnectTime() > 0) {
         //sync the current URL to the router
         $urlRouter.sync();

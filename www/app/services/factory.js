@@ -196,27 +196,32 @@ OBizR.factory('DataService', function($http,DrupalApiConstant) {
   //fetchcategory
   dataService.fetchCategory = function() {
     url = basePath + "slbiz/app-category-home.json";
-    return $http.get(url,config);
+    Localurl = "assets/offline-data/app-category-home.json";
+    return $http.get(Localurl,config);
   }
   //fetchcategory
   dataService.fetchKeywords = function() {
     url = basePath + "slbiz/filter/keywords.json";
-    return $http.get(url,config);
+    Localurl = "assets/offline-data/keywords.json";
+    return $http.get(Localurl,config);
   }
   //fetch Provience from backend
   dataService.fetchProvience = function() {
     url = basePath + "slbiz/province.json";
-    return $http.get(url,config);
+    Localurl = "assets/offline-data/province.json";
+    return $http.get(Localurl,config);
   }
   //fetch District from backend
   dataService.fetchDistricts = function(pid) {
     url = basePath + "slbiz/"+pid+"/district.json";
-    return $http.get(url,config);
+    Localurl = "assets/offline-data/district/"+pid+"_district.json";
+    return $http.get(Localurl,config);
   }
   //fetch Chiefdoms from backend
   dataService.fetchChiefdoms = function(did) {
     url = basePath + "slbiz/chiefdom.json?&district="+did;
-    return $http.get(url,config);
+    Localurl = "assets/offline-data/chiefdom/"+did+"_chiefdom.json";
+    return $http.get(Localurl,config);
   }
   //query search business
   dataService.fetchSearchedBusinesses = function(bizName) { 

@@ -440,7 +440,7 @@ OBizR.service('taxonomyService', function($q,$filter,$rootScope,$http,DrupalHelp
 	function getCategory() {
 			
 		var defer = $q.defer();
-		if (category == null || (Date.now() - lastFetched) > 60 * 10000) {
+		if (category == null) {
 			DataService.fetchCategory().success(function (data) {	
 				category = data.nodes;	
 				prepareCategory(category);
@@ -467,12 +467,11 @@ OBizR.service('taxonomyService', function($q,$filter,$rootScope,$http,DrupalHelp
 	function getKeywords() {
 			
 		var defer = $q.defer();
-		if (keywords == null || (Date.now() - lastFetched) > 60 * 10000) {
+		if (keywords == null) {
 			DataService.fetchKeywords().success(function (data) {	
 				keywords = data.Keywords;	
 				prepareKeywords(data.Keywords);
-
-				// console.log(data);
+				
 			    defer.resolve(keywords);
 			    lastFetched = Date.now();
 		    }).catch(function (error) {
@@ -495,10 +494,10 @@ OBizR.service('taxonomyService', function($q,$filter,$rootScope,$http,DrupalHelp
 	function getProvience() {
 			
 		var defer = $q.defer();
-		if (provience == null || (Date.now() - lastFetched) > 60 * 10000) {
+		if (provience == null) {
 			DataService.fetchProvience().success(function (data) {	
 				provience = data.locations;	
-				console.log(data);
+
 			    defer.resolve(provience);
 			    lastFetched = Date.now();
 		    }).catch(function (error) {
@@ -517,7 +516,7 @@ OBizR.service('taxonomyService', function($q,$filter,$rootScope,$http,DrupalHelp
 		var defer = $q.defer();
 		DataService.fetchDistricts(pid).success(function (data) {	
 			district = data.districts;
-			console.log(data);	
+	
 		    defer.resolve(district);
 	    }).catch(function (error) {
 	        defer.reject(error);
@@ -532,7 +531,7 @@ OBizR.service('taxonomyService', function($q,$filter,$rootScope,$http,DrupalHelp
 		var defer = $q.defer();
 		DataService.fetchChiefdoms(did).success(function (data) {	
 			chiefdoms = data.locations;	
-			console.log(data);
+
 		    defer.resolve(chiefdoms);
 	    }).catch(function (error) {
 	        defer.reject(error);
