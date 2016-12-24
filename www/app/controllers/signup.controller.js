@@ -30,7 +30,16 @@ OBizR.controller('SignupCtrl',function ($scope,$state,smsService,$ionicPopup,$ro
       })
         //login
         .then(function (data) {
-          $scope.showPoup();
+          //$scope.showPoup();
+          $localStorage.currentUser = data.data.user;
+          $rootScope.currentUser = $localStorage.currentUser;
+          $localStorage.isLogedin = true;
+          $localStorage.isRegistered = true;
+          if($localStorage.isLocationAllowed){
+            $state.go('app.nearby');
+          }else{
+            $state.go('location');
+          }
         })
         .catch(function (errorResult) {
           if (errorResult.status >= 400 && errorResult.status < 500) {
