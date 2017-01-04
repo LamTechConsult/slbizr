@@ -1,5 +1,5 @@
-Default the app usage to offline. Assume that all data is available offline in json files stored within the app and make API calls in the background for updated data only when you check and confirm that user have internet connection.
-When user is offline, display the offline message on a red banner or background to ensure the users knows they are working offline.
+*Default the app usage to offline. Assume that all data is available offline in json files stored within the app and make API calls in the background for updated data only when you check and confirm that user have internet connection.
+*When user is offline, display the offline message on a red banner or background to ensure the users knows they are working offline.
 While user is offline, search filter and etc should be limited to offline data only. 
 Do not display distance information when user is offline. if you can, cache all data displayed within the apps local storage while the user is online and use the cached version when the user goes online
 Make sure users location is collected and stored locally and when user is offline, use their local storage location information to display businesses near them.
